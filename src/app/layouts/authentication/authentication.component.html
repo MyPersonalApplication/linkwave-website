@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="background-header">
+    <header class="container d-md-flex justify-content-between py-3">
+      <div
+        routerLink="/login"
+        class="d-flex justify-content-center align-items-center mb-5 mb-md-0 text-dark text-decoration-none"
+      >
+        <img src="assets/images/logo/lw-logo.png" alt="Logo" width="50" />
+        <span class="fs-4 ms-3 d-none d-md-block">Link Wave</span>
+      </div>
+
+      <div class="text-center my-auto">
+        <button routerLink="/login" mat-raised-button class="me-2">
+          Login
+        </button>
+        <button routerLink="/register" mat-raised-button color="primary">
+          Register
+        </button>
+      </div>
+    </header>
+  </div>
+  <router-outlet></router-outlet>
+</div>

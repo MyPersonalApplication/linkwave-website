@@ -1,1 +1,132 @@
-<p>register works!</p>
+<div class="main d-md-flex justify-content-center align-items-center">
+  <section class="signup">
+    <div class="container-register">
+      <div class="signup-content">
+        <div class="signup-form">
+          <h2 class="form-title">Sign up</h2>
+          <form
+            action="#"
+            method="POST"
+            class="register-form"
+            id="register-form"
+          >
+            <div class="d-flex justify-content-between gap-2">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>First Name</mat-label>
+                <input
+                  name="name"
+                  matInput
+                  type="text"
+                  formControlName="firstName"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Last Name</mat-label>
+                <input
+                  name="lastName"
+                  matInput
+                  type="text"
+                  formControlName="lastName"
+                />
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Email</mat-label>
+              <input
+                name="email"
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="Example@example.com"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Password</mat-label>
+              <input
+                name="password"
+                matInput
+                [type]="isShowPassword ? 'text' : 'password'"
+                formControlName="password"
+                [placeholder]="isShowPassword ? 'Password' : ' • • • • • • • •'"
+              />
+              <button
+                type="button"
+                mat-icon-button
+                [matTooltip]="
+                  isShowPassword ? 'Hide Password' : 'Show Password'
+                "
+                matSuffix
+                tabindex="-1"
+                (click)="isShowPassword = !isShowPassword"
+              >
+                <mat-icon>{{
+                  isShowPassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                name="confirmPassword"
+                matInput
+                [type]="isShowConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                [placeholder]="
+                  isShowConfirmPassword
+                    ? 'Confirm Password'
+                    : ' • • • • • • • •'
+                "
+              />
+              <button
+                type="button"
+                mat-icon-button
+                [matTooltip]="
+                  isShowConfirmPassword ? 'Hide Password' : 'Show Password'
+                "
+                matSuffix
+                tabindex="-1"
+                (click)="isShowConfirmPassword = !isShowConfirmPassword"
+              >
+                <mat-icon>{{
+                  isShowConfirmPassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <div class="form-group">
+              <mat-checkbox color="primary"
+                >I agree all statements in
+                <a href="#" class="term-service">Terms of service</a>
+              </mat-checkbox>
+            </div>
+            <div class="form-group form-button">
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                class="form-submit"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="signup-image">
+          <figure>
+            <img src="assets/images/signup-image.jpg" alt="sign up image" />
+          </figure>
+          <a
+            routerLink="/login"
+            class="signup-image-link text-decoration-underline"
+          >
+            I am already a member
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
