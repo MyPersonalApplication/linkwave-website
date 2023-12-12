@@ -12,6 +12,7 @@ import { MaterialUIModule } from './mat-ui/mat-ui.module';
 import { AuthenticationComponent } from './layouts/authentication/authentication.component';
 import { FullComponent } from './layouts/full/full.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NotFoundComponent,
     AuthenticationComponent,
     FullComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

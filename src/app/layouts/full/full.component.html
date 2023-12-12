@@ -1,3 +1,148 @@
 <div class="container-fluid">
+  <mat-toolbar color="warn">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-5">
+          <div class="d-flex justify-content-start gap-5">
+            <div>
+              <button mat-button routerLink="/home">Home</button>
+            </div>
+            <div>
+              <button mat-button [matMenuTriggerFor]="message">Message</button>
+              <mat-menu #message="matMenu" class="p-3 message-width">
+                <button mat-menu-item>Item 1</button>
+                <button mat-menu-item>Item 2</button>
+              </mat-menu>
+            </div>
+            <div>
+              <button mat-button [matMenuTriggerFor]="friendRequest">
+                Friend Request
+              </button>
+              <mat-menu
+                #friendRequest="matMenu"
+                class="p-3 friend-request-width"
+              >
+                <button mat-menu-item>Item 1</button>
+                <button mat-menu-item>Item 2</button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="text-center">
+            <a routerLink="/home">
+              <img
+                src="assets/images/logo/lw-logo.png"
+                alt="Logo image"
+                width="50"
+              />
+            </a>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="d-flex justify-content-end gap-3">
+            <div>
+              <button mat-icon-button [matMenuTriggerFor]="notification">
+                <mat-icon matBadge="7">notifications</mat-icon>
+              </button>
+              <mat-menu #notification="matMenu" class="p-3 notification-width">
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="fw-bold">Recent Message</p>
+                  <div class="message-btn-group mb-3">
+                    <a href="">New group</a>
+                    <a class="ms-4" href="">New message</a>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <button mat-menu-item class="pt-3 p-2">
+                  <div class="d-flex justify-content-between">
+                    <div class="notification-profile">
+                      <button mat-mini-fab color="primary">
+                        <img
+                          src="assets/images/profile/profile-small-3.jpg"
+                          alt="Avatar profile"
+                          class="img-fluid rounded-circle"
+                        />
+                      </button>
+                    </div>
+                    <div class="notification-content px-4">
+                      <a [routerLink]="['/profile', 10]">Robert Faul</a>,
+                      <a [routerLink]="['/profile', 11]">William Jhon</a>
+                      <p class="mb-0">
+                        and 35 other people reacted to your photo
+                      </p>
+                    </div>
+                    <div class="notification-time text-end ps-2">
+                      <p class="mb-0">25 Apr 2019</p>
+                    </div>
+                  </div>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item class="pt-3 p-2">
+                  <div class="d-flex justify-content-between">
+                    <div class="notification-profile">
+                      <button mat-mini-fab color="primary">
+                        <img
+                          src="assets/images/profile/profile-small-3.jpg"
+                          alt="Avatar profile"
+                          class="img-fluid rounded-circle"
+                        />
+                      </button>
+                    </div>
+                    <div class="notification-content px-4">
+                      <a [routerLink]="['/profile', 12]">Robert Faul</a>,
+                      <a [routerLink]="['/profile', 13]">William Jhon</a>
+                      <p class="mb-0">
+                        and 35 other people reacted to your photo
+                      </p>
+                    </div>
+                    <div class="notification-time text-end ps-2">
+                      <p class="mb-0">25 Apr 2019</p>
+                    </div>
+                  </div>
+                </button>
+                <mat-divider></mat-divider>
+                <div
+                  class="d-flex justify-content-between align-items-center message-btn-group mt-3"
+                >
+                  <a href="#">See all in messenger</a>
+                  <a href="#">Mark All as Read</a>
+                </div>
+              </mat-menu>
+            </div>
+            <div class="header-top-search">
+              <form class="top-search-box">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  class="top-search-field"
+                />
+                <button mat-icon-button class="top-search-btn">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </form>
+            </div>
+            <div>
+              <button
+                mat-mini-fab
+                color="primary"
+                [matMenuTriggerFor]="profile"
+              >
+                <img
+                  src="assets/avatar/my-avatar.jpg"
+                  alt="Avatar profile"
+                  class="img-fluid rounded-circle"
+                />
+              </button>
+              <mat-menu #profile="matMenu">
+                <button mat-menu-item>Item 1</button>
+                <button mat-menu-item>Item 2</button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
   <router-outlet></router-outlet>
 </div>

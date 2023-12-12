@@ -1,0 +1,73 @@
+.top-search-box {
+  min-width: 250px;
+  position: relative;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.top-search-field {
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  padding-right: 30px;
+  background-color: transparent;
+
+  &::placeholder {
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+    color: #fff;
+  }
+}
+
+.top-search-btn {
+  top: -5px;
+  right: 0;
+  font-size: 20px;
+  position: absolute;
+}
+
+.message-btn-group a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #666666;
+
+  &:hover {
+    color: #f44336;
+    text-decoration: underline;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-menu-panel.message-width {
+    max-width: max-content !important;
+
+    .mat-mdc-menu-content {
+      width: 500px !important;
+    }
+  }
+
+  .mat-mdc-menu-panel.friend-request-width {
+    max-width: max-content !important;
+
+    .mat-mdc-menu-content {
+      width: 500px !important;
+    }
+  }
+
+  .mat-mdc-menu-panel.notification-width {
+    max-width: max-content !important;
+
+    .mat-mdc-menu-content {
+      width: 500px !important;
+    }
+  }
+
+  .notification-width {
+    .notification-time {
+      font-size: 12px;
+    }
+  }
+}
