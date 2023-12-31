@@ -13,6 +13,8 @@ import { AuthenticationComponent } from './layouts/authentication/authentication
 import { FullComponent } from './layouts/full/full.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile/profile.component';
+import { FriendRequestComponent } from './friend-request/friend-request.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
     AuthenticationComponent,
     FullComponent,
     ProfileComponent,
+    FriendRequestComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

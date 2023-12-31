@@ -7,6 +7,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthenticationComponent } from './layouts/authentication/authentication.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FriendRequestComponent } from './friend-request/friend-request.component';
+import { MessageComponent } from './message/message.component';
 
 const routes: Routes = [
   {
@@ -15,7 +17,13 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
+      {
+        path: 'friend-request',
+        component: FriendRequestComponent,
+        title: 'Friend Request',
+      },
       { path: 'profile/:id', component: ProfileComponent, title: 'Profile' },
+      { path: 'message', component: MessageComponent, title: 'Messager' },
     ],
   },
   {

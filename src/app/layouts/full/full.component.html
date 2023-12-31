@@ -8,83 +8,12 @@
               <button mat-button routerLink="/home">Home</button>
             </div>
             <div>
-              <button mat-button [matMenuTriggerFor]="message">Message</button>
-              <mat-menu #message="matMenu" class="p-3 message-width">
-                <div class="d-flex align-items-center justify-content-between">
-                  <p class="fw-bold">Recent Message</p>
-                  <div class="message-btn-group mb-3">
-                    <a href="#">New group</a>
-                    <a href="#" class="ms-4">New Message</a>
-                  </div>
-                </div>
-                <mat-divider></mat-divider>
-                <button mat-menu-item class="pt-3 p-2">
-                  <div class="row justify-content-between">
-                    <div class="notification-profile col-1">
-                      <button mat-mini-fab color="primary">
-                        <img
-                          src="assets/images/profile/profile-small-3.jpg"
-                          alt="Avatar profile"
-                          class="img-fluid rounded-circle"
-                        />
-                      </button>
-                    </div>
-                    <div class="message-content ps-4 col">
-                      <p class="fw-bold mb-1">Mili Raoulin</p>
-                      <p class="mb-0 content">
-                        Many desktop publishing packages and web page editors
-                        now use Lorem Ipsum as their default
-                      </p>
-                    </div>
-                    <div class="notification-time text-end col-3">
-                      <p class="mb-0">25 Apr 2019</p>
-                    </div>
-                  </div>
-                </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item class="pt-3 p-2">
-                  <div class="row justify-content-between">
-                    <div class="notification-profile col-1">
-                      <button mat-mini-fab color="primary">
-                        <img
-                          src="assets/images/profile/profile-small-4.jpg"
-                          alt="Avatar profile"
-                          class="img-fluid rounded-circle"
-                        />
-                      </button>
-                    </div>
-                    <div class="message-content ps-4 col">
-                      <p class="fw-bold mb-1">Jhon Doe</p>
-                      <p class="mb-0 content">
-                        Many desktop publishing packages and web page editors
-                        now use Lorem Ipsum as their default
-                      </p>
-                    </div>
-                    <div class="notification-time text-end col-3">
-                      <p class="mb-0">15 May 2019</p>
-                    </div>
-                  </div>
-                </button>
-                <mat-divider></mat-divider>
-                <div
-                  class="d-flex justify-content-between align-items-center message-btn-group mt-3"
-                >
-                  <a href="#">See all in messenger</a>
-                  <a href="#">Mark All as Read</a>
-                </div>
-              </mat-menu>
+              <button mat-button routerLink="/message">Message</button>
             </div>
             <div>
-              <button mat-button [matMenuTriggerFor]="friendRequest">
+              <button mat-button routerLink="/friend-request">
                 Friend Request
               </button>
-              <mat-menu
-                #friendRequest="matMenu"
-                class="p-3 friend-request-width"
-              >
-                <button mat-menu-item>Item 1</button>
-                <button mat-menu-item>Item 2</button>
-              </mat-menu>
             </div>
           </div>
         </div>
@@ -190,9 +119,12 @@
                 [matMenuTriggerFor]="profile"
               >
                 <img
-                  src="assets/avatar/my-avatar.jpg"
+                  src="assets/avatar/my-avatar-2.jpg"
                   alt="Avatar profile"
-                  class="img-fluid rounded-circle"
+                  class="rounded-circle"
+                  height="40"
+                  width="40"
+                  style="object-fit: cover"
                 />
               </button>
               <mat-menu #profile="matMenu">
