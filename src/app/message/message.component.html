@@ -1,37 +1,189 @@
-<main class="container mt-3">
+<main class="container mt-2">
   <div class="tile tile-alt" id="messages-main">
-    <div class="ms-menu">
-      <div class="p-3 pb-0 d-flex justify-content-between align-items-center">
-        <h1 class="m-0 fw-bold">Message</h1>
+    <div class="ms-menu" [class.toggled]="isMenuToggled">
+      <div
+        class="ms-user p-3 d-flex justify-content-between align-items-center"
+      >
+        <h3 class="m-0 fw-bold">Message</h3>
         <button mat-icon-button>
           <mat-icon>add_circle </mat-icon>
         </button>
       </div>
-      <mat-list>
-        <mat-list-item>
-          <img
-            matListItemAvatar
-            src="assets/avatar/my-avatar-2.jpg"
-            alt="Avatar Profile"
-          />
-          <h3 matListItemTitle class="fw-bold">Pepper</h3>
-          <p matListItemLine>Produced by a plant</p>
-        </mat-list-item>
-        <mat-list-item>
-          <img
-            matListItemAvatar
-            src="assets/avatar/my-avatar-2.jpg"
-            alt="Avatar Profile"
-          />
-          <h3 matListItemTitle class="fw-bold">Pepper</h3>
-          <p matListItemLine>Produced by a plant</p>
-        </mat-list-item>
+      <mat-list id="friend-list">
+        <div>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+          <mat-list-item>
+            <img
+              matListItemAvatar
+              src="assets/avatar/my-avatar-2.jpg"
+              alt="Avatar Profile"
+            />
+            <h3 matListItemTitle class="fw-bold">Pepper</h3>
+            <p matListItemLine>Produced by a plant</p>
+          </mat-list-item>
+        </div>
       </mat-list>
     </div>
 
     <div class="ms-body">
-      <div class="action-header clearfix">
-        <div class="d-block d-md-none" id="ms-menu-trigger">
+      <div class="action-header p-3 clearfix">
+        <div
+          class="d-block d-md-none float-start"
+          id="ms-menu-trigger"
+          (click)="toggleMenu()"
+        >
           <button mat-icon-button>
             <mat-icon>menu</mat-icon>
           </button>
@@ -48,117 +200,226 @@
           <span class="fw-bold h6">David Parbell</span>
         </div>
 
-        <ul class="ah-actions actions">
-          <li class="dropdown">
-            <button mat-icon-button>
-              <mat-icon>infor</mat-icon>
+        <div class="d-flex justify-content-end gap-1">
+          <button mat-icon-button>
+            <mat-icon>call</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>video_call</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="messageInfor">
+            <mat-icon>infor</mat-icon>
+          </button>
+          <mat-menu #messageInfor="matMenu">
+            <button mat-menu-item>
+              <mat-icon>dialpad</mat-icon>
+              <span>Redial</span>
             </button>
-          </li>
-        </ul>
+            <button mat-menu-item disabled>
+              <mat-icon>voicemail</mat-icon>
+              <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>notifications_off</mat-icon>
+              <span>Disable alerts</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
 
-      <div class="message-feed media">
-        <div class="float-start">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-            alt=""
-            class="rounded-circle me-1"
-            height="45"
-            width="45"
-          />
-        </div>
-        <div class="media-body">
-          <div class="mf-content">
-            Quisque consequat arcu eget odio cursus, ut tempor arcu vestibulum.
-            Etiam ex arcu, porta a urna non, lacinia pellentesque orci. Proin
-            semper sagittis erat, eget condimentum sapien viverra et. Mauris
-            volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis
-            mi. In eu massa a sem pulvinar lobortis.
+      <div id="message-list">
+        <div class="message-feed media">
+          <div class="float-start">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="rounded-circle me-1"
+              height="45"
+              width="45"
+            />
           </div>
-          <small class="mf-date ps-5">20/02/2015 at 09:00 </small>
-        </div>
-      </div>
-
-      <div class="message-feed right">
-        <div class="float-end">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar2.png"
-            alt=""
-            class="rounded-circle ms-1"
-            height="45"
-            width="45"
-          />
-        </div>
-        <div class="media-body">
-          <div class="mf-content">
-            Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed
-            turpis mi. In eu massa a sem pulvinar lobortis.
+          <div class="media-body">
+            <div class="mf-content">
+              Quisque consequat arcu eget odio cursus, ut tempor arcu
+              vestibulum. Etiam ex arcu, porta a urna non, lacinia pellentesque
+              orci. Proin semper sagittis erat, eget condimentum sapien viverra
+              et. Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc
+              sed turpis mi. In eu massa a sem pulvinar lobortis.
+            </div>
+            <small class="mf-date ps-5">20/02/2015 at 09:00 </small>
           </div>
-          <small class="mf-date pe-5">20/02/2015 at 09:30 </small>
         </div>
-      </div>
 
-      <div class="message-feed media">
-        <div class="float-start">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-            alt=""
-            class="rounded-circle me-1"
-            height="45"
-            width="45"
-          />
-        </div>
-        <div class="media-body">
-          <div class="mf-content">Etiam ex arcumentum</div>
-          <small class="mf-date ps-5">20/02/2015 at 09:33 </small>
-        </div>
-      </div>
-
-      <div class="message-feed right">
-        <div class="float-end">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar2.png"
-            alt=""
-            class="rounded-circle ms-1"
-            height="45"
-            width="45"
-          />
-        </div>
-        <div class="media-body">
-          <div class="mf-content">
-            Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui
-            ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus.
-            Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis
-            parturient montes,
+        <div class="message-feed right">
+          <div class="float-end">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar2.png"
+              alt=""
+              class="rounded-circle ms-1"
+              height="45"
+              width="45"
+            />
           </div>
-          <small class="mf-date pe-5">20/02/2015 at 10:10 </small>
-        </div>
-      </div>
-
-      <div class="message-feed media">
-        <div class="float-start">
-          <img
-            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-            alt=""
-            class="rounded-circle me-1"
-            height="45"
-            width="45"
-          />
-        </div>
-        <div class="media-body">
-          <div class="mf-content">
-            Cum sociis natoque penatibus et magnis dis parturient montes,
-            nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius.
-            Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit
-            massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus
-            tristique ante, vitae rhoncus sapien volutpat eget
+          <div class="media-body">
+            <div class="mf-content">
+              Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed
+              turpis mi. In eu massa a sem pulvinar lobortis.
+            </div>
+            <small class="mf-date pe-5">20/02/2015 at 09:30 </small>
           </div>
-          <small class="mf-date ps-5">20/02/2015 at 10:24 </small>
+        </div>
+
+        <div class="message-feed media">
+          <div class="float-start">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="rounded-circle me-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">Etiam ex arcumentum</div>
+            <small class="mf-date ps-5">20/02/2015 at 09:33 </small>
+          </div>
+        </div>
+
+        <div class="message-feed right">
+          <div class="float-end">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar2.png"
+              alt=""
+              class="rounded-circle ms-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui
+              ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus.
+              Praesent sed posuere sem. Cum sociis natoque penatibus et magnis
+              dis parturient montes,
+            </div>
+            <small class="mf-date pe-5">20/02/2015 at 10:10 </small>
+          </div>
+        </div>
+
+        <div class="message-feed media">
+          <div class="float-start">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="rounded-circle me-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Cum sociis natoque penatibus et magnis dis parturient montes,
+              nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius.
+              Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit
+              massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam
+              finibus tristique ante, vitae rhoncus sapien volutpat eget
+            </div>
+            <small class="mf-date ps-5">20/02/2015 at 10:24 </small>
+          </div>
+        </div>
+
+        <div class="message-feed right">
+          <div class="float-end">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar2.png"
+              alt=""
+              class="rounded-circle ms-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui
+              ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus.
+              Praesent sed posuere sem. Cum sociis natoque penatibus et magnis
+              dis parturient montes,
+            </div>
+            <small class="mf-date pe-5">20/02/2015 at 10:10 </small>
+          </div>
+        </div>
+
+        <div class="message-feed media">
+          <div class="float-start">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="rounded-circle me-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Cum sociis natoque penatibus et magnis dis parturient montes,
+              nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius.
+              Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit
+              massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam
+              finibus tristique ante, vitae rhoncus sapien volutpat eget
+            </div>
+            <small class="mf-date ps-5">20/02/2015 at 10:24 </small>
+          </div>
+        </div>
+
+        <div class="message-feed right">
+          <div class="float-end">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar2.png"
+              alt=""
+              class="rounded-circle ms-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui
+              ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus.
+              Praesent sed posuere sem. Cum sociis natoque penatibus et magnis
+              dis parturient montes,
+            </div>
+            <small class="mf-date pe-5">20/02/2015 at 10:10 </small>
+          </div>
+        </div>
+
+        <div class="message-feed media">
+          <div class="float-start">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="rounded-circle me-1"
+              height="45"
+              width="45"
+            />
+          </div>
+          <div class="media-body">
+            <div class="mf-content">
+              Cum sociis natoque penatibus et magnis dis parturient montes,
+              nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius.
+              Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit
+              massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam
+              finibus tristique ante, vitae rhoncus sapien volutpat eget
+            </div>
+            <small class="mf-date ps-5">20/02/2015 at 10:24 </small>
+          </div>
         </div>
       </div>
 
-      <div class="msb-reply">
-        <textarea placeholder="What's on your mind..."></textarea>
+      <div class="msb-reply p-2">
+        <button mat-icon-button>
+          <mat-icon>add_reaction</mat-icon>
+        </button>
+        <input placeholder="What's on your mind..." />
         <button mat-icon-button>
           <mat-icon>send</mat-icon>
         </button>

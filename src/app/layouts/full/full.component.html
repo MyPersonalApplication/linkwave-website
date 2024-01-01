@@ -2,104 +2,48 @@
   <mat-toolbar color="warn">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-5">
-          <div class="d-flex justify-content-start gap-5">
-            <div>
-              <button mat-button routerLink="/home">Home</button>
-            </div>
-            <div>
-              <button mat-button routerLink="/message">Message</button>
-            </div>
-            <div>
-              <button mat-button routerLink="/friend-request">
-                Friend Request
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-2">
-          <div class="text-center">
-            <a routerLink="/home">
+        <div class="col-4">
+          <div class="text-start">
+            <a
+              routerLink="/home"
+              class="text-reset text-decoration-none d-flex align-items-center"
+            >
               <img
                 src="assets/images/logo/lw-logo.png"
                 alt="Logo image"
+                class="rounded-circle"
                 width="50"
               />
+              <span class="fs-4 ms-2 d-none d-md-block text-uppercase fw-bold">
+                Link Wave
+              </span>
             </a>
           </div>
         </div>
-        <div class="col-5">
-          <div class="d-flex justify-content-end gap-3">
+        <div class="col-4">
+          <div class="d-flex justify-content-center gap-4">
             <div>
-              <button mat-icon-button [matMenuTriggerFor]="notification">
-                <mat-icon matBadge="7">notifications</mat-icon>
+              <button mat-icon-button routerLink="/home">
+                <mat-icon>home</mat-icon>
               </button>
-              <mat-menu #notification="matMenu" class="p-3 notification-width">
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="fw-bold">Recent notification</p>
-                  <div class="message-btn-group mb-2">
-                    <a href="#"
-                      ><mat-icon style="font-size: 20px">settings</mat-icon></a
-                    >
-                  </div>
-                </div>
-                <mat-divider></mat-divider>
-                <button mat-menu-item class="pt-3 p-2">
-                  <div class="row justify-content-between">
-                    <div class="notification-profile col-1">
-                      <button mat-mini-fab color="primary">
-                        <img
-                          src="assets/images/profile/profile-small-3.jpg"
-                          alt="Avatar profile"
-                          class="img-fluid rounded-circle"
-                        />
-                      </button>
-                    </div>
-                    <div class="notification-content ps-4 col">
-                      <p class="mb-0 content">
-                        <a [routerLink]="['/profile', 10]">Robert Faul</a>,
-                        <a [routerLink]="['/profile', 11]">William Jhon</a>
-                        and 35 other people reacted to your photo
-                      </p>
-                    </div>
-                    <div class="notification-time text-end col-3">
-                      <p class="mb-0">25 Apr 2019</p>
-                    </div>
-                  </div>
-                </button>
-                <mat-divider></mat-divider>
-                <button mat-menu-item class="pt-3 p-2">
-                  <div class="row justify-content-between">
-                    <div class="notification-profile col-1">
-                      <button mat-mini-fab color="primary">
-                        <img
-                          src="assets/images/profile/profile-small-3.jpg"
-                          alt="Avatar profile"
-                          class="img-fluid rounded-circle"
-                        />
-                      </button>
-                    </div>
-                    <div class="notification-content ps-4 col">
-                      <p class="mb-0 content">
-                        <a [routerLink]="['/profile', 12]">Robert Faul</a>,
-                        <a [routerLink]="['/profile', 13]">William Jhon</a>
-                        and 35 other people reacted to your photo
-                      </p>
-                    </div>
-                    <div class="notification-time text-end col-3">
-                      <p class="mb-0">25 Apr 2019</p>
-                    </div>
-                  </div>
-                </button>
-                <mat-divider></mat-divider>
-                <div
-                  class="d-flex justify-content-between align-items-center message-btn-group mt-3"
-                >
-                  <a href="#">See all in notification</a>
-                  <a href="#">Mark All as Read</a>
-                </div>
-              </mat-menu>
             </div>
+            <div>
+              <button mat-icon-button routerLink="/message">
+                <mat-icon>chat</mat-icon>
+              </button>
+            </div>
+            <div>
+              <button mat-icon-button routerLink="/friend-request">
+                <mat-icon>person_add</mat-icon>
+              </button>
+            </div>
+            <button mat-icon-button>
+              <mat-icon>notifications</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="d-flex justify-content-end gap-3">
             <div class="header-top-search">
               <form class="top-search-box">
                 <input
@@ -128,8 +72,19 @@
                 />
               </button>
               <mat-menu #profile="matMenu">
-                <button mat-menu-item>Item 1</button>
-                <button mat-menu-item>Item 2</button>
+                <button mat-menu-item>
+                  <mat-icon>account_circle</mat-icon>
+                  <span>Profile</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>settings</mat-icon>
+                  <span>Setting</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item>
+                  <mat-icon>logout</mat-icon>
+                  <span>Logout</span>
+                </button>
               </mat-menu>
             </div>
           </div>

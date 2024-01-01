@@ -3,6 +3,7 @@ $color_2: #fff;
 $color_3: #b3b3b3;
 $color_4: #2196f3;
 $color_5: #939393;
+$color_main: #f44336;
 $font-family_1: Roboto, sans-serif;
 $background-color_1: #edecec;
 
@@ -37,31 +38,6 @@ $background-color_1: #edecec;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   }
 }
-#ms-menu-trigger {
-  user-select: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50px;
-  height: 100%;
-  padding-right: 10px;
-  padding-top: 19px;
-  user-select: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50px;
-  height: 100%;
-  padding-right: 10px;
-  padding-top: 19px;
-  cursor: pointer;
-  text-align: right;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  i {
-    font-size: 21px;
-  }
-}
 #ms-menu-trigger.toggled {
   i {
     &:before {
@@ -72,9 +48,10 @@ $background-color_1: #edecec;
 
 .message-feed {
   padding: 20px;
+
   &:not(.right) {
     .mf-content {
-      background: #f44336;
+      background: $color_main;
       color: $color_2;
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
         0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -84,6 +61,7 @@ $background-color_1: #edecec;
 .message-feed.right {
   .mf-content {
     background: #eee;
+    text-align: left;
   }
   text-align: right;
 }
@@ -92,6 +70,7 @@ $background-color_1: #edecec;
   border-radius: 2px;
   display: inline-block;
   max-width: 80%;
+  border-radius: 5px;
 }
 .mf-date {
   display: block;
@@ -105,30 +84,27 @@ $background-color_1: #edecec;
   }
 }
 .msb-reply {
+  display: flex;
+  align-items: center;
   box-shadow: 0 -20px 20px -5px #fff;
   position: relative;
-  margin-top: 30px;
   border-top: 1px solid #eee;
   background: #f8f8f8;
-  textarea {
+
+  input {
     width: 100%;
     font-size: 13px;
     border: 0;
     padding: 10px 15px;
     resize: none;
-    height: 60px;
-    background: 0 0;
+
+    &:focus {
+      outline: 0;
+    }
   }
+
   button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    height: 100%;
-    width: 60px;
-    font-size: 25px;
-    color: $color_4;
-    background: 0 0;
+    color: $color_main;
     &:hover {
       background: #f2f2f2;
     }
@@ -136,42 +112,33 @@ $background-color_1: #edecec;
 }
 
 .action-header {
-  position: relative;
   background: #f8f8f8;
-  padding: 15px 13px 15px 17px;
 }
-.ah-actions {
-  z-index: 3;
-  float: right;
-  margin-top: 7px;
-  position: relative;
-}
-.actions {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  > li {
-    display: inline-block;
-    > a {
-      > i {
-        font-size: 20px;
-      }
-      display: block;
-      padding: 0 10px;
-    }
-  }
-  &:not(.a-alt) {
-    > li {
-      > a {
-        > i {
-          color: $color_5;
-        }
-      }
-    }
-  }
-}
+
 .ms-body {
   background: #fff;
+}
+
+.ms-user {
+  background: #f8f8f8;
+}
+
+#message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+}
+
+#friend-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 82vh;
 }
 
 @media (min-width: 768px) {
@@ -182,18 +149,26 @@ $background-color_1: #edecec;
   }
 }
 @media (max-width: 767px) {
-  #messages-main {
-    .ms-menu {
-      height: calc(100% - 58px);
-      display: none;
-      z-index: 1;
-      top: 58px;
-    }
-    .ms-menu.toggled {
-      display: block;
-    }
-    .ms-body {
-      overflow: hidden;
+  main {
+    padding: 0;
+
+    #messages-main {
+      .ms-menu {
+        height: calc(100% - 65px);
+        display: none;
+        z-index: 1;
+        top: 65px;
+      }
+      .ms-menu.toggled {
+        display: block;
+      }
+      .ms-body {
+        overflow: hidden;
+      }
+
+      #friend-list {
+        height: 75vh;
+      }
     }
   }
 }
