@@ -48,11 +48,16 @@
             </div>
             <div class="form-floating mb-3">
               <input
-                type="password"
+                [type]="hidePassword ? 'password' : 'text'"
                 class="form-control"
                 id="password"
                 placeholder="Password"
+                autocomplete="off"
               />
+              <span class="show-hide-pass" (click)="togglePasswordVisibility()">
+                <mat-icon *ngIf="hidePassword">visibility</mat-icon>
+                <mat-icon *ngIf="!hidePassword">visibility_off</mat-icon>
+              </span>
               <label for="password">Password</label>
             </div>
             <div class="form-check mb-3">

@@ -6,6 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  isShowPassword = false;
-  isShowConfirmPassword = false;
+  hidePassword: boolean = true;
+  hideConfirm: boolean = true;
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmVisibility(): void {
+    this.hideConfirm = !this.hideConfirm;
+  }
 }

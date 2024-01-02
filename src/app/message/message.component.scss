@@ -139,6 +139,11 @@ $background-color_1: #edecec;
   display: flex;
   flex-direction: column;
   height: 82vh;
+
+  .h3,
+  p {
+    font-family: "Poppins", sans-serif;
+  }
 }
 
 @media (min-width: 768px) {

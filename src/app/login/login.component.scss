@@ -369,6 +369,11 @@ label.valid {
 .zmdi-google {
   background: #e72734;
 }
+.show-hide-pass {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
 @media screen and (max-width: 1200px) {
   .container-login {
     width: calc(100% - 30px);
