@@ -9,6 +9,7 @@ import { AuthenticationComponent } from './layouts/authentication/authentication
 import { ProfileComponent } from './profile/profile.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { MessageComponent } from './message/message.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
       },
       { path: 'profile/:id', component: ProfileComponent, title: 'Profile' },
       { path: 'message', component: MessageComponent, title: 'Messager' },
+      {
+        path: 'notification',
+        component: NotificationComponent,
+        title: 'Notification',
+      },
     ],
   },
   {

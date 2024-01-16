@@ -15,6 +15,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile/profile.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { MessageComponent } from './message/message.component';
+import { NotificationComponent } from './notification/notification.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { MessageComponent } from './message/message.component';
     ProfileComponent,
     FriendRequestComponent,
     MessageComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,8 +40,11 @@ import { MessageComponent } from './message/message.component';
     BrowserAnimationsModule,
     MaterialUIModule,
     FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

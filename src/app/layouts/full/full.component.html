@@ -37,7 +37,7 @@
                 <mat-icon>person_add</mat-icon>
               </button>
             </div>
-            <button mat-icon-button>
+            <button mat-icon-button routerLink="/notification">
               <mat-icon>notifications</mat-icon>
             </button>
           </div>
@@ -78,7 +78,7 @@
                   <span>Setting</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="handleLogout()">
                   <mat-icon>logout</mat-icon>
                   <span>Logout</span>
                 </button>

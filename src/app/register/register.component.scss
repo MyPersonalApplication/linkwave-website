@@ -482,8 +482,11 @@ label.valid {
 }
 .show-hide-pass {
   position: absolute;
-  right: 20px;
+  right: 7px;
   bottom: 10px;
+}
+.invalid-feedback {
+  display: block;
 }
 @media screen and (max-width: 1300px) {
   .container-register {
