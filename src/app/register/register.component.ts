@@ -107,6 +107,7 @@ export class RegisterComponent {
       firstName: this.registrationForm.value.firstName,
       lastName: this.registrationForm.value.lastName,
     };
+
     this.isLoading = true;
     this.authService.register(requestData).subscribe({
       next: () => {

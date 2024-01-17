@@ -374,6 +374,9 @@ label.valid {
   right: 20px;
   bottom: 10px;
 }
+.invalid-feedback {
+  display: block;
+}
 @media screen and (max-width: 1200px) {
   .container-login {
     width: calc(100% - 30px);

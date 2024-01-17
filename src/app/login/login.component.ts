@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm!: FormGroup;
   hidePassword: boolean = true;
+  isLoading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -19,6 +20,14 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router
   ) {}
+
+  get email() {
+    return this.loginForm.get('email') as FormGroup;
+  }
+
+  get password() {
+    return this.loginForm.get('password') as FormGroup;
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -35,12 +44,13 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       this.swalService.showMessage(
         'Warning',
-        'Please complete required fields',
+        'Please complete all fields',
         'warning'
       );
       return;
     }
 
+    this.isLoading = true;
     this.authService
       .login(
         this.loginForm.value.email as string,
@@ -48,16 +58,17 @@ export class LoginComponent {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
+          this.isLoading = false;
           this.authService.saveUser(response);
           this.router.navigate(['/']);
         },
         error: (response) => {
           console.log(response);
+          this.isLoading = false;
           this.swalService.showMessage(
-            'Error',
+            'Warning',
             'Invalid email or password',
-            'error'
+            'warning'
           );
         },
       });

@@ -84,4 +84,11 @@ export class AuthService {
     }
     return ['USER'];
   }
+
+  public isLoggedIn(): boolean {
+    if (this.getAccessToken()) {
+      return true;
+    }
+    return false;
+  }
 }

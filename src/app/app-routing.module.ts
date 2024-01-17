@@ -10,6 +10,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { MessageComponent } from './message/message.component';
 import { NotificationComponent } from './notification/notification.component';
+import {
+  AuthenticationGuard,
+  UnAuthenticationGuard,
+} from './services/active.guard';
 
 const routes: Routes = [
   {
@@ -17,18 +21,34 @@ const routes: Routes = [
     component: FullComponent,
     children: [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthenticationGuard],
+      },
       {
         path: 'friend-request',
         component: FriendRequestComponent,
         title: 'Friend Request',
+        canActivate: [AuthenticationGuard],
       },
-      { path: 'profile/:id', component: ProfileComponent, title: 'Profile' },
-      { path: 'message', component: MessageComponent, title: 'Messager' },
+      {
+        path: 'profile/:id',
+        component: ProfileComponent,
+        title: 'Profile',
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'message',
+        component: MessageComponent,
+        title: 'Messager',
+        canActivate: [AuthenticationGuard],
+      },
       {
         path: 'notification',
         component: NotificationComponent,
         title: 'Notification',
+        canActivate: [AuthenticationGuard],
       },
     ],
   },
@@ -36,8 +56,16 @@ const routes: Routes = [
     path: '',
     component: AuthenticationComponent,
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [UnAuthenticationGuard],
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [UnAuthenticationGuard],
+      },
     ],
   },
   { path: '**', component: NotFoundComponent },
