@@ -1,25 +1,12 @@
 $color_1: #fff;
-$width: 280px;
-$height: 330px;
+$width: 160px;
+// $height: 250px;
 $border_radius: 10px;
 
 .card {
   border-radius: $border_radius;
 
-  .card-profile {
-    width: calc($height * 0.75);
-    height: $height;
+  .card-img-top {
     cursor: pointer;
-
-    .card-image {
-      width: 100%;
-
-      img {
-        border-top-left-radius: $border_radius;
-        border-top-right-radius: $border_radius;
-        width: 100%;
-        object-fit: cover;
-      }
-    }
   }
 }

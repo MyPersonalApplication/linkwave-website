@@ -1,0 +1,33 @@
+.vh-90 {
+  height: 90vh;
+}
+
+.notification-card {
+  cursor: pointer;
+
+  .options-button {
+    display: none;
+  }
+
+  &:hover {
+    .options-button {
+      display: inline-block;
+    }
+
+    .unread-indicator {
+      display: none;
+    }
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.unread-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #f44336; /* You can change the color to suit your preference */
+  border-radius: 50%;
+}

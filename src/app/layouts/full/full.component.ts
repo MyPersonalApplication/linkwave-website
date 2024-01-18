@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { UserInfo } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { SwalService } from 'src/app/services/swal.service';
 

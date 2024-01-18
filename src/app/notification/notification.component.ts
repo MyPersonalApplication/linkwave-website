@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Notification } from '../models/notification';
+import { Profile, UserInfo } from '../models/profile';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-notification',
@@ -6,25 +9,104 @@ import { Component } from '@angular/core';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent {
-  dismissAll(): void {
-    const notificationCards = document.querySelectorAll('.notification-card');
-    notificationCards.forEach((card) => {
-      card.classList.add('display-none');
-    });
-    const row = document.querySelector('.notification-container');
-    const message = document.createElement('h4');
-    message.classList.add('text-center');
-    message.innerHTML = 'All caught up!';
-    if (row) {
-      row.appendChild(message);
-    }
+  userProfile: Profile = {
+    id: '1',
+    gender: true,
+    dob: new Date(),
+    country: 'Vietnam',
+    address: 'Can Tho',
+    aboutMe: 'I am a developer',
+    phoneNumber: '0123456789',
+    hobbies: ['Reading', 'Coding', 'Gaming'],
+    avatarUrl: 'https://picsum.photos/seed/picsum/200/300',
+    coverUrl: 'https://picsum.photos/seed/picsum/200/300',
+  };
+
+  userInfo: UserInfo = {
+    id: '1',
+    email: 'quang@gmail.com',
+    firstName: 'Quang',
+    lastName: 'Nguyen',
+    profile: this.userProfile,
+  };
+
+  notifications: Notification[] = [
+    {
+      id: '1',
+      type: 'friend-request',
+      message: 'You have a new friend request',
+      isRead: true,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '2',
+      type: 'message',
+      message: 'You have a new message',
+      isRead: false,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '3',
+      type: 'friend-request',
+      message: 'You have a new friend request',
+      isRead: true,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '4',
+      type: 'message',
+      message: 'You have a new message',
+      isRead: false,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '5',
+      type: 'friend-request',
+      message: 'You have a new friend request',
+      isRead: true,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '6',
+      type: 'message',
+      message: 'You have a new message',
+      isRead: false,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+    {
+      id: '7',
+      type: 'friend-request',
+      message: 'You have a new friend request',
+      isRead: true,
+      createdAt: new Date(),
+      sender: this.userInfo,
+    },
+  ];
+
+  constructor(private showToast: ToastService) {}
+
+  markAllAsRead(): void {
+    this.notifications.forEach((n) => (n.isRead = true));
   }
 
-  dismissNotification(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const parent = target.closest('.notification-card');
-    if (parent) {
-      parent.classList.add('display-none');
+  removeNotification(id: string): void {
+    this.notifications = this.notifications.filter((n) => n.id !== id);
+    this.showToast.showSuccessMessasge(
+      'Success',
+      'Remove notification successfully'
+    );
+  }
+
+  changeReadStatus(id: string): void {
+    const notification = this.notifications.find((n) => n.id === id);
+    if (notification) {
+      notification.isRead = !notification.isRead;
     }
   }
 }

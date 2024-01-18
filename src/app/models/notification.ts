@@ -1,5 +1,10 @@
+import { UserInfo } from './profile';
+
 export interface Notification {
   id: string;
-  name: string;
-  email: string;
+  type: string;
+  message: string;
+  isRead: boolean;
+  createdAt: Date;
+  sender: UserInfo;
 }

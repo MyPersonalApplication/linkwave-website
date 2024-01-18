@@ -1,9 +1,3 @@
-export interface UserInfo {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface TokenData {
   access_token: string;
   expires_in: number;

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SwalService } from '../services/swal.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +15,8 @@ export class LoginComponent {
   isLoading: boolean = false;
 
   constructor(
+    private showToast: ToastService,
     private formBuilder: FormBuilder,
-    private swalService: SwalService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -42,10 +42,9 @@ export class LoginComponent {
 
   submit(): void {
     if (this.loginForm.invalid) {
-      this.swalService.showMessage(
+      this.showToast.showWarningMessage(
         'Warning',
-        'Please complete all fields',
-        'warning'
+        'Please complete all fields'
       );
       return;
     }
@@ -65,10 +64,9 @@ export class LoginComponent {
         error: (response) => {
           console.log(response);
           this.isLoading = false;
-          this.swalService.showMessage(
+          this.showToast.showWarningMessage(
             'Warning',
-            'Invalid email or password',
-            'warning'
+            'Invalid email or password'
           );
         },
       });

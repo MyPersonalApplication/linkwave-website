@@ -71,8 +71,12 @@ export class SwalService {
     });
   }
 
-  confirmToHandle(title: string, icon: SweetAlertIcon, callback: () => void) {
-    return Swal.fire({
+  async confirmToHandle(
+    title: string,
+    icon: SweetAlertIcon,
+    callback: () => void
+  ) {
+    const result = await Swal.fire({
       title: title,
       showDenyButton: true,
       confirmButtonText: 'Yes',
@@ -80,12 +84,11 @@ export class SwalService {
       denyButtonColor: 'gray',
       confirmButtonColor: '#dc2626',
       icon: icon,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        callback();
-      }
-      return false;
     });
+    if (result.isConfirmed) {
+      callback();
+    }
+    return false;
   }
 
   showMessageToHandle(

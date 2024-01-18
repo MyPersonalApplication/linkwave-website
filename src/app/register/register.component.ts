@@ -9,6 +9,7 @@ import { passwordMatchingValidatior } from '../shared/utility/validator/password
 import { SwalService } from '../services/swal.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -24,8 +25,9 @@ export class RegisterComponent {
   isAgreeTerm: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private showToast: ToastService,
     private swalService: SwalService,
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -86,18 +88,13 @@ export class RegisterComponent {
 
   submit(): void {
     if (this.registrationForm.invalid) {
-      this.swalService.showMessage(
-        'Warning',
-        'Please fill all required fields',
-        'warning'
-      );
+      this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
       return;
     }
     if (this.registrationForm.valid && !this.registrationForm.value.agreeTerm) {
-      this.swalService.showMessage(
+      this.showToast.showWarningMessage(
         'Warning',
-        'Please agree with our terms',
-        'warning'
+        'Please agree with our terms'
       );
       return;
     }
@@ -122,10 +119,9 @@ export class RegisterComponent {
       error: (error) => {
         console.log(error);
         this.isLoading = false;
-        this.swalService.showMessage(
+        this.showToast.showErrorMessage(
           'Error',
-          'Register failed. Please try again',
-          'error'
+          'Register failed. Please try again'
         );
       },
     });
