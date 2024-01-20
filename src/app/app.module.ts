@@ -17,11 +17,28 @@ import { FriendRequestComponent } from './friend-request/friend-request.componen
 import { MessageComponent } from './message/message.component';
 import { NotificationComponent } from './notification/notification.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ApiInterceptor } from './helpers/api-interceptor';
+import {
+  DatePipe,
+  LocationStrategy,
+  PathLocationStrategy,
+} from '@angular/common';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DATE_FORMATS } from './helpers/dateFormat';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -59,7 +76,26 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  providers: [AuthService],
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+    DatePipe,
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    AuthService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -64,10 +64,27 @@ export class LoginComponent {
         error: (response) => {
           console.log(response);
           this.isLoading = false;
-          this.showToast.showWarningMessage(
-            'Warning',
-            'Invalid email or password'
-          );
+
+          switch (response.status) {
+            case 403:
+              this.showToast.showWarningMessage(
+                'Warning',
+                response.error.message
+              );
+              // this.router.navigate(['/verify']);
+              break;
+            case 401:
+              this.showToast.showWarningMessage(
+                'Warning',
+                response.error.message
+              );
+              break;
+            default:
+              this.showToast.showErrorMessage(
+                'Error',
+                'Login failed. Please try again'
+              );
+          }
         },
       });
   }

@@ -1,0 +1,9 @@
+{
+  "USER_NOT_FOUND": "User information not found. Please try again with another user.",
+  "HAVE_NOT_VERIFIED_EMAIL": "Invalid account. User probably hasn't verified email",
+  "CHANGE_PASSWORD_WRONG_OLD_PASSWORD": "Change password fail. Incorrect password.",
+  "INVALID_ACCOUNT": "Account is invalid. Please try again with another account.",
+  "JWT_MISSING": "Token is missing. Please try to login again.",
+  "UNDEFINED_ERROR": "Server error. Please try again later.",
+  "INCORRECT_LOGIN_CREDENTIALS": "Incorrect login credentials. Please try again."
+}

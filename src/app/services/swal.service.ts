@@ -91,23 +91,22 @@ export class SwalService {
     return false;
   }
 
-  showMessageToHandle(
+  async showMessageToHandle(
     title: string,
     message: string,
     icon: SweetAlertIcon,
     callback: () => void
   ) {
-    return Swal.fire({
+    const result = await Swal.fire({
       title: title,
       text: message,
       icon: icon,
-    }).then((result) => {
-      if (result.isConfirmed || result.isDismissed) {
-        callback();
-        return true;
-      }
-      return false;
     });
+    if (result.isConfirmed || result.isDismissed) {
+      callback();
+      return true;
+    }
+    return false;
   }
 
   showMessage(title: string, message: string, icon: SweetAlertIcon) {
