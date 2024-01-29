@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,18 +26,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApiInterceptor } from './helpers/api-interceptor';
-import {
-  DatePipe,
-  LocationStrategy,
-  PathLocationStrategy,
-} from '@angular/common';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DATE_FORMATS } from './helpers/dateFormat';
 import { PageLikeComponent } from './component/card/page-like/page-like.component';
 import { RecentNotificationsComponent } from './component/card/recent-notifications/recent-notifications.component';
 import { FriendsZoneComponent } from './component/card/friends-zone/friends-zone.component';
@@ -88,22 +75,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     {
-      provide: LocationStrategy,
-      useClass: PathLocationStrategy,
-    },
-    {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
       multi: true,
     },
-    DatePipe,
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     AuthService,
   ],
   bootstrap: [AppComponent],
