@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Share Your Mood</h2>
+<mat-dialog-content>
+  <div class="w-500 pt-2">
+    <textarea
+      name="share"
+      class="form-control"
+      placeholder="Say Something"
+      rows="5"
+    ></textarea>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Post</button>
+</mat-dialog-actions>

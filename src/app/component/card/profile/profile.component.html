@@ -1,0 +1,27 @@
+<mat-card class="example-card">
+  <figure class="profile-banner-small">
+    <a [routerLink]="['/profile', 1]">
+      <img
+        src="assets/images/banner/banner-small.jpg"
+        alt=""
+        class="img-fluid"
+      />
+    </a>
+    <a [routerLink]="['/profile', 1]" class="profile-thumb-2">
+      <img
+        src="assets/images/profile/profile-midle-1.jpg"
+        class="profile-thumb-2"
+        alt=""
+      />
+    </a>
+  </figure>
+  <mat-card-content>
+    <h6 class="text-center fw-bold author mt-5" [routerLink]="['/profile', 1]">
+      Erik Jhonson
+    </h6>
+    <p class="text-center">
+      Any one can join with but Social network us if you want Any one can join
+      with us if you want
+    </p>
+  </mat-card-content>
+</mat-card>

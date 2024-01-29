@@ -39,6 +39,11 @@ import {
 } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DATE_FORMATS } from './helpers/dateFormat';
+import { PageLikeComponent } from './component/card/page-like/page-like.component';
+import { RecentNotificationsComponent } from './component/card/recent-notifications/recent-notifications.component';
+import { FriendsZoneComponent } from './component/card/friends-zone/friends-zone.component';
+import { CardProfileComponent } from './component/card/profile/profile.component';
+import { PostComponent } from './component/dialog/post/post.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -57,6 +62,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     FriendRequestComponent,
     MessageComponent,
     NotificationComponent,
+    CardProfileComponent,
+    PageLikeComponent,
+    RecentNotificationsComponent,
+    FriendsZoneComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
