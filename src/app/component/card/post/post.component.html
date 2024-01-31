@@ -1,0 +1,165 @@
+<mat-card class="mb-4" *ngFor="let post of postList">
+  <mat-card-content>
+    <!-- post title start -->
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-2 align-items-center">
+        <div class="profile-thumb">
+          <div class="author" [routerLink]="['/profile', post.user.id]">
+            <img
+              [src]="post.user.profile.avatarUrl"
+              alt="profile picture"
+              class="rounded-circle avatar-post"
+            />
+          </div>
+        </div>
+
+        <div class="ms-2">
+          <h6
+            class="fw-bold author mb-1"
+            [routerLink]="['/profile', post.user.id]"
+          >
+            {{ post.user.firstName }} {{ post.user.lastName }}
+          </h6>
+          <span class="post-time">
+            {{ post.createdAt | date : "short" }}
+          </span>
+        </div>
+      </div>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuPostSettings">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menuPostSettings="matMenu">
+        <button mat-menu-item>
+          <mat-icon>bookmark</mat-icon>
+          <span>Save post</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>cancel_presentation</mat-icon>
+          <span>Hide post</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>disabled_visible</mat-icon>
+          <span>Unfollow pagename</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>report</mat-icon>
+          <span>Report post</span>
+        </button>
+      </mat-menu>
+    </div>
+    <!-- post title start -->
+    <div class="mt-2">
+      <p class="post-desc">
+        {{ post.content }}
+      </p>
+      <div *ngIf="post.media.length != 0" class="gallery">
+        <ng-container *ngIf="post.media.length == 1">
+          <ng-container *ngFor="let item of post.media">
+            <figure
+              *ngIf="!item.isVideo"
+              class="mb-0 gallery__item gallery_1_item--1"
+            >
+              <img
+                [src]="item.url"
+                [alt]="item.caption"
+                class="gallery__img rounded"
+              />
+            </figure>
+            <div *ngIf="item.isVideo" class="gallery__item gallery_1_item--1">
+              <app-video-player [videoUrl]="item.url"></app-video-player>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="post.media.length == 2">
+          <ng-container *ngFor="let item of post.media; let i = index">
+            <figure
+              *ngIf="!item.isVideo"
+              class="mb-0 gallery__item gallery_2_item--{{ i + 1 }}"
+            >
+              <img
+                [src]="item.url"
+                [alt]="item.caption"
+                class="gallery__img rounded"
+              />
+            </figure>
+            <div
+              *ngIf="item.isVideo"
+              class="gallery__item video_2_item--{{ i + 1 }}"
+            >
+              <app-video-player [videoUrl]="item.url"></app-video-player>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="post.media.length == 3">
+          <ng-container *ngFor="let item of post.media; let i = index">
+            <figure
+              *ngIf="!item.isVideo"
+              class="mb-0 gallery__item gallery_3_item--{{ i + 1 }}"
+            >
+              <img
+                [src]="item.url"
+                [alt]="item.caption"
+                class="gallery__img rounded"
+              />
+            </figure>
+            <div
+              *ngIf="item.isVideo"
+              class="gallery__item video_3_item--{{ i + 1 }}"
+            >
+              <app-video-player [videoUrl]="item.url"></app-video-player>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="post.media.length >= 4">
+          <ng-container *ngFor="let item of post.media; let i = index">
+            <figure
+              *ngIf="!item.isVideo"
+              class="mb-0 gallery__item gallery_4_item--{{ i + 1 }}"
+            >
+              <img
+                [src]="item.url"
+                [alt]="item.caption"
+                class="gallery__img rounded"
+              />
+            </figure>
+            <div
+              *ngIf="item.isVideo"
+              class="gallery__item video_4_item--{{ i + 1 }}"
+            >
+              <app-video-player [videoUrl]="item.url"></app-video-player>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="d-flex justify-content-between">
+        <div class="post-meta-like">
+          <fa-icon
+            *ngIf="!post.isLiked"
+            [icon]="faRegularHeart"
+            size="lg"
+            style="color: #ff3232"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="post.isLiked"
+            [icon]="faSolidHeart"
+            size="lg"
+            style="color: #ff3232"
+          ></fa-icon>
+          <span class="ms-2">{{ post.likes }} people like this</span>
+        </div>
+        <div class="d-flex gap-4">
+          <div class="post-comment">
+            <fa-icon [icon]="faRegularComments"></fa-icon>
+            <span class="ms-2">{{ post.comments }}</span>
+          </div>
+          <div class="post-share">
+            <!-- <i class="bi bi-share"></i> -->
+            <fa-icon [icon]="faRegularShareFromSquare"></fa-icon>
+            <span class="ms-2">{{ post.shares }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
