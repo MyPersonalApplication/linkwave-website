@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/aos/dist/aos.css",
               "node_modules/plyr/dist/plyr.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -37,6 +38,7 @@
               "src/styles.scss"
             ],
             "scripts": [
+              "node_modules/aos/dist/aos.js",
               "node_modules/plyr/dist/plyr.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]

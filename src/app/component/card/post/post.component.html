@@ -59,6 +59,7 @@
             <figure
               *ngIf="!item.isVideo"
               class="mb-0 gallery__item gallery_1_item--1"
+              data-aos="zoom-in-up"
             >
               <img
                 [src]="item.url"
@@ -66,7 +67,11 @@
                 class="gallery__img rounded"
               />
             </figure>
-            <div *ngIf="item.isVideo" class="gallery__item gallery_1_item--1">
+            <div
+              *ngIf="item.isVideo"
+              class="gallery__item gallery_1_item--1"
+              data-aos="zoom-in-up"
+            >
               <app-video-player [videoUrl]="item.url"></app-video-player>
             </div>
           </ng-container>
@@ -76,6 +81,7 @@
             <figure
               *ngIf="!item.isVideo"
               class="mb-0 gallery__item gallery_2_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <img
                 [src]="item.url"
@@ -86,6 +92,7 @@
             <div
               *ngIf="item.isVideo"
               class="gallery__item video_2_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <app-video-player [videoUrl]="item.url"></app-video-player>
             </div>
@@ -96,6 +103,7 @@
             <figure
               *ngIf="!item.isVideo"
               class="mb-0 gallery__item gallery_3_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <img
                 [src]="item.url"
@@ -106,6 +114,7 @@
             <div
               *ngIf="item.isVideo"
               class="gallery__item video_3_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <app-video-player [videoUrl]="item.url"></app-video-player>
             </div>
@@ -116,6 +125,7 @@
             <figure
               *ngIf="!item.isVideo"
               class="mb-0 gallery__item gallery_4_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <img
                 [src]="item.url"
@@ -126,6 +136,7 @@
             <div
               *ngIf="item.isVideo"
               class="gallery__item video_4_item--{{ i + 1 }}"
+              data-aos="zoom-in-up"
             >
               <app-video-player [videoUrl]="item.url"></app-video-player>
             </div>
@@ -139,24 +150,26 @@
             [icon]="faRegularHeart"
             size="lg"
             style="color: #ff3232"
+            (click)="likePost(post.id)"
           ></fa-icon>
           <fa-icon
             *ngIf="post.isLiked"
             [icon]="faSolidHeart"
             size="lg"
             style="color: #ff3232"
+            (click)="likePost(post.id)"
           ></fa-icon>
           <span class="ms-2">{{ post.likes }} people like this</span>
         </div>
         <div class="d-flex gap-4">
           <div class="post-comment">
             <fa-icon [icon]="faRegularComments"></fa-icon>
-            <span class="ms-2">{{ post.comments }}</span>
+            <span class="ms-1">{{ post.comments }}</span>
           </div>
           <div class="post-share">
             <!-- <i class="bi bi-share"></i> -->
             <fa-icon [icon]="faRegularShareFromSquare"></fa-icon>
-            <span class="ms-2">{{ post.shares }}</span>
+            <span class="ms-1">{{ post.shares }}</span>
           </div>
         </div>
       </div>

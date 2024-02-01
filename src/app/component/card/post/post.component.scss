@@ -8,11 +8,20 @@
   object-fit: cover;
 }
 
+.post-meta-like {
+  cursor: pointer;
+}
+
+.post-comment,
+.post-share {
+  cursor: pointer;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(1, 5vw);
-  grid-gap: 1rem;
+  grid-gap: 0.4rem;
   margin-bottom: 1rem;
 }
 

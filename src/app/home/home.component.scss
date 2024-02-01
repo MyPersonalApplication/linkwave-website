@@ -38,3 +38,9 @@
 .scroll-top:hover {
   background-color: #333333;
 }
+
+.widget-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
