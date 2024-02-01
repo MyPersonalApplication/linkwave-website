@@ -5,6 +5,7 @@ $border_radius: 10px;
 
 .card {
   border-radius: $border_radius;
+  padding: 0;
 
   .card-img-top {
     cursor: pointer;

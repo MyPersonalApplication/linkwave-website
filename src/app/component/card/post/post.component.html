@@ -143,7 +143,7 @@
           </ng-container>
         </ng-container>
       </div>
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between align-items-center">
         <div class="post-meta-like">
           <fa-icon
             *ngIf="!post.isLiked"
@@ -159,17 +159,17 @@
             style="color: #ff3232"
             (click)="likePost(post.id)"
           ></fa-icon>
-          <span class="ms-2">{{ post.likes }} people like this</span>
+          <span>{{ post.likes }} people like this</span>
         </div>
         <div class="d-flex gap-4">
           <div class="post-comment">
             <fa-icon [icon]="faRegularComments"></fa-icon>
-            <span class="ms-1">{{ post.comments }}</span>
+            <span>{{ post.comments }}</span>
           </div>
           <div class="post-share">
             <!-- <i class="bi bi-share"></i> -->
             <fa-icon [icon]="faRegularShareFromSquare"></fa-icon>
-            <span class="ms-1">{{ post.shares }}</span>
+            <span>{{ post.shares }}</span>
           </div>
         </div>
       </div>

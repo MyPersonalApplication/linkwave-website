@@ -30,101 +30,106 @@
   >
     <mat-tab label="All">
       <div *ngFor="let item of notifications; let index = index">
-        <div class="card mb-1 notification-card">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col-10 d-flex align-items-center">
-                <img
-                  [src]="item.sender.profile.avatarUrl"
-                  class="rounded-circle"
-                  alt="Avatar"
-                  width="50"
-                  height="50"
-                />
-                <div class="ms-2">
-                  <div class="card-text">
-                    {{ item.message }}
-                  </div>
-                  <div class="card-text">
-                    <small class="text-body-secondary">
-                      {{ item.createdAt | date : "medium" }}
-                    </small>
+        <mat-card class="mb-1 notification-card">
+          <mat-card-content>
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-10 d-flex align-items-center">
+                  <img
+                    [src]="item.sender.profile.avatarUrl"
+                    class="rounded-circle"
+                    alt="Avatar"
+                    width="50"
+                    height="50"
+                  />
+                  <div class="ms-2">
+                    <div class="card-text">
+                      {{ item.message }}
+                    </div>
+                    <div class="card-text">
+                      <small class="text-body-secondary">
+                        {{ item.createdAt | date : "medium" }}
+                      </small>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-2 text-end align-center">
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="menuNotificationMoreItem"
-                  class="options-button"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <span class="unread-indicator" *ngIf="!item.isRead"></span>
-                <mat-menu #menuNotificationMoreItem="matMenu">
-                  <button mat-menu-item (click)="changeReadStatus(item.id)">
-                    <mat-icon>check</mat-icon>
-                    <span *ngIf="!item.isRead">Mark as read</span>
-                    <span *ngIf="item.isRead">Mark as unread</span>
+                <div class="col-2 text-end align-center">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menuNotificationMoreItem"
+                    class="options-button"
+                  >
+                    <mat-icon>more_vert</mat-icon>
                   </button>
-                  <button mat-menu-item (click)="removeNotification(item.id)">
-                    <mat-icon>remove</mat-icon>
-                    <span>Remove this notification</span>
-                  </button>
-                </mat-menu>
+                  <span class="unread-indicator" *ngIf="!item.isRead"></span>
+                  <mat-menu #menuNotificationMoreItem="matMenu">
+                    <button mat-menu-item (click)="changeReadStatus(item.id)">
+                      <mat-icon>check</mat-icon>
+                      <span *ngIf="!item.isRead">Mark as read</span>
+                      <span *ngIf="item.isRead">Mark as unread</span>
+                    </button>
+                    <button mat-menu-item (click)="removeNotification(item.id)">
+                      <mat-icon>remove</mat-icon>
+                      <span>Remove this notification</span>
+                    </button>
+                  </mat-menu>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </mat-tab>
     <mat-tab label="Unread">
       <div *ngFor="let item of notifications; let index = index">
-        <div *ngIf="!item.isRead" class="card mb-1 notification-card">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col-10 d-flex align-items-center">
-                <img
-                  [src]="item.sender.profile.avatarUrl"
-                  class="rounded-circle"
-                  alt="Avatar"
-                  width="50"
-                  height="50"
-                />
-                <div class="ms-2">
-                  <div class="card-text">
-                    {{ item.message }}
-                  </div>
-                  <div class="card-text">
-                    <small class="text-body-secondary">{{
-                      item.createdAt | date : "medium"
-                    }}</small>
+        <mat-card *ngIf="!item.isRead" class="mb-1 notification-card">
+          <mat-card-content>
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-10 d-flex align-items-center">
+                  <img
+                    [src]="item.sender.profile.avatarUrl"
+                    class="rounded-circle"
+                    alt="Avatar"
+                    width="50"
+                    height="50"
+                  />
+                  <div class="ms-2">
+                    <div class="card-text">
+                      {{ item.message }}
+                    </div>
+                    <div class="card-text">
+                      <small class="text-body-secondary">{{
+                        item.createdAt | date : "medium"
+                      }}</small>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-2 text-end">
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="menuNotificationMoreItem"
-                  class="options-button"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <span class="unread-indicator"></span>
-                <mat-menu #menuNotificationMoreItem="matMenu">
-                  <button mat-menu-item>
-                    <mat-icon>check</mat-icon>
-                    <span>Mark as read</span>
+                <div class="col-2 text-end">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menuNotificationMoreItem"
+                    class="options-button"
+                  >
+                    <mat-icon>more_vert</mat-icon>
                   </button>
-                  <button mat-menu-item (click)="removeNotification(item.id)">
-                    <mat-icon>remove</mat-icon>
-                    <span>Remove this notification</span>
-                  </button>
-                </mat-menu>
+                  <span class="unread-indicator"></span>
+                  <mat-menu #menuNotificationMoreItem="matMenu">
+                    <button mat-menu-item>
+                      <mat-icon>check</mat-icon>
+                      <span>Mark as read</span>
+                    </button>
+                    <button mat-menu-item (click)="removeNotification(item.id)">
+                      <mat-icon>remove</mat-icon>
+                      <span>Remove this notification</span>
+                    </button>
+                  </mat-menu>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
+        <div></div>
       </div>
     </mat-tab>
   </mat-tab-group>

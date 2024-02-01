@@ -33,6 +33,7 @@ import { CardProfileComponent } from './component/card/profile/profile.component
 import { CardPostComponent } from './component/card/post/post.component';
 import { PostComponent } from './component/dialog/post/post.component';
 import { VideoPlayerComponent } from './component/video-player/video-player.component';
+import { NavProfileComponent } from './component/nav-profile/nav-profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FriendsZoneComponent,
     PostComponent,
     VideoPlayerComponent,
+    NavProfileComponent,
   ],
   imports: [
     BrowserModule,

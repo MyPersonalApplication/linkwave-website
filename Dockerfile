@@ -1,16 +1,33 @@
-# Stage 1: Build Angular App
-FROM node:18.19.0-alpine3.19 AS builder
+# Use an official Node runtime as a base image
+FROM node:20.11.0-alpine as builder
 
+# Set the working directory
 WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the Angular app files to the working directory
 COPY . .
-RUN npm run build
 
-# Stage 2: Serve Application using Nginx Server
-FROM nginx:1.19-alpine
-RUN rm -rf /usr/share/nginx/html/*
+# Build the Angular app
+RUN npm run build --prod
+
+# Use Nginx as a lightweight base image
+FROM nginx:latest
+
+# Copy the Angular build from the builder stage to the nginx directory
 COPY --from=builder /usr/src/app/dist/itlinkwave-website /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
 
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose ports
 EXPOSE 80
+EXPOSE 443
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
