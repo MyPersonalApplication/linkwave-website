@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Build the Angular app
-RUN npm run build --prod
+RUN npm run build
 
 # Use Nginx as a lightweight base image
-FROM nginx:latest
+FROM nginx:stable
 
 # Copy the Angular build from the builder stage to the nginx directory
 COPY --from=builder /usr/src/app/dist/itlinkwave-website /usr/share/nginx/html
@@ -27,7 +27,3 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports
 EXPOSE 80
-EXPOSE 443
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
