@@ -1,0 +1,9 @@
+.nav-about {
+  .nav-item {
+    cursor: pointer;
+
+    &:hover {
+      color: #dc4734 !important;
+    }
+  }
+}

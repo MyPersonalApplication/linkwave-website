@@ -14,6 +14,11 @@ import {
   AuthenticationGuard,
   UnAuthenticationGuard,
 } from './services/active.guard';
+import { TimelineComponent } from './profile/timeline/timeline.component';
+import { AboutComponent } from './profile/about/about.component';
+import { PhotoComponent } from './profile/photo/photo.component';
+import { FriendComponent } from './profile/friend/friend.component';
+import { MoreComponent } from './profile/more/more.component';
 
 const routes: Routes = [
   {
@@ -38,6 +43,34 @@ const routes: Routes = [
         component: ProfileComponent,
         title: 'Profile',
         canActivate: [AuthenticationGuard],
+        children: [
+          { path: '', redirectTo: 'timeline', pathMatch: 'full' },
+          {
+            path: 'timeline',
+            component: TimelineComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'about',
+            component: AboutComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'photos',
+            component: PhotoComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'friends',
+            component: FriendComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'more',
+            component: MoreComponent,
+            canActivate: [AuthenticationGuard],
+          },
+        ],
       },
       {
         path: 'message',

@@ -33,7 +33,12 @@ import { CardProfileComponent } from './component/card/profile/profile.component
 import { CardPostComponent } from './component/card/post/post.component';
 import { PostComponent } from './component/dialog/post/post.component';
 import { VideoPlayerComponent } from './component/video-player/video-player.component';
-import { NavProfileComponent } from './component/nav-profile/nav-profile.component';
+import { TimelineComponent } from './profile/timeline/timeline.component';
+import { AboutComponent } from './profile/about/about.component';
+import { PhotoComponent } from './profile/photo/photo.component';
+import { FriendComponent } from './profile/friend/friend.component';
+import { MoreComponent } from './profile/more/more.component';
+import { SettingComponent } from './profile/setting/setting.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -59,7 +64,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     FriendsZoneComponent,
     PostComponent,
     VideoPlayerComponent,
-    NavProfileComponent,
+    TimelineComponent,
+    AboutComponent,
+    PhotoComponent,
+    FriendComponent,
+    MoreComponent,
+    SettingComponent,
   ],
   imports: [
     BrowserModule,

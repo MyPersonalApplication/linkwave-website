@@ -7,8 +7,31 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
   profileId: string = '';
+  pages = [
+    {
+      text: 'Timeline',
+      url: 'timeline',
+    },
+    {
+      text: 'About',
+      url: 'about',
+    },
+    {
+      text: 'Photos',
+      url: 'photos',
+    },
+    {
+      text: 'Friends',
+      url: 'friends',
+    },
+    {
+      text: 'More',
+      url: 'more',
+    },
+  ];
+
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id')!;

@@ -1,6 +1,5 @@
 section {
-  background-color: #0e0d26;
-  color: #fff !important;
+  background-color: #f1f1f1;
   font-size: 20px !important;
 }
 
@@ -39,7 +38,7 @@ section {
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
-  background: #6ffacb;
+  background: #f44336;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: cover;
@@ -47,7 +46,6 @@ section {
 }
 
 .notfound h2 {
-  color: #fff;
   font-size: 24px;
   font-weight: 700;
   text-transform: uppercase;
@@ -55,7 +53,7 @@ section {
 }
 
 .notfound p {
-  color: #fff;
+  color: #333333;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 20px;
@@ -67,14 +65,14 @@ section {
   font-size: 14px;
   text-decoration: none;
   text-transform: uppercase;
-  background: #0046d5;
+  background: #f44336;
   display: inline-block;
   padding: 15px 30px;
   border-radius: 40px;
   color: #fff;
   font-weight: 700;
-  -webkit-box-shadow: 0px 4px 15px -5px #0046d5;
-  box-shadow: 0px 4px 15px -5px #0046d5;
+  -webkit-box-shadow: 0px 4px 15px -5px #f44336;
+  box-shadow: 0px 4px 15px -5px #f44336;
 }
 
 @media only screen and (max-width: 767px) {

@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-lg-3 order-2 order-md-1">
+    <aside class="widget-area profile-sidebar">
+      <mat-card>
+        <mat-card-content>
+          <h4 class="widget-title">Erik Jhonson</h4>
+          <div class="widget-body">
+            <div class="about-author">
+              <p>
+                I Do not know how? But i believe that it is possible one day if
+                i stay with my dream all time
+              </p>
+              <ul class="author-into-list">
+                <li>
+                  <a href="#">
+                    <fa-icon [icon]="faSolidBriefcase" size="lg"></fa-icon>
+                    <span class="ms-2">Web Developer</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <fa-icon [icon]="faSolidHouse" size="lg"></fa-icon>
+                    <span class="ms-2">Melbourne, Australia</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <fa-icon [icon]="faSolidLocationDot" size="lg"></fa-icon>
+                    <span class="ms-2">Pulshar, Melbourne</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <!-- <fa-icon :icon="['fas', 'heart-pulse']" /> -->
+                    <fa-icon [icon]="faSolidHeartPulse" size="lg"></fa-icon>
+                    <span class="ms-2">Travel, Swimming</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- widget single item start -->
+      <mat-card>
+        <mat-card-content>
+          <h4 class="widget-title">Sweets Memories</h4>
+          <div class="widget-body">
+            <div class="sweet-galley img-gallery">
+              <div class="row row-5">
+                <div *ngFor="let memory of sweetsMemories" class="col-4">
+                  <div class="image">
+                    <img [src]="memory.image" alt="sweet memory" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- widget single item end -->
+    </aside>
+  </div>
+
+  <div class="col-lg-6 order-1 order-lg-2">
+    <mat-card class="mb-4">
+      <mat-card-content>
+        <div class="d-flex align-items-center">
+          <!-- profile picture end -->
+          <div class="profile-thumb">
+            <a href="#">
+              <figure class="profile-thumb-middle">
+                <img
+                  src="assets/images/profile/profile-small-37.jpg"
+                  alt="profile picture"
+                />
+              </figure>
+            </a>
+          </div>
+          <!-- profile picture end -->
+
+          <!-- share content box start -->
+          <div class="ms-2 w-100">
+            <input
+              class="form-control"
+              aria-disabled="true"
+              placeholder="Say Something"
+              (click)="openDialog()"
+            />
+          </div>
+          <!-- share content box end -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <app-card-post [postList]="postList"></app-card-post>
+  </div>
+
+  <div class="col-lg-3 order-3">
+    <aside class="widget-area">
+      <!-- widget single item start -->
+      <app-page-like></app-page-like>
+      <!-- widget single item end -->
+    </aside>
+  </div>
+</div>

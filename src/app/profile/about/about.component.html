@@ -1,0 +1,136 @@
+<div class="row justify-content-end">
+  <div class="col-lg-9">
+    <mat-card class="mb-4">
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-center my-2">
+          <div class="page-title-inner">
+            <h4 class="page-title">about</h4>
+          </div>
+          <nav class="d-flex gap-4 gap-lg-5 nav-about">
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Facebook</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandFacebook"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Github</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandGithub"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Linkedin</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandLinkedin"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Instagram</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandInstagram"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<mat-tab-group color="warn">
+  <mat-tab label="About Me">
+    <mat-card>
+      <mat-card-content>
+        <div
+          class="author-desc-title d-flex justify-content-between align-items-center"
+        >
+          <h6 class="author">
+            <a href="profile.html">Mili Raoulin</a>
+          </h6>
+          <!-- <div class="post-settings-bar">
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="post-settings arrow-shape">
+                  <ul>
+                    <li><button>copy link to adda</button></li>
+                    <li><button>edit post</button></li>
+                    <li><button>embed adda</button></li>
+                  </ul>
+                </div>
+              </div> -->
+          <button mat-icon-button [matMenuTriggerFor]="menuAboutSettings">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menuAboutSettings="matMenu">
+            <button mat-menu-item>
+              <mat-icon>bookmark</mat-icon>
+              <span>Save post</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>cancel_presentation</mat-icon>
+              <span>Hide post</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>disabled_visible</mat-icon>
+              <span>Unfollow pagename</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>report</mat-icon>
+              <span>Report post</span>
+            </button>
+          </mat-menu>
+        </div>
+        <p>
+          Many desktop publishing packages and web page editors now use Lorem
+          Ipsum as their default model text, and a search for 'lorem ipsum' will
+          uncover many web sites still in their infancy. Many desktop publishing
+          packages and web page editors now use Lorem Ipsum as their default
+          model text, and a search for 'lorem ipsum' will uncover many web sites
+          still in their infancy.
+        </p>
+        <p>
+          Many desktop publishing packages and web page editors now use Lorem
+          Ipsum as their default model text, and a search for 'lorem ipsum' will
+          uncover many web sites still in their infancy. Many desktop publishing
+          packages and web page editors now use Lorem Ipsum as their default
+          model text, and a search
+        </p>
+        <p>
+          Many desktop publishing packages and web page editors now use Lorem
+          Ipsum as their default model text, and a search for 'lorem ipsum' will
+          uncover many web sites still in their infancy. Many desktop publishing
+          packages and web page editors now use Lorem Ipsum as their default
+          model text, and a search
+        </p>
+        <p>
+          Many desktop publishing packages and web page editors now use Lorem
+          Ipsum as their default model text, and a search for 'lorem ipsum' will
+          uncover many web sites still in their infancy. Many desktop publishing
+          packages and web page editors now use Lorem Ipsum as their default
+          model text, and a search
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Working Zone"> Content 2 </mat-tab>
+  <mat-tab label="Work & Education"> Content 3 </mat-tab>
+  <mat-tab label="Friends & Family"> Content 4 </mat-tab>
+  <mat-tab label="Contact Details"> Content 5 </mat-tab>
+</mat-tab-group>

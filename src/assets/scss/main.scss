@@ -1956,7 +1956,6 @@ textarea:focus {
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   .profile-picture-box {
     margin-top: 2em;
-    width: 15em;
     -webkit-transform: translateY(calc(-50% - 10px));
     -ms-transform: translateY(calc(-50% - 10px));
     transform: translateY(calc(-50% - 10px));
@@ -1980,11 +1979,38 @@ textarea:focus {
 
 .profile-picture {
   position: relative;
+
+  img {
+    width: 21.5em;
+    height: 21.5em;
+    object-fit: cover;
+  }
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
   .profile-picture {
-    width: 100px;
+    img {
+      width: 18.5em;
+      height: 18.5em;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .profile-picture {
+    img {
+      width: 15em;
+      height: 15em;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .profile-picture {
+    img {
+      width: 100px;
+      height: 100px;
+    }
   }
 }
 

@@ -23,7 +23,7 @@ FROM nginx:stable
 COPY --from=builder /usr/src/app/dist/itlinkwave-website /usr/share/nginx/html
 
 # Copy the custom Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports
 EXPOSE 80
