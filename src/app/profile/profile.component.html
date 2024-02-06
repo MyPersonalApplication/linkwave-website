@@ -2,7 +2,7 @@
   class="profile-banner-large bg-img"
   style="background-image: url('assets/images/banner/profile-banner.jpg')"
 ></div>
-<div class="profile-menu-area bg-white">
+<div class="bg-white mb-3">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-3">
@@ -20,7 +20,12 @@
                 class="main-menu d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center"
               >
                 <li *ngFor="let page of pages">
-                  <a [routerLink]="page.url" class="text-decoration-none">
+                  <a
+                    [routerLink]="page.url"
+                    class="text-decoration-none"
+                    [ngClass]="{ active: page.isActive }"
+                    (click)="onClick(page)"
+                  >
                     {{ page.text }}
                   </a>
                 </li>

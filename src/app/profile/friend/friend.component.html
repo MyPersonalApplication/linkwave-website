@@ -1,1 +1,49 @@
-<p>friend works!</p>
+<div class="row justify-content-end">
+  <div class="col-lg-9">
+    <mat-card>
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-center my-2">
+          <div class="page-title-inner">
+            <h4 class="page-title">Friends (1250)</h4>
+          </div>
+          <nav class="d-flex gap-5 nav-friends">
+            <div class="nav-item">All</div>
+            <div class="nav-item">Recently</div>
+            <div class="nav-item">Relative</div>
+            <div class="nav-item">Collage</div>
+            <div class="nav-item">Request</div>
+          </nav>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="py-3">
+  <mat-card>
+    <mat-card-content class="px-4">
+      <div class="row">
+        <div *ngFor="let friend of friends" class="col-lg-3 col-sm-6 mb-3">
+          <div class="friend-list-view">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+              <a href="#">
+                <figure class="profile-thumb-middle">
+                  <img [src]="friend.avatarUrl" alt="profile picture" />
+                </figure>
+              </a>
+            </div>
+            <!-- profile picture end -->
+
+            <div class="posted-author">
+              <h6 class="author">
+                <a href="profile.html">{{ friend.name }}</a>
+              </h6>
+              <div class="add-frnd">Add Friend</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

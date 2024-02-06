@@ -1,6 +1,6 @@
 <div class="row justify-content-end">
   <div class="col-lg-9">
-    <mat-card class="mb-4">
+    <mat-card class="mb-3">
       <mat-card-content>
         <div class="d-flex justify-content-between align-items-center my-2">
           <div class="page-title-inner">
@@ -17,3 +17,42 @@
     </mat-card>
   </div>
 </div>
+
+<mat-card class="mb-3">
+  <mat-card-content class="px-4">
+    <div class="row">
+      <div class="col-md-6 col-lg-4 my-3">
+        <div class="photo-group active">
+          <div class="gallery-overlay">
+            <img src="assets/avatar/my-avatar-4.jpg" alt="Photo Gallery" />
+            <div class="view-icon"></div>
+          </div>
+          <div class="photo-gallery-caption">
+            <h3 class="photos-caption">create folder</h3>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let photo of photos" class="col-md-6 col-lg-4 my-3">
+        <div class="photo-group">
+          <div class="d-none product-thumb-large-view">
+            <img
+              *ngFor="let gallery of photo.galleries"
+              [src]="gallery"
+              alt="Photo Gallery"
+            />
+          </div>
+          <div class="gallery-overlay">
+            <img [src]="photo.galleries[0]" alt="Photo Gallery" />
+            <div class="view-icon"></div>
+          </div>
+          <div class="photo-gallery-caption">
+            <h3 class="photos-caption">
+              {{ photo.caption }}
+              ({{ photo.number }})
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

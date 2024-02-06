@@ -1,7 +1,7 @@
 <div class="main d-md-flex justify-content-center align-items-center">
   <section class="signup">
     <div class="container-register">
-      <div class="signup-content">
+      <div class="signup-content gap-5 gap-md-0">
         <div class="signup-form">
           <h2 class="form-title">Sign up</h2>
           <form
@@ -11,7 +11,7 @@
             (ngSubmit)="submit()"
           >
             <div class="row mb-3">
-              <div class="col-12 col-md-6 mb-3 mb-md-0">
+              <div class="col-12 col-lg-6 mb-3 mb-lg-0 pe-lg-2">
                 <div class="form-floating">
                   <input
                     type="first-name"
@@ -33,7 +33,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-lg-6 ps-lg-2">
                 <div class="form-floating">
                   <input
                     type="last-name"
@@ -164,7 +164,7 @@
                 color="warn"
                 class="form-submit"
               >
-                Register
+                Sign up
               </button>
               <button
                 *ngIf="isLoading"
@@ -180,8 +180,8 @@
             </div>
           </form>
         </div>
-        <div class="signup-image">
-          <figure>
+        <div class="signup-image mb-3">
+          <figure class="text-center">
             <img src="assets/images/signup-image.jpg" alt="sign up image" />
           </figure>
           <a

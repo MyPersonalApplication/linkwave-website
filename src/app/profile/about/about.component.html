@@ -1,10 +1,10 @@
 <div class="row justify-content-end">
   <div class="col-lg-9">
-    <mat-card class="mb-4">
+    <mat-card class="mb-3">
       <mat-card-content>
         <div class="d-flex justify-content-between align-items-center my-2">
           <div class="page-title-inner">
-            <h4 class="page-title">about</h4>
+            <h4 class="page-title">About</h4>
           </div>
           <nav class="d-flex gap-4 gap-lg-5 nav-about">
             <div class="nav-item">
@@ -53,9 +53,10 @@
     </mat-card>
   </div>
 </div>
+
 <mat-tab-group color="warn">
   <mat-tab label="About Me">
-    <mat-card>
+    <mat-card class="mb-3">
       <mat-card-content>
         <div
           class="author-desc-title d-flex justify-content-between align-items-center"
@@ -63,18 +64,7 @@
           <h6 class="author">
             <a href="profile.html">Mili Raoulin</a>
           </h6>
-          <!-- <div class="post-settings-bar">
-                <span></span>
-                <span></span>
-                <span></span>
-                <div class="post-settings arrow-shape">
-                  <ul>
-                    <li><button>copy link to adda</button></li>
-                    <li><button>edit post</button></li>
-                    <li><button>embed adda</button></li>
-                  </ul>
-                </div>
-              </div> -->
+
           <button mat-icon-button [matMenuTriggerFor]="menuAboutSettings">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -129,8 +119,24 @@
       </mat-card-content>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Working Zone"> Content 2 </mat-tab>
-  <mat-tab label="Work & Education"> Content 3 </mat-tab>
-  <mat-tab label="Friends & Family"> Content 4 </mat-tab>
-  <mat-tab label="Contact Details"> Content 5 </mat-tab>
+  <mat-tab label="Working Zone">
+    <mat-card class="mb-3">
+      <mat-card-content> Content 2 </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Work & Education">
+    <mat-card class="mb-3">
+      <mat-card-content> Content 2 </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Friends & Family">
+    <mat-card class="mb-3">
+      <mat-card-content> Content 2 </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Contact Details">
+    <mat-card class="mb-3">
+      <mat-card-content> Content 2 </mat-card-content>
+    </mat-card>
+  </mat-tab>
 </mat-tab-group>

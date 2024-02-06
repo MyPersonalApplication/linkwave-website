@@ -1,1 +1,111 @@
-<p>more works!</p>
+<div class="row justify-content-end">
+  <div class="col-lg-9">
+    <mat-card>
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-center my-2">
+          <div class="page-title-inner">
+            <h4 class="page-title">About</h4>
+          </div>
+          <nav class="d-flex gap-4 gap-lg-5 nav-about">
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Facebook</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandFacebook"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Github</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandGithub"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Linkedin</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandLinkedin"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="#" class="text-reset">
+                <span class="d-none d-lg-block">Instagram</span>
+                <fa-icon
+                  class="d-block d-lg-none"
+                  [icon]="faBrandInstagram"
+                  size="lg"
+                ></fa-icon>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="py-3">
+  <mat-card class="mb-3">
+    <mat-card-content>
+      <h5 class="content-title">Favorite Books</h5>
+      <div class="content-body">
+        <div class="row favorite-item-carousel">
+          <div
+            *ngFor="let book of favoriteBooks"
+            class="col-12 col-sm-6 col-md-4 col-lg-2 mb-5"
+          >
+            <figure class="favorite-item">
+              <a [href]="book.url">
+                <img [src]="book.image" alt="" />
+              </a>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="load-more text-center">
+              <div class="load-more-btn">Load more</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <h5 class="content-title">favorite sports</h5>
+      <div class="content-body">
+        <div class="row favorite-item-carousel">
+          <div
+            *ngFor="let sport of favoriteSports"
+            class="col-12 col-sm-6 col-md-4 col-lg-2 mb-5"
+          >
+            <figure class="favorite-item">
+              <a [href]="sport.url">
+                <img [src]="sport.image" alt="" />
+              </a>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="load-more text-center">
+              <div class="load-more-btn">load more</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

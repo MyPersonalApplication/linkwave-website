@@ -1,0 +1,9 @@
+.nav-friends {
+  .nav-item {
+    cursor: pointer;
+
+    &:hover {
+      color: #dc4734 !important;
+    }
+  }
+}

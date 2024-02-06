@@ -1945,12 +1945,19 @@ textarea:focus {
 }
 
 .profile-picture-box {
+  margin-top: -20px;
   position: absolute;
   -webkit-transform: translateY(calc(-50% - 10px));
   -ms-transform: translateY(calc(-50% - 10px));
   transform: translateY(calc(-50% - 10px));
   background-color: #fff;
   z-index: 1;
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+  .profile-picture-box {
+    margin-top: 0;
+  }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2032,7 +2039,7 @@ textarea:focus {
 }
 
 .profile-sidebar {
-  margin-top: 105px;
+  margin-top: 95px;
 }
 
 .author-into-list {
@@ -2729,7 +2736,6 @@ textarea:focus {
 }
 
 .photo-group {
-  margin-top: 30px;
   cursor: pointer;
 }
 
@@ -2759,6 +2765,12 @@ textarea:focus {
 
 .gallery-overlay {
   position: relative;
+
+  img {
+    height: 244px;
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 .gallery-overlay:before {
@@ -2865,6 +2877,7 @@ textarea:focus {
   line-height: 1;
   color: #333333;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 .load-more-btn:hover {
@@ -2935,6 +2948,7 @@ textarea:focus {
   line-height: 1.8;
   color: #666666;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {

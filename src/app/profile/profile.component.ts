@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+interface Page {
+  text: string;
+  url: string;
+  isActive: boolean;
+}
 
 @Component({
   selector: 'app-profile',
@@ -7,35 +13,39 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  profileId: string = '';
-  pages = [
-    {
-      text: 'Timeline',
-      url: 'timeline',
-    },
-    {
-      text: 'About',
-      url: 'about',
-    },
-    {
-      text: 'Photos',
-      url: 'photos',
-    },
-    {
-      text: 'Friends',
-      url: 'friends',
-    },
-    {
-      text: 'More',
-      url: 'more',
-    },
+  private profileId: string = '';
+
+  pages: Page[] = [
+    { text: 'Timeline', url: 'timeline', isActive: true },
+    { text: 'About', url: 'about', isActive: false },
+    { text: 'Photos', url: 'photos', isActive: false },
+    { text: 'Friends', url: 'friends', isActive: false },
+    { text: 'More', url: 'more', isActive: false },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id')!;
+  ngOnInit(): void {
+    this.setProfileId();
+    this.setActivePage();
+  }
+
+  setProfileId(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('id')!;
     this.profileId = id;
-    console.log(id);
+  }
+
+  setActivePage(): void {
+    const page = this.activatedRoute.firstChild?.snapshot.url[0].path;
+    this.pages.forEach((p) => (p.isActive = false));
+    const selectedPage = this.pages.find((p) => p.url === page);
+    if (selectedPage) {
+      selectedPage.isActive = true;
+    }
+  }
+
+  onClick(page: Page): void {
+    this.pages.forEach((p) => (p.isActive = false));
+    page.isActive = true;
   }
 }
