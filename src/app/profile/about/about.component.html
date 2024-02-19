@@ -62,12 +62,13 @@
           class="author-desc-title d-flex justify-content-between align-items-center"
         >
           <h6 class="author">
-            <a href="profile.html">Mili Raoulin</a>
+            <a> {{ profileData?.firstName }} {{ profileData?.lastName }} </a>
           </h6>
 
           <button mat-icon-button [matMenuTriggerFor]="menuAboutSettings">
             <mat-icon>more_vert</mat-icon>
           </button>
+
           <mat-menu #menuAboutSettings="matMenu">
             <button mat-menu-item>
               <mat-icon>bookmark</mat-icon>
@@ -87,35 +88,65 @@
             </button>
           </mat-menu>
         </div>
-        <p>
-          Many desktop publishing packages and web page editors now use Lorem
-          Ipsum as their default model text, and a search for 'lorem ipsum' will
-          uncover many web sites still in their infancy. Many desktop publishing
-          packages and web page editors now use Lorem Ipsum as their default
-          model text, and a search for 'lorem ipsum' will uncover many web sites
-          still in their infancy.
-        </p>
-        <p>
-          Many desktop publishing packages and web page editors now use Lorem
-          Ipsum as their default model text, and a search for 'lorem ipsum' will
-          uncover many web sites still in their infancy. Many desktop publishing
-          packages and web page editors now use Lorem Ipsum as their default
-          model text, and a search
-        </p>
-        <p>
-          Many desktop publishing packages and web page editors now use Lorem
-          Ipsum as their default model text, and a search for 'lorem ipsum' will
-          uncover many web sites still in their infancy. Many desktop publishing
-          packages and web page editors now use Lorem Ipsum as their default
-          model text, and a search
-        </p>
-        <p>
-          Many desktop publishing packages and web page editors now use Lorem
-          Ipsum as their default model text, and a search for 'lorem ipsum' will
-          uncover many web sites still in their infancy. Many desktop publishing
-          packages and web page editors now use Lorem Ipsum as their default
-          model text, and a search
-        </p>
+
+        <div>
+          <h5 class="card-title mb-4">About</h5>
+          <p class="small fst-italic mb-4">
+            <ngx-skeleton-loader
+              *ngIf="!contentLoaded"
+              count="1"
+              appearance="line"
+            />
+            {{ profileData?.profile?.aboutMe }}
+          </p>
+
+          <h5 class="card-title mb-3">Profile Details</h5>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">First Name</div>
+            <div class="col-lg-9 col-md-8">{{ profileData?.firstName }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Last Name</div>
+            <div class="col-lg-9 col-md-8">{{ profileData?.lastName }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Female</div>
+            <div class="col-lg-9 col-md-8">
+              {{ profileData?.profile?.gender ? "Male" : "Female" }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Birthday</div>
+            <div class="col-lg-9 col-md-8">
+              {{ profileData?.profile?.dateOfBirth | date : "longDate" }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Address</div>
+            <div class="col-lg-9 col-md-8">
+              {{ profileData?.profile?.address }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Phone</div>
+            <div class="col-lg-9 col-md-8">
+              {{ profileData?.profile?.phoneNumber }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Email</div>
+            <div class="col-lg-9 col-md-8">
+              {{ profileData?.email }}
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </mat-tab>

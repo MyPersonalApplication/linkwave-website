@@ -17,9 +17,8 @@ export class HomeComponent {
 
   userProfile: Profile[] = [
     {
-      id: '1',
       gender: true,
-      dob: new Date(),
+      dateOfBirth: new Date(),
       country: 'Vietnam',
       address: 'Can Tho',
       aboutMe: 'I am a developer',
@@ -29,9 +28,8 @@ export class HomeComponent {
       coverUrl: 'https://picsum.photos/seed/picsum/200/300',
     },
     {
-      id: '2',
       gender: true,
-      dob: new Date(),
+      dateOfBirth: new Date(),
       country: 'Vietnam',
       address: 'Can Tho',
       aboutMe: 'I am a developer',
@@ -41,9 +39,8 @@ export class HomeComponent {
       coverUrl: 'https://picsum.photos/seed/picsum/200/300',
     },
     {
-      id: '3',
       gender: true,
-      dob: new Date(),
+      dateOfBirth: new Date(),
       country: 'Vietnam',
       address: 'Can Tho',
       aboutMe: 'I am a developer',

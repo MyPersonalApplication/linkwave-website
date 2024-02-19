@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SwalService } from 'src/app/services/swal.service';
 
@@ -10,8 +11,13 @@ import { SwalService } from 'src/app/services/swal.service';
 export class FullComponent {
   constructor(
     private swalService: SwalService,
-    private authService: AuthService
+    private authService: AuthService,
+    public router: Router
   ) {}
+
+  renderToProfile() {
+    this.router.navigate(['/profile']);
+  }
 
   handleLogout() {
     this.swalService.confirmToHandle(

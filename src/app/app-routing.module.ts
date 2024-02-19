@@ -39,6 +39,39 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
       },
       {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthenticationGuard],
+        children: [
+          { path: '', redirectTo: 'timeline', pathMatch: 'full' },
+          {
+            path: 'timeline',
+            component: TimelineComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'about',
+            component: AboutComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'photos',
+            component: PhotoComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'friends',
+            component: FriendComponent,
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'more',
+            component: MoreComponent,
+            canActivate: [AuthenticationGuard],
+          },
+        ],
+      },
+      {
         path: 'profile/:id',
         component: ProfileComponent,
         title: 'Profile',

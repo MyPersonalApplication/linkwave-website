@@ -10,9 +10,8 @@ import { ToastService } from '../services/toast.service';
 })
 export class NotificationComponent {
   userProfile: Profile = {
-    id: '1',
     gender: true,
-    dob: new Date(),
+    dateOfBirth: new Date(),
     country: 'Vietnam',
     address: 'Can Tho',
     aboutMe: 'I am a developer',

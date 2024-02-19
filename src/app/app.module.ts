@@ -39,6 +39,7 @@ import { PhotoComponent } from './profile/photo/photo.component';
 import { FriendComponent } from './profile/friend/friend.component';
 import { MoreComponent } from './profile/more/more.component';
 import { SettingComponent } from './profile/setting/setting.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -88,6 +89,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    NgxSkeletonLoaderModule,
   ],
   providers: [
     {

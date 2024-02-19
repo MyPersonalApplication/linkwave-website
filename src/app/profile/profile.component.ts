@@ -13,8 +13,6 @@ interface Page {
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  private profileId: string = '';
-
   pages: Page[] = [
     { text: 'Timeline', url: 'timeline', isActive: true },
     { text: 'About', url: 'about', isActive: false },
@@ -26,13 +24,7 @@ export class ProfileComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.setProfileId();
     this.setActivePage();
-  }
-
-  setProfileId(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id')!;
-    this.profileId = id;
   }
 
   setActivePage(): void {

@@ -9,9 +9,8 @@ export interface UserInfo {
 }
 
 export interface Profile {
-  id: string;
   gender: boolean;
-  dob: Date;
+  dateOfBirth: Date;
   country: string;
   address: string;
   aboutMe: string;
@@ -32,7 +31,13 @@ export interface Experience {
   companyOrSchoolName: string;
   positionOrDegree: string;
   description: string;
-  location: string;
   startDate: Date;
   endDate: Date;
+  location: string;
+  experienceType: ExperienceType;
+}
+
+export enum ExperienceType {
+  WORK = 'WORK',
+  EDUCATION = 'EDUCATION',
 }

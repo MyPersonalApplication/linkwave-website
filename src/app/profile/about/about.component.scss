@@ -35,3 +35,21 @@
     flex: 1 1 auto;
   }
 }
+
+.social-links a {
+  font-size: 20px;
+  display: inline-block;
+  color: rgba(1, 41, 112, 0.5);
+  line-height: 0;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-weight: 600;
+  color: rgba(1, 41, 112, 0.6);
+}
