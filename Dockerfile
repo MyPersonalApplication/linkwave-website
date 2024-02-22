@@ -1,5 +1,5 @@
 # Use an official Node runtime as a base image
-FROM node:20.11.0-alpine as builder
+FROM node:18.17-alpine as builder
 
 # Set the working directory
 WORKDIR /usr/src/app
