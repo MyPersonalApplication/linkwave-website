@@ -47,8 +47,8 @@ export class AboutComponent implements OnInit {
   loadProfileData(userId: string | null) {
     if (userId) {
       this.userService.getProfile(userId).subscribe({
-        next: (response) => {
-          this.profileData = response as UserInfo;
+        next: (response: UserInfo) => {
+          this.profileData = response;
           this.workExperiences =
             this.profileData?.experiences?.filter(
               (exp) => exp.experienceType === ExperienceType.WORK
@@ -69,17 +69,17 @@ export class AboutComponent implements OnInit {
       });
     } else {
       this.userService.getCurrentProfile().subscribe({
-        next: (response) => {
-          this.profileData = response as UserInfo;
+        next: (response: UserInfo) => {
+          this.profileData = response;
           this.workExperiences =
             this.profileData?.experiences?.filter(
               (exp) => exp.experienceType === ExperienceType.WORK
             ) || [];
-          this.contentLoaded = true;
           this.educationExperiences =
             this.profileData?.experiences?.filter(
               (exp) => exp.experienceType === ExperienceType.EDUCATION
             ) || [];
+          this.contentLoaded = true;
         },
         error: (response) => {
           this.showToast.showErrorMessage(

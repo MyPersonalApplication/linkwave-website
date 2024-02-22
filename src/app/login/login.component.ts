@@ -62,7 +62,6 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         error: (response) => {
-          console.log(response);
           this.isLoading = false;
 
           switch (response.status) {

@@ -117,7 +117,6 @@ export class RegisterComponent {
         this.router.navigate(['/login']);
       },
       error: (error) => {
-        console.log(error);
         this.isLoading = false;
         this.showToast.showErrorMessage(
           'Error',
