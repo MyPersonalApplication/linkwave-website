@@ -34,6 +34,10 @@
   .mat-mdc-tab-body-wrapper {
     flex: 1 1 auto;
   }
+
+  .mat-mdc-standard-chip .mdc-evolution-chip__text-label {
+    font-family: "Poppins", sans-serif !important;
+  }
 }
 
 .social-links a {
@@ -45,11 +49,27 @@
   transition: 0.3s;
 }
 
-.row {
+.info {
   margin-bottom: 1rem;
 }
 
 .label {
   font-weight: 600;
   color: rgba(1, 41, 112, 0.6);
+}
+
+.experience-desc-title {
+  padding-bottom: 16px;
+
+  .author {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.experience-content {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }

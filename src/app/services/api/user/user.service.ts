@@ -15,4 +15,8 @@ export class UserService {
   getProfile(userId: string) {
     return this.http.get<UserInfo>(`/api/user/profile/${userId}`);
   }
+
+  updateProfile(data: UserInfo) {
+    return this.http.put<UserInfo>(`/api/user/profile/${data.id}`, data);
+  }
 }

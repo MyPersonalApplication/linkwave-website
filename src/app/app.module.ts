@@ -40,6 +40,7 @@ import { FriendComponent } from './profile/friend/friend.component';
 import { MoreComponent } from './profile/more/more.component';
 import { SettingComponent } from './profile/setting/setting.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { AboutMeComponent } from './component/dialog/about-me/about-me.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -71,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FriendComponent,
     MoreComponent,
     SettingComponent,
+    AboutMeComponent,
   ],
   imports: [
     BrowserModule,

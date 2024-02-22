@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {
   faFacebook as faBrandFacebook,
@@ -6,7 +7,8 @@ import {
   faLinkedin as faBrandLinkedin,
   faInstagramSquare as faBrandInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { UserInfo } from 'src/app/models/profile';
+import { AboutMeComponent } from 'src/app/component/dialog/about-me/about-me.component';
+import { Experience, ExperienceType, UserInfo } from 'src/app/models/profile';
 import { UserService } from 'src/app/services/api/user/user.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -22,13 +24,17 @@ export class AboutComponent implements OnInit {
   faBrandInstagram = faBrandInstagram;
 
   private userId: string = '';
+  ExperienceType = ExperienceType;
   contentLoaded = false;
   profileData: UserInfo | undefined;
+  workExperiences: Experience[] = [];
+  educationExperiences: Experience[] = [];
 
   constructor(
     private showToast: ToastService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +49,14 @@ export class AboutComponent implements OnInit {
       this.userService.getProfile(userId).subscribe({
         next: (response) => {
           this.profileData = response as UserInfo;
+          this.workExperiences =
+            this.profileData?.experiences?.filter(
+              (exp) => exp.experienceType === ExperienceType.WORK
+            ) || [];
+          this.educationExperiences =
+            this.profileData?.experiences?.filter(
+              (exp) => exp.experienceType === ExperienceType.EDUCATION
+            ) || [];
           this.contentLoaded = true;
         },
         error: (response) => {
@@ -57,7 +71,15 @@ export class AboutComponent implements OnInit {
       this.userService.getCurrentProfile().subscribe({
         next: (response) => {
           this.profileData = response as UserInfo;
+          this.workExperiences =
+            this.profileData?.experiences?.filter(
+              (exp) => exp.experienceType === ExperienceType.WORK
+            ) || [];
           this.contentLoaded = true;
+          this.educationExperiences =
+            this.profileData?.experiences?.filter(
+              (exp) => exp.experienceType === ExperienceType.EDUCATION
+            ) || [];
         },
         error: (response) => {
           this.showToast.showErrorMessage(
@@ -68,5 +90,32 @@ export class AboutComponent implements OnInit {
         },
       });
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AboutMeComponent, {
+      data: this.profileData,
+    });
+
+    dialogRef.afterClosed().subscribe((result: UserInfo) => {
+      if (result) {
+        this.userService.updateProfile(result).subscribe({
+          next: (response: any) => {
+            this.loadProfileData(this.userId);
+            this.showToast.showSuccessMessasge(
+              'Success',
+              response.message || 'Update successfully'
+            );
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
+    });
   }
 }
