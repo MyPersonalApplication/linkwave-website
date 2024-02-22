@@ -65,28 +65,9 @@
             <a> {{ profileData?.firstName }} {{ profileData?.lastName }} </a>
           </h6>
 
-          <button mat-icon-button [matMenuTriggerFor]="menuAboutSettings">
-            <mat-icon>more_vert</mat-icon>
+          <button mat-icon-button (click)="openDialog()">
+            <mat-icon>edit</mat-icon>
           </button>
-
-          <mat-menu #menuAboutSettings="matMenu">
-            <button mat-menu-item>
-              <mat-icon>bookmark</mat-icon>
-              <span>Save post</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>cancel_presentation</mat-icon>
-              <span>Hide post</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>disabled_visible</mat-icon>
-              <span>Unfollow pagename</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>report</mat-icon>
-              <span>Report post</span>
-            </button>
-          </mat-menu>
         </div>
 
         <div>
@@ -94,7 +75,7 @@
           <p class="small fst-italic mb-4">
             <ngx-skeleton-loader
               *ngIf="!contentLoaded"
-              count="1"
+              count="2"
               appearance="line"
             />
             {{ profileData?.profile?.aboutMe }}
@@ -102,72 +83,207 @@
 
           <h5 class="card-title mb-3">Profile Details</h5>
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">First Name</div>
-            <div class="col-lg-9 col-md-8">{{ profileData?.firstName }}</div>
-          </div>
+          <ngx-skeleton-loader
+            *ngIf="!contentLoaded"
+            count="9"
+            appearance="line"
+          />
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Last Name</div>
-            <div class="col-lg-9 col-md-8">{{ profileData?.lastName }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Female</div>
-            <div class="col-lg-9 col-md-8">
-              {{ profileData?.profile?.gender ? "Male" : "Female" }}
+          <div *ngIf="contentLoaded">
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">First Name</div>
+              <div class="col-lg-9 col-md-8">{{ profileData?.firstName }}</div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Birthday</div>
-            <div class="col-lg-9 col-md-8">
-              {{ profileData?.profile?.dateOfBirth | date : "longDate" }}
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Last Name</div>
+              <div class="col-lg-9 col-md-8">{{ profileData?.lastName }}</div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Address</div>
-            <div class="col-lg-9 col-md-8">
-              {{ profileData?.profile?.address }}
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Female</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.profile?.gender ? "Male" : "Female" }}
+              </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Phone</div>
-            <div class="col-lg-9 col-md-8">
-              {{ profileData?.profile?.phoneNumber }}
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Birthday</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.profile?.dateOfBirth | date : "longDate" }}
+              </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label">Email</div>
-            <div class="col-lg-9 col-md-8">
-              {{ profileData?.email }}
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Address</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.profile?.address }}
+              </div>
+            </div>
+
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Country</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.profile?.country }}
+              </div>
+            </div>
+
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Phone</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.profile?.phoneNumber }}
+              </div>
+            </div>
+
+            <div class="row info">
+              <div class="col-lg-3 col-md-4 label">Email</div>
+              <div class="col-lg-9 col-md-8">
+                {{ profileData?.email }}
+              </div>
+            </div>
+
+            <div class="row info align-items-center">
+              <div class="col-lg-3 col-md-4 label">Hobbies</div>
+              <div class="col-lg-9 col-md-8">
+                <mat-chip-set cdkDropList cdkDropListOrientation="horizontal">
+                  <mat-chip *ngFor="let hobby of profileData?.profile?.hobbies">
+                    {{ hobby }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
             </div>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Working Zone">
-    <mat-card class="mb-3">
-      <mat-card-content> Content 2 </mat-card-content>
-    </mat-card>
-  </mat-tab>
+
   <mat-tab label="Work & Education">
     <mat-card class="mb-3">
-      <mat-card-content> Content 2 </mat-card-content>
+      <mat-card-content>
+        <div
+          class="experience-desc-title d-flex justify-content-between align-items-center"
+        >
+          <h6 class="author">Work</h6>
+
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div *ngFor="let experience of workExperiences">
+          <div class="row align-items-center gx-5">
+            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+              <div class="bg-light p-4 rounded-4">
+                <div class="text-danger fw-bolder mb-2">
+                  {{ experience.startDate | date : "MM/yyyy" }} -
+                  {{
+                    experience.endDate
+                      ? (experience.endDate | date : "MM/yyyy")
+                      : "Current"
+                  }}
+                </div>
+                <div class="small fw-bolder">
+                  {{ experience.companyOrSchoolName }}
+                </div>
+                <div class="small text-muted">
+                  {{ experience.positionOrDegree }}
+                </div>
+                <div class="small text-muted">
+                  {{ experience.location }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="experience-content">
+                {{ experience.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider class="my-4"></mat-divider>
+
+        <div
+          class="experience-desc-title d-flex justify-content-between align-items-center"
+        >
+          <h6 class="author">Education</h6>
+
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div *ngFor="let experience of educationExperiences">
+          <div class="row align-items-center gx-5">
+            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+              <div class="bg-light p-4 rounded-4">
+                <div class="text-danger fw-bolder mb-2">
+                  {{ experience.startDate | date : "MM/yyyy" }} -
+                  {{
+                    experience.endDate
+                      ? (experience.endDate | date : "MM/yyyy")
+                      : "Current"
+                  }}
+                </div>
+                <div class="small fw-bolder">
+                  {{ experience.companyOrSchoolName }}
+                </div>
+                <div class="small text-muted">
+                  {{ experience.positionOrDegree }}
+                </div>
+                <div class="small text-muted">
+                  {{ experience.location }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="experience-content">
+                {{ experience.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Friends & Family">
+  <mat-tab label="Skills">
+    <mat-card class="mb-3">
+      <mat-card-content>
+        <div
+          class="experience-desc-title d-flex justify-content-between align-items-center mb-3"
+        >
+          <h6 class="author">Skills</h6>
+
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div *ngFor="let item of profileData?.skills; let index = index">
+          <div class="row align-items-center">
+            <div class="col-10 d-flex align-items-center">
+              <div>
+                <h6 class="mb-1">{{ item.skillName }}</h6>
+                <p *ngIf="item.certificationName">
+                  {{ item.certificationName }}
+                </p>
+              </div>
+            </div>
+            <div class="col-2 text-end align-center">
+              <button mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+          <mat-divider
+            *ngIf="index !== profileData?.skills?.length! - 1"
+            class="my-3"
+          ></mat-divider>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <!-- <mat-tab label="Contact Details">
     <mat-card class="mb-3">
       <mat-card-content> Content 2 </mat-card-content>
     </mat-card>
-  </mat-tab>
-  <mat-tab label="Contact Details">
-    <mat-card class="mb-3">
-      <mat-card-content> Content 2 </mat-card-content>
-    </mat-card>
-  </mat-tab>
+  </mat-tab> -->
 </mat-tab-group>
