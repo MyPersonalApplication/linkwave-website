@@ -1,0 +1,54 @@
+<form (ngSubmit)="onSaveCover()" novalidate enctype="multipart/form-data">
+  <h2 mat-dialog-title class="fw-bold">Change your Avatar</h2>
+  <mat-dialog-content>
+    <div class="w-800 pt-2">
+      <div class="mb-3">
+        <img
+          [src]="
+            cropImageReview
+              ? cropImageReview
+              : 'assets/images/banner/profile-banner.jpg'
+          "
+          class="img-fluid profile"
+          alt="Profile"
+        />
+        <div class="input-group my-2">
+          <image-cropper
+            class="mb-3 p-0"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="5 / 1"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+          ></image-cropper>
+          <input
+            type="file"
+            class="form-control form-control-lg"
+            id="avatar"
+            aria-describedby="uploadAvatar"
+            aria-label="Upload"
+            (change)="onSelectFile($event)"
+          />
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            id="uploadAvatar"
+            (click)="deleteCover()"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button cdkFocusInitial type="submit" color="warn">
+      Save Changes
+    </button>
+  </mat-dialog-actions>
+</form>

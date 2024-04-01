@@ -32,45 +32,6 @@ export class SwalService {
     });
   }
 
-  leavePageConfirmation() {
-    return Swal.fire({
-      title: 'Leave site?',
-      text: 'Changes that you made may not be saved.',
-      showDenyButton: true,
-      confirmButtonText: 'Never mind',
-      denyButtonText: 'Stay',
-      denyButtonColor: 'gray',
-      icon: 'question',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        return true;
-      }
-      return false;
-    });
-  }
-
-  leavePageConfirmationWithSave(callback: () => void) {
-    return Swal.fire({
-      title: 'Leave site?',
-      text: 'Do you want to save and leave the form?',
-      showDenyButton: true,
-      confirmButtonText: 'Save and leave',
-      confirmButtonColor: '#3f51b5',
-      denyButtonText: 'Leave without saving',
-      denyButtonColor: 'gray',
-      icon: 'question',
-      showCloseButton: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        callback();
-      }
-      if (result.isDismissed) {
-        return false;
-      }
-      return true;
-    });
-  }
-
   async confirmToHandle(
     title: string,
     icon: SweetAlertIcon,

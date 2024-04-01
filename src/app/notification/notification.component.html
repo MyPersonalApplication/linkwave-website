@@ -36,7 +36,7 @@
               <div class="row align-items-center">
                 <div class="col-10 d-flex align-items-center">
                   <img
-                    [src]="item.sender.profile.avatarUrl"
+                    src="assets/avatar/default-avartar.jpg"
                     class="rounded-circle"
                     alt="Avatar"
                     width="50"
@@ -88,7 +88,7 @@
               <div class="row align-items-center">
                 <div class="col-10 d-flex align-items-center">
                   <img
-                    [src]="item.sender.profile.avatarUrl"
+                    src="assets/avatar/default-avartar.jpg"
                     class="rounded-circle"
                     alt="Avatar"
                     width="50"
@@ -99,9 +99,9 @@
                       {{ item.message }}
                     </div>
                     <div class="card-text">
-                      <small class="text-body-secondary">{{
-                        item.createdAt | date : "medium"
-                      }}</small>
+                      <small class="text-body-secondary">
+                        {{ item.createdAt | date : "medium" }}
+                      </small>
                     </div>
                   </div>
                 </div>

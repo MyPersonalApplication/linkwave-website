@@ -64,6 +64,16 @@ export class ApiInterceptor implements HttpInterceptor {
   ): HttpRequest<unknown> {
     //do not add header for api in noAuthList
     if (noAuthList.includes(req.url) || !token) return req;
+
+    // Do not set 'Content-Type' header for FormData requests
+    if (req.body instanceof FormData) {
+      return req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+
     return req.clone({
       setHeaders: {
         'Content-Type': 'application/json',

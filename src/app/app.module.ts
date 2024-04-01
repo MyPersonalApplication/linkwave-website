@@ -41,6 +41,10 @@ import { MoreComponent } from './profile/more/more.component';
 import { SettingComponent } from './profile/setting/setting.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AboutMeComponent } from './component/dialog/about-me/about-me.component';
+import { TextareaAutoresizeDirective } from './directive/textarea-autoresize.directive';
+import { AvatarComponent } from './component/dialog/avatar/avatar.component';
+import { CoverComponent } from './component/dialog/cover/cover.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -73,6 +77,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MoreComponent,
     SettingComponent,
     AboutMeComponent,
+    TextareaAutoresizeDirective,
+    AvatarComponent,
+    CoverComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
     NgxSkeletonLoaderModule,
+    ImageCropperModule,
   ],
   providers: [
     {

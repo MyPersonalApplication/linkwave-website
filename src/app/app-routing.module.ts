@@ -47,26 +47,31 @@ const routes: Routes = [
           {
             path: 'timeline',
             component: TimelineComponent,
+            title: 'Timeline',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'about',
             component: AboutComponent,
+            title: 'About',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'photos',
             component: PhotoComponent,
+            title: 'Photos',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'friends',
             component: FriendComponent,
+            title: 'Friends',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'more',
             component: MoreComponent,
+            title: 'More',
             canActivate: [AuthenticationGuard],
           },
         ],
@@ -81,26 +86,31 @@ const routes: Routes = [
           {
             path: 'timeline',
             component: TimelineComponent,
+            title: 'Timeline',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'about',
             component: AboutComponent,
+            title: 'About',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'photos',
             component: PhotoComponent,
+            title: 'Photos',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'friends',
             component: FriendComponent,
+            title: 'Friends',
             canActivate: [AuthenticationGuard],
           },
           {
             path: 'more',
             component: MoreComponent,
+            title: 'More',
             canActivate: [AuthenticationGuard],
           },
         ],

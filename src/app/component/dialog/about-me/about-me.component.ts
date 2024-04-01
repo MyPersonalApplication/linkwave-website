@@ -1,3 +1,4 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, Inject } from '@angular/core';
 import {
   FormArray,
@@ -6,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserInfo } from 'src/app/models/profile';
 import { ToastService } from 'src/app/services/toast.service';
@@ -17,6 +19,8 @@ import { noSpecialCharsValidatior } from 'src/app/shared/utility/validator/speci
   styleUrls: ['./about-me.component.scss'],
 })
 export class AboutMeComponent {
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
   profileForm!: FormGroup;
 
   constructor(
@@ -52,8 +56,6 @@ export class AboutMeComponent {
             this.formBuilder.control(hobby)
           )
         ),
-        avatarUrl: [this.data.profile.avatarUrl],
-        coverUrl: [this.data.profile.coverUrl],
       }),
     });
   }
@@ -78,11 +80,47 @@ export class AboutMeComponent {
     return this.profileForm.get('profile.address') as FormControl;
   }
 
+  get hobbies() {
+    return this.profileForm.get('profile.hobbies') as FormArray;
+  }
+
   onSaveProfile(): void {
+    console.log(this.profileForm.value);
     if (this.profileForm.invalid) {
       this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
       return;
     }
     this.dialogRef.close(this.profileForm.value);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.hobbies.value.push(value);
+    }
+    event.chipInput!.clear();
+  }
+
+  remove(hobby: string): void {
+    const index = this.hobbies.value.indexOf(hobby);
+    if (index >= 0) {
+      this.hobbies.value.splice(index, 1);
+    }
+  }
+
+  edit(hobby: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove hobby if it no longer has a name
+    if (!value) {
+      this.remove(hobby);
+      return;
+    }
+
+    // Edit existing hobby
+    const index = this.hobbies.value.indexOf(hobby);
+    if (index >= 0) {
+      this.hobbies.value[index] = value;
+    }
   }
 }

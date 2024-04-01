@@ -6,26 +6,18 @@
   <h2 mat-dialog-title class="fw-bold">Edit your profile</h2>
   <mat-dialog-content>
     <div class="w-800 pt-2">
-      <!-- Profile Edit Form -->
       <div class="row mb-3">
-        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">
-          Profile Image
+        <label class="col-md-4 col-lg-3 col-form-label" for="email">
+          Email
         </label>
         <div class="col-md-8 col-lg-9">
-          <img
-            src="assets/avatar/my-avatar-4.jpg"
-            class="img-fluid"
-            alt="Profile"
+          <input
+            class="form-control-plaintext"
+            readonly
+            type="email"
+            id="email"
+            formControlName="email"
           />
-          <div class="pt-2">
-            <input class="btn btn-primary btn-sm" type="file" />
-            <a
-              class="btn btn-danger btn-sm ms-1"
-              title="Remove my profile image"
-            >
-              <i class="bi bi-trash"> </i
-            ></a>
-          </div>
         </div>
       </div>
 
@@ -82,6 +74,20 @@
       </div>
 
       <div formGroupName="profile">
+        <div class="row mb-3">
+          <label class="col-md-4 col-lg-3 col-form-label" for="aboutMe">
+            About Me
+          </label>
+          <div class="col-md-8 col-lg-9">
+            <textarea
+              class="form-control"
+              id="aboutMe"
+              formControlName="aboutMe"
+              appTextareaAutoresize
+            ></textarea>
+          </div>
+        </div>
+
         <fieldset class="row mb-3">
           <label class="col-md-4 col-lg-3 col-form-label">Gender</label>
           <div class="col-md-8 col-lg-9">
@@ -169,20 +175,49 @@
             />
           </div>
         </div>
-      </div>
 
-      <div class="row mb-3">
-        <label class="col-md-4 col-lg-3 col-form-label" for="email">
-          Email
-        </label>
-        <div class="col-md-8 col-lg-9">
-          <input
-            class="form-control"
-            readonly
-            type="email"
-            id="email"
-            formControlName="email"
-          />
+        <div class="row mb-3">
+          <label class="col-md-4 col-lg-3 col-form-label" for="country">
+            Country
+          </label>
+          <div class="col-md-8 col-lg-9">
+            <input
+              class="form-control"
+              type="text"
+              id="country"
+              formControlName="country"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-md-4 col-lg-3 col-form-label" for="hobbies">
+            Hobbies
+          </label>
+          <div class="col-md-8 col-lg-9">
+            <input
+              class="form-control ms-0"
+              type="text"
+              id="hobbies"
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)"
+            />
+            <mat-chip-grid #chipGrid aria-label="Enter Hobby">
+              <mat-chip-row
+                *ngFor="let hobby of hobbies.value"
+                (removed)="remove(hobby)"
+                [editable]="true"
+                (edited)="edit(hobby, $event)"
+              >
+                {{ hobby }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+          </div>
         </div>
       </div>
     </div>

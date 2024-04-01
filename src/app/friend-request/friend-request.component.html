@@ -2,9 +2,9 @@
   <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
     <div *ngFor="let item of friendRequests; let index = index">
       <div class="card" style="width: 15rem">
-        <div class="p-0" [routerLink]="['/profile', item.id]">
+        <div class="p-0" [routerLink]="['/profile', item.sender.id]">
           <img
-            [src]="item.sender.profile.avatarUrl"
+            src="assets/avatar/default-avartar.jpg"
             class="card-img-top"
             alt="Avatar Profile"
           />

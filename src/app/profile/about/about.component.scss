@@ -6,6 +6,12 @@
   }
 }
 
+img.profile {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
 :host ::ng-deep {
   .mat-mdc-tab-group {
     flex-direction: row;

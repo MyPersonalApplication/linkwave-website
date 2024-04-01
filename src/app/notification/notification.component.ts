@@ -17,8 +17,6 @@ export class NotificationComponent {
     aboutMe: 'I am a developer',
     phoneNumber: '0123456789',
     hobbies: ['Reading', 'Coding', 'Gaming'],
-    avatarUrl: 'https://picsum.photos/seed/picsum/200/300',
-    coverUrl: 'https://picsum.photos/seed/picsum/200/300',
   };
 
   userInfo: UserInfo = {

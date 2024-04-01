@@ -11,167 +11,17 @@
       </div>
       <mat-list id="friend-list">
         <div>
-          <mat-list-item>
+          <mat-list-item *ngFor="let item of messageList">
             <img
               matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
+              [src]="item.avatarUrl"
               alt="Avatar Profile"
             />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
-          </mat-list-item>
-          <mat-list-item>
-            <img
-              matListItemAvatar
-              src="assets/avatar/my-avatar-2.jpg"
-              alt="Avatar Profile"
-            />
-            <h3 matListItemTitle class="fw-bold">Pepper</h3>
-            <p matListItemLine>Produced by a plant</p>
+            <span matListItemTitle class="fw-bold">{{ item.name }}</span>
+            <span matListItemLine>{{ item.lastMessage }}</span>
+            <span>
+              {{ item.lastMessageTime | date : "short" }}
+            </span>
           </mat-list-item>
         </div>
       </mat-list>

@@ -5,5 +5,6 @@
   "INVALID_ACCOUNT": "Account is invalid. Please try again with another account.",
   "JWT_MISSING": "Token is missing. Please try to login again.",
   "UNDEFINED_ERROR": "Server error. Please try again later.",
-  "INCORRECT_LOGIN_CREDENTIALS": "Incorrect login credentials. Please try again."
+  "INCORRECT_LOGIN_CREDENTIALS": "Incorrect login credentials. Please try again.",
+  "TOKEN_EXPIRED": "Token is expired. Please try to login again."
 }

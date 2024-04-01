@@ -9,6 +9,7 @@ import {
 import { PostComponent } from 'src/app/component/dialog/post/post.component';
 import { PostList } from 'src/app/models/post';
 import { Profile, UserInfo } from 'src/app/models/profile';
+import mockUserProfile from 'src/app/mock/user-profile.json';
 
 @Component({
   selector: 'app-timeline',
@@ -21,41 +22,10 @@ export class TimelineComponent {
   faSolidLocationDot = faSolidLocationDot;
   faSolidHeartPulse = faSolidHeartPulse;
 
-  userProfile: Profile[] = [
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar-3.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar-4.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-  ];
+  userProfile: Profile[] = mockUserProfile.data.map((profile) => ({
+    ...profile,
+    dateOfBirth: new Date(profile.dateOfBirth),
+  }));
 
   userInfo: UserInfo[] = [
     {

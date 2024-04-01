@@ -4,6 +4,7 @@ import { PostComponent } from '../component/dialog/post/post.component';
 import { faHandPointUp as faRegularHandPointUp } from '@fortawesome/free-regular-svg-icons';
 import { PostList } from '../models/post';
 import { Profile, UserInfo } from '../models/profile';
+import mockUserProfile from 'src/app/mock/user-profile.json';
 
 @Component({
   selector: 'app-home',
@@ -15,41 +16,10 @@ export class HomeComponent {
 
   showScrollTop = false;
 
-  userProfile: Profile[] = [
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar-3.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar-4.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-    {
-      gender: true,
-      dateOfBirth: new Date(),
-      country: 'Vietnam',
-      address: 'Can Tho',
-      aboutMe: 'I am a developer',
-      phoneNumber: '0123456789',
-      hobbies: ['Reading', 'Coding', 'Gaming'],
-      avatarUrl: 'assets/avatar/my-avatar.jpg',
-      coverUrl: 'https://picsum.photos/seed/picsum/200/300',
-    },
-  ];
+  userProfile: Profile[] = mockUserProfile.data.map((profile) => ({
+    ...profile,
+    dateOfBirth: new Date(profile.dateOfBirth),
+  }));
 
   userInfo: UserInfo[] = [
     {

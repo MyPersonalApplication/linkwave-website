@@ -2,12 +2,21 @@
   width: 800px;
 }
 
-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-
 h2 {
   font-family: "Poppins", sans-serif !important;
+}
+
+.form-check-input:checked {
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+:host ::ng-deep {
+  .mat-mdc-standard-chip .mdc-evolution-chip__text-label {
+    font-family: "Poppins", sans-serif !important;
+  }
+}
+
+textarea {
+  overflow-y: hidden;
 }

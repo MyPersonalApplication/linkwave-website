@@ -4,11 +4,14 @@ export interface UserInfo {
   firstName: string;
   lastName: string;
   profile: Profile;
+  avatar?: Avatar;
+  cover?: Cover;
   skills?: Array<Skill>;
   experiences?: Array<Experience>;
 }
 
 export interface Profile {
+  id?: string;
   gender: boolean;
   dateOfBirth: Date;
   country: string;
@@ -16,8 +19,22 @@ export interface Profile {
   aboutMe: string;
   phoneNumber: string;
   hobbies: Array<string>;
-  avatarUrl: string;
-  coverUrl: string;
+}
+
+export interface Avatar {
+  id?: string;
+  imageId: string;
+  imageUrl: string;
+}
+
+export interface ChangeAvatar {
+  multipartFile: File;
+}
+
+export interface Cover {
+  id?: string;
+  imageId: string;
+  imageUrl: string;
 }
 
 export interface Skill {
