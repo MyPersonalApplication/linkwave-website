@@ -46,7 +46,7 @@ $background-color_1: #edecec;
   }
 }
 
-img {
+:is(img) {
   object-fit: cover;
 }
 

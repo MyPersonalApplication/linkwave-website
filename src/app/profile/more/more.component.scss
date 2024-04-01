@@ -1,5 +1,5 @@
 .favorite-item {
-  img {
+  :is(img) {
     width: 100%;
     height: 260px;
     object-fit: cover;

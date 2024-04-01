@@ -11,7 +11,7 @@
   margin-bottom: 5px;
   border-radius: 5px;
 
-  img {
+  :is(img) {
     position: absolute;
     width: 100%;
     object-fit: cover;
