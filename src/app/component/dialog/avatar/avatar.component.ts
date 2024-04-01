@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Avatar } from 'src/app/models/profile';
 import { SwalService } from 'src/app/services/swal.service';
 
@@ -9,32 +11,61 @@ import { SwalService } from 'src/app/services/swal.service';
   styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent {
-  image: File | null = null;
-  imageMin: File | null = null;
-  images: File[] = [];
+  imageChangedEvent: any = '';
+  cropImageReview: any = '';
 
   constructor(
     public dialogRef: MatDialogRef<AvatarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Avatar,
-    private swalService: SwalService
+    private swalService: SwalService,
+    private sanitizer: DomSanitizer
   ) {
-    this.imageMin = data.imageUrl as unknown as File;
+    this.cropImageReview = data.imageUrl as unknown as File;
   }
 
   onSelectFile(event: any) {
-    this.image = event.target.files[0];
-    this.imageMin = null;
-    const fr = new FileReader();
-    fr.onload = (e: any) => {
-      this.imageMin = e.target?.result;
-    };
-    if (this.image) {
-      fr.readAsDataURL(this.image);
-    }
+    this.imageChangedEvent = event;
   }
 
   onSaveAvatar() {
-    this.dialogRef.close(this.image);
+    this.convertBlobUrlToFile(
+      this.cropImageReview.changingThisBreaksApplicationSecurity
+    ).then((file) => {
+      this.dialogRef.close(file);
+    });
+  }
+
+  async convertBlobUrlToFile(blobUrl: string): Promise<File> {
+    // Fetch the Blob data
+    const response = await fetch(blobUrl);
+    const blobData = await response.blob();
+
+    // Extract filename from the Blob URL
+    const filename = blobUrl.substring(blobUrl.lastIndexOf('/') + 1);
+
+    // Create a new File object
+    const file = new File([blobData], filename);
+
+    return file;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.cropImageReview = this.sanitizer.bypassSecurityTrustUrl(
+      event.objectUrl ?? ''
+    );
+  }
+
+  imageLoaded() {
+    // show cropper
+  }
+
+  cropperReady() {
+    // cropper ready
+  }
+
+  loadImageFailed() {
+    // show message
+    this.swalService.showMessage('Error', 'Image failed to load', 'error');
   }
 
   deleteAvatar() {

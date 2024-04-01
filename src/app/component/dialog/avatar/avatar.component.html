@@ -4,10 +4,26 @@
     <div class="w-800 pt-2">
       <div class="mb-3">
         <img
-          [src]="imageMin ? imageMin : 'assets/avatar/default-avartar.jpg'"
+          [src]="
+            cropImageReview
+              ? cropImageReview
+              : 'assets/avatar/default-avartar.jpg'
+          "
           class="img-fluid profile"
           alt="Profile"
         />
+        <image-cropper
+          class="mt-2 p-0"
+          style="width: 20rem"
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="4 / 4"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady()"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
         <div class="input-group my-2">
           <input
             type="file"
