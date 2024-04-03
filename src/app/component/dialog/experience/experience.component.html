@@ -1,0 +1,175 @@
+<form [formGroup]="experienceForm" novalidate (ngSubmit)="onSaveExperience()">
+  <h2 mat-dialog-title class="fw-bold">Your Experience</h2>
+  <mat-dialog-content>
+    <div class="w-lg-800 w-md-600 pt-2">
+      <div class="row mb-3">
+        <label
+          class="col-md-4 col-lg-3 col-form-label"
+          for="companyOrSchoolName"
+        >
+          Company Name (School)
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            class="form-control"
+            [class.is-invalid]="
+              companyOrSchoolName?.invalid && companyOrSchoolName?.touched
+            "
+            type="text"
+            id="companyOrSchoolName"
+            formControlName="companyOrSchoolName"
+          />
+          <div
+            *ngIf="companyOrSchoolName?.invalid && companyOrSchoolName?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="companyOrSchoolName?.errors?.['required']">
+              Please enter company or school name
+            </small>
+            <small *ngIf="companyOrSchoolName?.errors?.['specialChars']">
+              Please enter a valid company or school name
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="positionOrDegree">
+          Position (Degree)
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            class="form-control"
+            [class.is-invalid]="
+              positionOrDegree?.invalid && positionOrDegree?.touched
+            "
+            type="text"
+            id="positionOrDegree"
+            formControlName="positionOrDegree"
+          />
+          <div
+            *ngIf="positionOrDegree?.invalid && positionOrDegree?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="positionOrDegree?.errors?.['required']">
+              Please enter position or degree
+            </small>
+            <small *ngIf="positionOrDegree?.errors?.['specialChars']">
+              Please enter a valid position or degree
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="description">
+          Description
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <textarea
+            class="form-control"
+            [class.is-invalid]="description?.invalid && description?.touched"
+            id="description"
+            formControlName="description"
+            appTextareaAutoresize
+          ></textarea>
+          <div
+            *ngIf="description?.invalid && description?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="description?.errors?.['required']">
+              Please enter description
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="startDate">
+          Start Date
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            type="date"
+            class="form-control"
+            [class.is-invalid]="startDate?.invalid && startDate?.touched"
+            id="startDate"
+            formControlName="startDate"
+          />
+          <div
+            *ngIf="startDate?.invalid && startDate?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="startDate?.errors?.['required']">
+              Please enter start date
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="endDate">
+          End Date
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            type="date"
+            class="form-control"
+            [class.is-invalid]="endDate?.invalid && endDate?.touched"
+            id="endDate"
+            formControlName="endDate"
+          />
+          <div
+            *ngIf="endDate?.invalid && endDate?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="endDate?.errors?.['required']">
+              Please enter end date
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="location">
+          Location
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <textarea
+            type="text"
+            class="form-control"
+            [class.is-invalid]="location?.invalid && location?.touched"
+            id="location"
+            formControlName="location"
+            appTextareaAutoresize
+          ></textarea>
+          <div
+            *ngIf="location?.invalid && location?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="location?.errors?.['required']">
+              Please enter end date
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+      <button
+        *ngIf="id?.value !== ''"
+        mat-button
+        (click)="onDeleteExperience($event)"
+      >
+        Delete Experience
+      </button>
+    </div>
+    <div>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button cdkFocusInitial type="submit" color="warn">
+        Save Changes
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

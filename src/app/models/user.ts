@@ -10,6 +10,7 @@ export interface TokenData {
 export interface Token {
   accessTokenResponse: TokenData;
   roles: string[];
+  userId: string;
 }
 
 export enum Roles {

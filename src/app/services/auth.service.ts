@@ -57,7 +57,7 @@ export class AuthService {
   saveUser(data: Token): void {
     this.saveToken(data.accessTokenResponse.access_token);
     this.storageService.save(ROLE_KEY, data.roles);
-    this.storageService.save(USER_KEY, data);
+    this.storageService.save(USER_KEY, data.userId);
   }
 
   saveToken(data: unknown) {
@@ -74,6 +74,13 @@ export class AuthService {
   getAccessToken() {
     if (this.storageService.get(ACCESS_KEY)) {
       return this.storageService.get(ACCESS_KEY) as string;
+    }
+    return null;
+  }
+
+  getUserId() {
+    if (this.storageService.get(USER_KEY)) {
+      return this.storageService.get(USER_KEY);
     }
     return null;
   }

@@ -48,8 +48,8 @@ export interface Experience {
   companyOrSchoolName: string;
   positionOrDegree: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
   location: string;
   experienceType: ExperienceType;
 }

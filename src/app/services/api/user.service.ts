@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ChangeAvatar, UserInfo } from 'src/app/models/profile';
+import { ChangeAvatar, Experience, UserInfo } from 'src/app/models/profile';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +31,25 @@ export class UserService {
     const formData = new FormData();
     formData.append('multipartFile', data);
     return this.http.put<any>(`/api/user/profile/${userId}/cover`, formData);
+  }
+
+  getWorkExperiences(userId: string) {
+    return this.http.get<Experience>(`/api/user/experience/${userId}`);
+  }
+
+  getEducationExperiences(userId: string) {
+    return this.http.get<Experience>(`/api/user/experience/${userId}`);
+  }
+
+  addExperience(data: Experience) {
+    return this.http.post<Experience>(`/api/user/experience`, data);
+  }
+
+  updateExperience(data: Experience) {
+    return this.http.put<Experience>(`/api/user/experience/${data.id}`, data);
+  }
+
+  deleteExperience(id: string) {
+    return this.http.delete(`/api/user/experience/${id}`);
   }
 }

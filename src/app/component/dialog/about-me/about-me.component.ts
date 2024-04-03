@@ -85,7 +85,6 @@ export class AboutMeComponent {
   }
 
   onSaveProfile(): void {
-    console.log(this.profileForm.value);
     if (this.profileForm.invalid) {
       this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
       return;

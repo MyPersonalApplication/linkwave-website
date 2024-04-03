@@ -13,32 +13,35 @@ img.profile {
 }
 
 :host ::ng-deep {
-  .mat-mdc-tab-group {
-    flex-direction: row;
-  }
-  .mat-mdc-tab-header {
-    border-bottom: none;
-    width: 23%;
-  }
-  .mat-mdc-tab-body-wrapper {
-    margin-left: 2.5em;
-  }
-  .mat-mdc-tab-header-pagination {
-    display: none !important;
-  }
-  .mat-mdc-tab-labels {
-    flex-direction: column;
-
-    .mat-mdc-tab {
-      justify-content: flex-start;
+  // Desktop
+  @media screen and (min-width: 1024px) {
+    .mat-mdc-tab-group {
+      flex-direction: row;
     }
-  }
-  .mat-mdc-ink-bar {
-    height: 100%;
-    left: 98% !important;
-  }
-  .mat-mdc-tab-body-wrapper {
-    flex: 1 1 auto;
+    .mat-mdc-tab-header {
+      border-bottom: none;
+      width: 23%;
+    }
+    .mat-mdc-tab-body-wrapper {
+      margin-left: 2.5em;
+    }
+    .mat-mdc-tab-header-pagination {
+      display: none !important;
+    }
+    .mat-mdc-tab-labels {
+      flex-direction: column;
+
+      .mat-mdc-tab {
+        justify-content: flex-start;
+      }
+    }
+    .mat-mdc-ink-bar {
+      height: 100%;
+      left: 98% !important;
+    }
+    .mat-mdc-tab-body-wrapper {
+      flex: 1 1 auto;
+    }
   }
 
   .mat-mdc-standard-chip .mdc-evolution-chip__text-label {

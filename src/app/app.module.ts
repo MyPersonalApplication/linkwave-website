@@ -45,6 +45,7 @@ import { TextareaAutoresizeDirective } from './directive/textarea-autoresize.dir
 import { AvatarComponent } from './component/dialog/avatar/avatar.component';
 import { CoverComponent } from './component/dialog/cover/cover.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ExperienceComponent } from './component/dialog/experience/experience.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -80,6 +81,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TextareaAutoresizeDirective,
     AvatarComponent,
     CoverComponent,
+    ExperienceComponent,
   ],
   imports: [
     BrowserModule,

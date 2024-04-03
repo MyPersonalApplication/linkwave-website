@@ -11,13 +11,10 @@ import {
 import { AboutMeComponent } from 'src/app/component/dialog/about-me/about-me.component';
 import { AvatarComponent } from 'src/app/component/dialog/avatar/avatar.component';
 import { CoverComponent } from 'src/app/component/dialog/cover/cover.component';
-import {
-  ChangeAvatar,
-  Experience,
-  ExperienceType,
-  UserInfo,
-} from 'src/app/models/profile';
+import { ExperienceComponent } from 'src/app/component/dialog/experience/experience.component';
+import { Experience, ExperienceType, UserInfo } from 'src/app/models/profile';
 import { UserService } from 'src/app/services/api/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -36,6 +33,7 @@ export class AboutComponent implements OnInit {
   contentLoading = true;
   updateAvatarLoading = false;
   updateCoverLoading = false;
+  isCurrentUser = false;
   profileData: UserInfo | undefined;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
@@ -44,8 +42,8 @@ export class AboutComponent implements OnInit {
     private showToast: ToastService,
     private route: ActivatedRoute,
     private userService: UserService,
-    public dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private authService: AuthService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +79,7 @@ export class AboutComponent implements OnInit {
     } else {
       this.userService.getCurrentProfile().subscribe({
         next: (response: UserInfo) => {
+          this.isCurrentUser = true;
           this.profileData = response;
           this.workExperiences =
             this.profileData?.experiences?.filter(
@@ -162,6 +161,7 @@ export class AboutComponent implements OnInit {
   }
 
   openDialogEditProfile() {
+    console.log(this.profileData);
     const dialogRef = this.dialog.open(AboutMeComponent, {
       data: this.profileData,
     });
@@ -175,6 +175,123 @@ export class AboutComponent implements OnInit {
               'Success',
               response.message || 'Update successfully'
             );
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
+    });
+  }
+
+  openDialogExperience(experiencenId: string, experienceType: ExperienceType) {
+    let experience: Experience;
+
+    if (experienceType === ExperienceType.WORK) {
+      experience = this.workExperiences.find(
+        (exp) => exp.id === experiencenId
+      ) as Experience;
+    } else {
+      experience = this.educationExperiences.find(
+        (exp) => exp.id === experiencenId
+      ) as Experience;
+    }
+
+    const dialogRef = this.dialog.open(ExperienceComponent, {
+      data: {
+        experience,
+        experienceType,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: Experience) => {
+      if (!result) {
+        return;
+      }
+
+      if (typeof result == 'object') {
+        if (result.id) {
+          this.userService.updateExperience(result).subscribe({
+            next: () => {
+              if (result.experienceType === ExperienceType.WORK) {
+                this.workExperiences = this.workExperiences.map((exp) =>
+                  exp.id === result.id ? result : exp
+                );
+                this.showToast.showSuccessMessasge(
+                  'Success',
+                  'Update work experience successfully'
+                );
+              } else {
+                this.educationExperiences = this.educationExperiences.map(
+                  (exp) => (exp.id === result.id ? result : exp)
+                );
+                this.showToast.showSuccessMessasge(
+                  'Success',
+                  'Update education experience successfully'
+                );
+              }
+            },
+            error: (response) => {
+              this.showToast.showErrorMessage(
+                'Error',
+                response.error?.message ||
+                  'Something went wrong. Please try again later'
+              );
+            },
+          });
+        } else {
+          this.userService.addExperience(result).subscribe({
+            next: (response: any) => {
+              if (result.experienceType === ExperienceType.WORK) {
+                this.workExperiences.push(response);
+                this.showToast.showSuccessMessasge(
+                  'Success',
+                  'Add work experience successfully'
+                );
+              } else {
+                this.educationExperiences.push(response);
+                this.showToast.showSuccessMessasge(
+                  'Success',
+                  'Add education experience successfully'
+                );
+              }
+            },
+            error: (response) => {
+              this.showToast.showErrorMessage(
+                'Error',
+                response.error?.message ||
+                  'Something went wrong. Please try again later'
+              );
+            },
+          });
+        }
+      } else {
+        const experience = this.profileData?.experiences?.find(
+          (exp) => exp.id === result
+        );
+        this.userService.deleteExperience(result).subscribe({
+          next: () => {
+            if (experience?.experienceType === ExperienceType.WORK) {
+              this.workExperiences = this.workExperiences.filter(
+                (exp) => exp.id !== result
+              );
+              this.showToast.showSuccessMessasge(
+                'Success',
+                'Delete work experience successfully'
+              );
+            } else {
+              this.educationExperiences = this.educationExperiences.filter(
+                (exp) => exp.id !== result
+              );
+              this.showToast.showSuccessMessasge(
+                'Success',
+                'Delete education experience successfully'
+              );
+            }
           },
           error: (response) => {
             this.showToast.showErrorMessage(
