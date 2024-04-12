@@ -1,0 +1,69 @@
+.profile-picture {
+  position: relative;
+
+  .profile-picture-change {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    width: 93%;
+    margin: 0 10px;
+    text-align: center;
+  }
+
+  &:hover {
+    .profile-picture-change {
+      display: block;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    .profile-picture-change {
+      width: 92%;
+    }
+  }
+
+  @media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .profile-picture-change {
+      width: 90%;
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+    .profile-picture-change {
+      bottom: 5px;
+      padding: 5px 0;
+      width: 90%;
+      margin: 0 5px;
+    }
+  }
+}
+
+.profile-banner-large {
+  position: relative;
+
+  .profile-banner-change {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    margin: 0 10px;
+    text-align: center;
+  }
+
+  &:hover {
+    .profile-banner-change {
+      display: block;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+}

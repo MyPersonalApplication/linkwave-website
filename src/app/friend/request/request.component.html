@@ -1,7 +1,8 @@
-<main class="container mt-3">
-  <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+<main class="container mt-4">
+  <h5 class="fw-bold mb-2">Friend request</h5>
+  <div class="d-flex flex-wrap gap-2">
     <div *ngFor="let item of friendRequests; let index = index">
-      <div class="card" style="width: 15rem">
+      <div class="card" style="width: 13rem">
         <div class="p-0" [routerLink]="['/profile', item.sender.id]">
           <img
             src="assets/avatar/default-avartar.jpg"
@@ -9,10 +10,8 @@
             alt="Avatar Profile"
           />
         </div>
-        <div
-          class="card-body d-flex flex-column justify-content-center align-items-center"
-        >
-          <div class="mb-2">
+        <div class="card-body">
+          <div class="mb-2 text-center">
             <h6>{{ item.sender.firstName }} {{ item.sender.lastName }}</h6>
           </div>
           <button
@@ -33,5 +32,17 @@
         </div>
       </div>
     </div>
+    <app-user-card *ngIf="isLoadingRequest" [count]="12"></app-user-card>
+  </div>
+  <div
+    *ngIf="!isLoadingRequest && friendRequests.length == 0"
+    class="text-center"
+  >
+    <img
+      src="assets/images/gif/empty-states-nbg.gif"
+      alt="Empty State"
+      class="img-fluid"
+      width="500"
+    />
   </div>
 </main>

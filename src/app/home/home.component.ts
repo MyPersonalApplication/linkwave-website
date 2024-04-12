@@ -1,17 +1,18 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostComponent } from '../component/dialog/post/post.component';
 import { faHandPointUp as faRegularHandPointUp } from '@fortawesome/free-regular-svg-icons';
 import { PostList } from '../models/post';
 import { Profile, UserInfo } from '../models/profile';
 import mockUserProfile from 'src/app/mock/user-profile.json';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   faRegularHandPointUp = faRegularHandPointUp;
 
   showScrollTop = false;
@@ -285,6 +286,8 @@ export class HomeComponent {
   ];
 
   constructor(public dialog: MatDialog) {}
+
+  ngOnInit(): void {}
 
   openDialog() {
     const dialogRef = this.dialog.open(PostComponent);

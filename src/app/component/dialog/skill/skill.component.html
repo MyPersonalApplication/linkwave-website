@@ -1,0 +1,77 @@
+<form [formGroup]="skillForm" novalidate (ngSubmit)="onSaveSkill()">
+  <h2 mat-dialog-title class="fw-bold">Your Skill</h2>
+  <mat-dialog-content>
+    <div class="w-lg-800 w-md-600 pt-2">
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="skillName">
+          Skill Name
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            class="form-control"
+            [class.is-invalid]="skillName?.invalid && skillName?.touched"
+            type="text"
+            id="skillName"
+            formControlName="skillName"
+          />
+          <div
+            *ngIf="skillName?.invalid && skillName?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="skillName?.errors?.['required']">
+              Please enter skill name
+            </small>
+            <small *ngIf="skillName?.errors?.['specialChars']">
+              Please enter a valid skill name
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-md-4 col-lg-3 col-form-label" for="certificationName">
+          Certification Name
+        </label>
+        <div class="col-md-8 col-lg-9">
+          <input
+            class="form-control"
+            [class.is-invalid]="
+              certificationName?.invalid && certificationName?.touched
+            "
+            type="text"
+            id="certificationName"
+            formControlName="certificationName"
+          />
+          <div
+            *ngIf="certificationName?.invalid && certificationName?.touched"
+            class="invalid-feedback col-12"
+          >
+            <small *ngIf="certificationName?.errors?.['required']">
+              Please enter certification name
+            </small>
+            <small *ngIf="certificationName?.errors?.['specialChars']">
+              Please enter a valid certification name
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+      <button
+        *ngIf="id?.value !== ''"
+        mat-button
+        (click)="onDeleteSkill($event)"
+      >
+        Delete Skill
+      </button>
+    </div>
+    <div>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button cdkFocusInitial type="submit" color="warn">
+        Save Changes
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

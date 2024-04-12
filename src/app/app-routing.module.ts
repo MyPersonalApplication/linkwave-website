@@ -7,7 +7,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthenticationComponent } from './layouts/authentication/authentication.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { MessageComponent } from './message/message.component';
 import { NotificationComponent } from './notification/notification.component';
 import {
@@ -19,6 +18,9 @@ import { AboutComponent } from './profile/about/about.component';
 import { PhotoComponent } from './profile/photo/photo.component';
 import { FriendComponent } from './profile/friend/friend.component';
 import { MoreComponent } from './profile/more/more.component';
+import { RecommendComponent } from './friend/recommend/recommend.component';
+import { RequestComponent } from './friend/request/request.component';
+import { UserFriendComponent } from './friend/friend.component';
 
 const routes: Routes = [
   {
@@ -33,10 +35,29 @@ const routes: Routes = [
         canActivate: [AuthenticationGuard],
       },
       {
-        path: 'friend-request',
-        component: FriendRequestComponent,
+        path: 'friend',
         title: 'Friend Request',
         canActivate: [AuthenticationGuard],
+        children: [
+          {
+            path: '',
+            component: UserFriendComponent,
+            title: 'Friends',
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'request',
+            component: RequestComponent,
+            title: 'Friend Request',
+            canActivate: [AuthenticationGuard],
+          },
+          {
+            path: 'recommend',
+            component: RecommendComponent,
+            title: 'Recommend',
+            canActivate: [AuthenticationGuard],
+          },
+        ],
       },
       {
         path: 'profile',

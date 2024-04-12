@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendRequest } from '../models/friend-request';
-import { SwalService } from '../services/swal.service';
-import { FriendRequestService } from '../services/api/friend-request.service';
-import { ToastService } from '../services/toast.service';
+import { FriendRequest } from 'src/app/models/friend-request';
+import { FriendRequestService } from 'src/app/services/api/friend-request.service';
+import { SwalService } from 'src/app/services/swal.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  selector: 'app-friend-request',
-  templateUrl: './friend-request.component.html',
-  styleUrls: ['./friend-request.component.scss'],
+  selector: 'app-request',
+  templateUrl: './request.component.html',
+  styleUrls: ['./request.component.scss'],
 })
-export class FriendRequestComponent implements OnInit {
-  friendRequests: FriendRequest[] | undefined;
+export class RequestComponent implements OnInit {
+  isLoadingRequest = true;
+  friendRequests: FriendRequest[] = [];
 
   constructor(
     private swalService: SwalService,
@@ -25,6 +26,7 @@ export class FriendRequestComponent implements OnInit {
   loadFriendRequestData() {
     this.friendRequestService.getFriendRequests().subscribe({
       next: (response: FriendRequest[]) => {
+        this.isLoadingRequest = false;
         this.friendRequests = response;
       },
       error: (response) => {

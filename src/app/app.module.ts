@@ -12,7 +12,6 @@ import { AuthenticationComponent } from './layouts/authentication/authentication
 import { FullComponent } from './layouts/full/full.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile/profile.component';
-import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { MessageComponent } from './message/message.component';
 import { NotificationComponent } from './notification/notification.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,6 +45,11 @@ import { AvatarComponent } from './component/dialog/avatar/avatar.component';
 import { CoverComponent } from './component/dialog/cover/cover.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ExperienceComponent } from './component/dialog/experience/experience.component';
+import { SkillComponent } from './component/dialog/skill/skill.component';
+import { RecommendComponent } from './friend/recommend/recommend.component';
+import { RequestComponent } from './friend/request/request.component';
+import { UserFriendComponent } from './friend/friend.component';
+import { UserCardComponent } from './component/loading/user-card/user-card.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -61,7 +65,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthenticationComponent,
     FullComponent,
     ProfileComponent,
-    FriendRequestComponent,
     MessageComponent,
     NotificationComponent,
     CardProfileComponent,
@@ -82,6 +85,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AvatarComponent,
     CoverComponent,
     ExperienceComponent,
+    SkillComponent,
+    UserFriendComponent,
+    RecommendComponent,
+    RequestComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,

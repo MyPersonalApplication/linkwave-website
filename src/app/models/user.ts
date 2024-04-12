@@ -1,3 +1,5 @@
+import { Avatar, Cover, UserInfo } from './profile';
+
 export interface TokenData {
   access_token: string;
   expires_in: number;
@@ -10,7 +12,7 @@ export interface TokenData {
 export interface Token {
   accessTokenResponse: TokenData;
   roles: string[];
-  userId: string;
+  user: UserInfo;
 }
 
 export enum Roles {

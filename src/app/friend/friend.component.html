@@ -1,0 +1,139 @@
+<main class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="fw-bold">Suggestion to make friends</h5>
+    <button mat-button color="warn" [routerLink]="['recommend']">
+      View more
+    </button>
+  </div>
+  <div class="d-flex flex-wrap gap-2">
+    <div *ngFor="let item of recommends; let index = index">
+      <div class="card" style="width: 13rem" *ngIf="!item.friend">
+        <div class="p-0" [routerLink]="['/profile', item?.user?.id]">
+          <img
+            [src]="
+              item?.user?.avatar?.imageUrl
+                ? item?.user?.avatar?.imageUrl
+                : 'assets/avatar/default-avartar.jpg'
+            "
+            class="card-img-top"
+            alt="Avatar Profile"
+          />
+        </div>
+        <div class="card-body">
+          <div class="mb-3 name text-center">
+            <h6>{{ item?.user?.firstName }} {{ item?.user?.lastName }}</h6>
+          </div>
+          <button
+            *ngIf="
+              item?.requestId && item?.request?.sender?.id == getCurrentUserId()
+            "
+            mat-stroked-button
+            color="warn"
+            class="w-100 confirm"
+            (click)="recallRequest(item.requestId)"
+          >
+            Recall
+          </button>
+          <div
+            *ngIf="
+              item?.requestId &&
+              item?.request?.receiver?.id == getCurrentUserId()
+            "
+            class="d-flex gap-2"
+          >
+            <button
+              mat-raised-button
+              color="warn"
+              class="w-100 confirm"
+              (click)="confirmFriendRequest(item.requestId)"
+            >
+              Accept
+            </button>
+            <button
+              mat-raised-button
+              class="w-100 remove"
+              (click)="removeFriendRequest(item.requestId)"
+            >
+              Remove
+            </button>
+          </div>
+          <button
+            *ngIf="!item?.requestId"
+            mat-raised-button
+            color="warn"
+            class="w-100 confirm"
+            (click)="addFriend(item.user.id)"
+          >
+            Add Friend
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-user-card *ngIf="isLoadingRecommend" [count]="6"></app-user-card>
+  </div>
+  <div
+    *ngIf="!isLoadingRecommend && recommends.length == 0"
+    class="text-center"
+  >
+    <img
+      src="assets/gif/empty-states-nbg.gif"
+      alt="Empty State"
+      class="img-fluid"
+      width="500"
+    />
+  </div>
+</main>
+
+<main class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="fw-bold">Friend request</h5>
+    <button mat-button color="warn" [routerLink]="['request']">
+      View more
+    </button>
+  </div>
+  <div class="d-flex flex-wrap gap-2">
+    <div *ngFor="let item of friendRequests; let index = index">
+      <div class="card" style="width: 13rem">
+        <div class="p-0" [routerLink]="['/profile', item.sender.id]">
+          <img
+            src="assets/avatar/default-avartar.jpg"
+            class="card-img-top"
+            alt="Avatar Profile"
+          />
+        </div>
+        <div class="card-body">
+          <div class="mb-3 text-center">
+            <h6>{{ item.sender.firstName }} {{ item.sender.lastName }}</h6>
+          </div>
+          <button
+            mat-raised-button
+            color="warn"
+            class="w-100 confirm"
+            (click)="confirmFriendRequest(item.id)"
+          >
+            Confirm
+          </button>
+          <button
+            mat-raised-button
+            class="w-100 mt-2 remove"
+            (click)="removeFriendRequest(item.id)"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-user-card *ngIf="isLoadingRequest" [count]="6"></app-user-card>
+  </div>
+  <div
+    *ngIf="!isLoadingRequest && friendRequests.length == 0"
+    class="text-center"
+  >
+    <img
+      src="assets/gif/empty-states-nbg.gif"
+      alt="Empty State"
+      class="img-fluid"
+      width="500"
+    />
+  </div>
+</main>

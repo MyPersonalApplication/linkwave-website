@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
 import { Token } from '../models/user';
+import { UserInfo } from '../models/profile';
 
 const ACCESS_KEY = 'ACCESS_TOKEN';
 const USER_KEY = 'USER_DATA';
@@ -57,7 +58,7 @@ export class AuthService {
   saveUser(data: Token): void {
     this.saveToken(data.accessTokenResponse.access_token);
     this.storageService.save(ROLE_KEY, data.roles);
-    this.storageService.save(USER_KEY, data.userId);
+    this.storageService.save(USER_KEY, data.user);
   }
 
   saveToken(data: unknown) {
@@ -78,7 +79,11 @@ export class AuthService {
     return null;
   }
 
-  getUserId() {
+  saveUserData(data: UserInfo) {
+    this.storageService.save(USER_KEY, data);
+  }
+
+  getUserData() {
     if (this.storageService.get(USER_KEY)) {
       return this.storageService.get(USER_KEY);
     }

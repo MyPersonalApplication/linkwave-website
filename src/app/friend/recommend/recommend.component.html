@@ -1,0 +1,80 @@
+<main class="container mt-4">
+  <h5 class="fw-bold mb-2">Suggestion to make friends</h5>
+  <div class="d-flex flex-wrap gap-2">
+    <div *ngFor="let item of recommends; let index = index">
+      <div class="card" style="width: 13rem" *ngIf="!item.friend">
+        <div class="p-0" [routerLink]="['/profile', item?.user?.id]">
+          <img
+            [src]="
+              item?.user?.avatar?.imageUrl
+                ? item?.user?.avatar?.imageUrl
+                : 'assets/avatar/default-avartar.jpg'
+            "
+            class="card-img-top"
+            alt="Avatar Profile"
+          />
+        </div>
+        <div class="card-body">
+          <div class="mb-3 name text-center">
+            <h6>{{ item?.user?.firstName }} {{ item?.user?.lastName }}</h6>
+          </div>
+          <button
+            *ngIf="
+              item?.requestId && item?.request?.sender?.id == getCurrentUserId()
+            "
+            mat-stroked-button
+            color="warn"
+            class="w-100 confirm"
+            (click)="recallRequest(item.requestId)"
+          >
+            Recall
+          </button>
+          <div
+            *ngIf="
+              item?.requestId &&
+              item?.request?.receiver?.id == getCurrentUserId()
+            "
+            class="d-flex gap-2"
+          >
+            <button
+              mat-raised-button
+              color="warn"
+              class="w-100 confirm"
+              (click)="confirmFriendRequest(item.requestId)"
+            >
+              Accept
+            </button>
+            <button
+              mat-raised-button
+              class="w-100 remove"
+              (click)="removeFriendRequest(item.requestId)"
+            >
+              Remove
+            </button>
+          </div>
+          <button
+            *ngIf="!item?.requestId"
+            mat-raised-button
+            color="warn"
+            class="w-100 confirm"
+            (click)="addFriend(item.user.id)"
+          >
+            Add Friend
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-user-card *ngIf="isLoadingRecommend" [count]="12"></app-user-card>
+  </div>
+  <div
+    *ngIf="!isLoadingRecommend && recommends.length == 0"
+    class="text-center"
+  >
+    <img
+      src="assets/images/gif/empty-states-nbg.gif"
+      alt="Empty State"
+      class="img-fluid"
+      width="500"
+    />
+  </div>
+</main>

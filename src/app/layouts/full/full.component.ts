@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserInfo } from 'src/app/models/profile';
 import { AuthService } from 'src/app/services/auth.service';
 import { SwalService } from 'src/app/services/swal.service';
 
@@ -8,12 +9,18 @@ import { SwalService } from 'src/app/services/swal.service';
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss'],
 })
-export class FullComponent {
+export class FullComponent implements OnInit {
+  userData!: UserInfo;
+
   constructor(
     private swalService: SwalService,
     private authService: AuthService,
     public router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.userData = this.authService.getUserData() as UserInfo;
+  }
 
   renderToProfile() {
     this.router.navigate(['/profile']);

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../services/api/user.service';
+import { UserInfo } from '../models/profile';
+import { ToastService } from '../services/toast.service';
+import { AuthService } from '../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AvatarComponent } from '../component/dialog/avatar/avatar.component';
+import { CoverComponent } from '../component/dialog/cover/cover.component';
 
 interface Page {
   text: string;
@@ -13,18 +20,126 @@ interface Page {
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  userData!: UserInfo;
+  coverImage!: string;
+  profileData: UserInfo | undefined;
+
   pages: Page[] = [
     { text: 'Timeline', url: 'timeline', isActive: true },
     { text: 'About', url: 'about', isActive: false },
-    { text: 'Photos', url: 'photos', isActive: false },
+    // { text: 'Photos', url: 'photos', isActive: false },
     { text: 'Friends', url: 'friends', isActive: false },
-    { text: 'More', url: 'more', isActive: false },
+    // { text: 'More', url: 'more', isActive: false },
   ];
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private showToast: ToastService,
+    private authService: AuthService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
+    this.userData = this.userData = this.authService.getUserData() as UserInfo;
+    this.coverImage =
+      this.userData.cover?.imageUrl ||
+      'assets/images/banner/profile-banner.jpg';
     this.setActivePage();
+    this.route.paramMap.subscribe((params) => {
+      const userId = params.get('id');
+      this.loadProfileData(userId);
+    });
+  }
+
+  loadProfileData(userId: string | null) {
+    userId ? this.getProfile(userId) : this.getCurrentProfile();
+  }
+
+  getProfile(userId: string) {
+    this.userService.getProfile(userId).subscribe({
+      next: (response: UserInfo) => {
+        this.profileData = response;
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
+
+  getCurrentProfile() {
+    this.userService.getCurrentProfile().subscribe({
+      next: (response: UserInfo) => {
+        this.profileData = response;
+        this.authService.saveUserData(response);
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
+
+  openDialogChangeAvatar() {
+    const dialogRef = this.dialog.open(AvatarComponent, {
+      data: this.profileData?.avatar,
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.userService.updateAvatar(this.profileData!.id, result).subscribe({
+          next: (response: any) => {
+            this.loadProfileData(this.userData.id);
+            this.showToast.showSuccessMessasge(
+              'Success',
+              response.message || 'Update successfully'
+            );
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
+    });
+  }
+
+  openDialogChangeCover() {
+    const dialogRef = this.dialog.open(CoverComponent, {
+      data: this.profileData?.cover,
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.userService.updateCover(this.profileData!.id, result).subscribe({
+          next: (response: any) => {
+            this.loadProfileData(this.userData.id);
+            this.showToast.showSuccessMessasge(
+              'Success',
+              response.message || 'Update successfully'
+            );
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
+    });
   }
 
   setActivePage(): void {

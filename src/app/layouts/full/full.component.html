@@ -33,7 +33,7 @@
               </button>
             </div>
             <div>
-              <button mat-icon-button routerLink="/friend-request">
+              <button mat-icon-button routerLink="/friend">
                 <mat-icon>person_add</mat-icon>
               </button>
             </div>
@@ -63,12 +63,20 @@
                 [matMenuTriggerFor]="profile"
               >
                 <img
-                  src="assets/avatar/my-avatar-2.jpg"
+                  [src]="
+                    userData.avatar?.imageUrl
+                      ? userData.avatar?.imageUrl
+                      : 'assets/avatar/default-avartar.jpg'
+                  "
                   alt="Avatar profile"
                   class="rounded-circle header-avatar"
                 />
               </button>
               <mat-menu #profile="matMenu">
+                <button mat-menu-item class="justify-content-center">
+                  <span>Hi, {{ userData.firstName }}</span>
+                </button>
+                <mat-divider></mat-divider>
                 <button mat-menu-item (click)="renderToProfile()">
                   <mat-icon>account_circle</mat-icon>
                   <span>Profile</span>

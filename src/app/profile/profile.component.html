@@ -1,14 +1,31 @@
 <div
   class="profile-banner-large bg-img"
-  style="background-image: url('assets/images/banner/profile-banner.jpg')"
-></div>
+  [style.background-image]="'url(' + coverImage + ')'"
+>
+  <div class="profile-banner-change" (click)="openDialogChangeCover()">
+    Change Picture
+  </div>
+</div>
 <div class="bg-white mb-3">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-3">
         <div class="profile-picture-box">
           <figure class="profile-picture">
-            <img src="assets/avatar/my-avatar-4.jpg" alt="profile picture" />
+            <img
+              [src]="
+                userData.avatar?.imageUrl
+                  ? userData.avatar?.imageUrl
+                  : 'assets/avatar/default-avartar.jpg'
+              "
+              alt="profile picture"
+            />
+            <div
+              class="profile-picture-change"
+              (click)="openDialogChangeAvatar()"
+            >
+              Change Picture
+            </div>
           </figure>
         </div>
       </div>
@@ -30,7 +47,7 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <div>
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                       <mat-icon>settings</mat-icon>
@@ -44,7 +61,7 @@
                       </button>
                     </mat-menu>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </nav>
           </div>

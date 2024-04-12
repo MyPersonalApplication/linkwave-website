@@ -8,11 +8,18 @@ import {
   faLinkedin as faBrandLinkedin,
   faInstagramSquare as faBrandInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+import { concatMap, debounce } from 'rxjs';
 import { AboutMeComponent } from 'src/app/component/dialog/about-me/about-me.component';
 import { AvatarComponent } from 'src/app/component/dialog/avatar/avatar.component';
 import { CoverComponent } from 'src/app/component/dialog/cover/cover.component';
 import { ExperienceComponent } from 'src/app/component/dialog/experience/experience.component';
-import { Experience, ExperienceType, UserInfo } from 'src/app/models/profile';
+import { SkillComponent } from 'src/app/component/dialog/skill/skill.component';
+import {
+  Experience,
+  ExperienceType,
+  Skill,
+  UserInfo,
+} from 'src/app/models/profile';
 import { UserService } from 'src/app/services/api/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -34,7 +41,7 @@ export class AboutComponent implements OnInit {
   updateAvatarLoading = false;
   updateCoverLoading = false;
   isCurrentUser = false;
-  profileData: UserInfo | undefined;
+  profileData!: UserInfo;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
 
@@ -54,114 +61,119 @@ export class AboutComponent implements OnInit {
   }
 
   loadProfileData(userId: string | null) {
-    if (userId) {
-      this.userService.getProfile(userId).subscribe({
-        next: (response: UserInfo) => {
-          this.profileData = response;
-          this.workExperiences =
-            this.profileData?.experiences?.filter(
-              (exp) => exp.experienceType === ExperienceType.WORK
-            ) || [];
-          this.educationExperiences =
-            this.profileData?.experiences?.filter(
-              (exp) => exp.experienceType === ExperienceType.EDUCATION
-            ) || [];
-          this.contentLoading = false;
-        },
-        error: (response) => {
-          this.showToast.showErrorMessage(
-            'Error',
-            response.error?.message ||
-              'Something went wrong. Please try again later'
-          );
-        },
-      });
-    } else {
-      this.userService.getCurrentProfile().subscribe({
-        next: (response: UserInfo) => {
-          this.isCurrentUser = true;
-          this.profileData = response;
-          this.workExperiences =
-            this.profileData?.experiences?.filter(
-              (exp) => exp.experienceType === ExperienceType.WORK
-            ) || [];
-          this.educationExperiences =
-            this.profileData?.experiences?.filter(
-              (exp) => exp.experienceType === ExperienceType.EDUCATION
-            ) || [];
-          this.contentLoading = false;
-        },
-        error: (response) => {
-          this.showToast.showErrorMessage(
-            'Error',
-            response.error?.message ||
-              'Something went wrong. Please try again later'
-          );
-        },
-      });
-    }
+    userId ? this.getProfile(userId) : this.getCurrentProfile();
   }
 
-  openDialogChangeAvatar() {
-    const dialogRef = this.dialog.open(AvatarComponent, {
-      data: this.profileData?.avatar,
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.updateAvatarLoading = true;
-        this.userService.updateAvatar(this.profileData!.id, result).subscribe({
-          next: (response: any) => {
-            this.loadProfileData(this.userId);
-            this.updateAvatarLoading = false;
-            this.showToast.showSuccessMessasge(
-              'Success',
-              response.message || 'Update successfully'
-            );
-          },
-          error: (response) => {
-            this.showToast.showErrorMessage(
-              'Error',
-              response.error?.message ||
-                'Something went wrong. Please try again later'
-            );
-          },
-        });
-      }
+  getProfile(userId: string) {
+    this.userService.getProfile(userId).subscribe({
+      next: (response: UserInfo) => {
+        this.profileData = response;
+        this.workExperiences =
+          this.profileData?.experiences?.filter(
+            (exp) => exp.experienceType === ExperienceType.WORK
+          ) || [];
+        this.educationExperiences =
+          this.profileData?.experiences?.filter(
+            (exp) => exp.experienceType === ExperienceType.EDUCATION
+          ) || [];
+        this.contentLoading = false;
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
     });
   }
 
-  openDialogChangeCover() {
-    const dialogRef = this.dialog.open(CoverComponent, {
-      data: this.profileData?.cover,
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.updateCoverLoading = true;
-        this.userService.updateCover(this.profileData!.id, result).subscribe({
-          next: (response: any) => {
-            this.loadProfileData(this.userId);
-            this.updateCoverLoading = false;
-            this.showToast.showSuccessMessasge(
-              'Success',
-              response.message || 'Update successfully'
-            );
-          },
-          error: (response) => {
-            this.showToast.showErrorMessage(
-              'Error',
-              response.error?.message ||
-                'Something went wrong. Please try again later'
-            );
-          },
-        });
-      }
+  getCurrentProfile() {
+    this.userService.getCurrentProfile().subscribe({
+      next: (response: UserInfo) => {
+        this.isCurrentUser = true;
+        this.profileData = response;
+        this.workExperiences =
+          this.profileData?.experiences?.filter(
+            (exp) => exp.experienceType === ExperienceType.WORK
+          ) || [];
+        this.educationExperiences =
+          this.profileData?.experiences?.filter(
+            (exp) => exp.experienceType === ExperienceType.EDUCATION
+          ) || [];
+        this.contentLoading = false;
+        this.authService.saveUserData(response);
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
     });
   }
+
+  // openDialogChangeAvatar() {
+  //   const dialogRef = this.dialog.open(AvatarComponent, {
+  //     data: this.profileData?.avatar,
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result: any) => {
+  //     if (result) {
+  //       this.updateAvatarLoading = true;
+  //       this.userService.updateAvatar(this.profileData!.id, result).subscribe({
+  //         next: (response: any) => {
+  //           this.loadProfileData(this.userId);
+  //           this.updateAvatarLoading = false;
+  //           this.showToast.showSuccessMessasge(
+  //             'Success',
+  //             response.message || 'Update successfully'
+  //           );
+  //         },
+  //         error: (response) => {
+  //           this.showToast.showErrorMessage(
+  //             'Error',
+  //             response.error?.message ||
+  //               'Something went wrong. Please try again later'
+  //           );
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
+
+  // openDialogChangeCover() {
+  //   const dialogRef = this.dialog.open(CoverComponent, {
+  //     data: this.profileData?.cover,
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result: any) => {
+  //     if (result) {
+  //       this.updateCoverLoading = true;
+  //       this.userService.updateCover(this.profileData!.id, result).subscribe({
+  //         next: (response: any) => {
+  //           this.loadProfileData(this.userId);
+  //           // this.authService.saveUserData(this.profileData);
+  //           this.updateCoverLoading = false;
+  //           this.showToast.showSuccessMessasge(
+  //             'Success',
+  //             response.message || 'Update successfully'
+  //           );
+  //         },
+  //         error: (response) => {
+  //           this.showToast.showErrorMessage(
+  //             'Error',
+  //             response.error?.message ||
+  //               'Something went wrong. Please try again later'
+  //           );
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
 
   openDialogEditProfile() {
-    console.log(this.profileData);
     const dialogRef = this.dialog.open(AboutMeComponent, {
       data: this.profileData,
     });
@@ -246,6 +258,7 @@ export class AboutComponent implements OnInit {
         } else {
           this.userService.addExperience(result).subscribe({
             next: (response: any) => {
+              this.profileData?.experiences?.push(response);
               if (result.experienceType === ExperienceType.WORK) {
                 this.workExperiences.push(response);
                 this.showToast.showSuccessMessasge(
@@ -292,6 +305,79 @@ export class AboutComponent implements OnInit {
                 'Delete education experience successfully'
               );
             }
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
+    });
+  }
+
+  openDialogSkill(skillId: string) {
+    const skill = this.profileData?.skills?.find((s) => s.id === skillId);
+
+    const dialogRef = this.dialog.open(SkillComponent, {
+      data: skill,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Skill) => {
+      if (!result) {
+        return;
+      }
+
+      if (typeof result == 'object') {
+        if (result.id) {
+          this.userService.updateSkill(result).subscribe({
+            next: () => {
+              this.profileData!.skills = this.profileData!.skills?.map((s) =>
+                s.id === result.id ? result : s
+              );
+              this.showToast.showSuccessMessasge(
+                'Success',
+                'Update skill successfully'
+              );
+            },
+            error: (response) => {
+              this.showToast.showErrorMessage(
+                'Error',
+                response.error?.message ||
+                  'Something went wrong. Please try again later'
+              );
+            },
+          });
+        } else {
+          this.userService.addSkill(result).subscribe({
+            next: (response: any) => {
+              this.profileData!.skills?.push(response);
+              this.showToast.showSuccessMessasge(
+                'Success',
+                'Add skill successfully'
+              );
+            },
+            error: (response) => {
+              this.showToast.showErrorMessage(
+                'Error',
+                response.error?.message ||
+                  'Something went wrong. Please try again later'
+              );
+            },
+          });
+        }
+      } else {
+        this.userService.deleteSkill(result).subscribe({
+          next: () => {
+            this.profileData!.skills = this.profileData!.skills?.filter(
+              (s) => s.id !== result
+            );
+            this.showToast.showSuccessMessasge(
+              'Success',
+              'Delete skill successfully'
+            );
           },
           error: (response) => {
             this.showToast.showErrorMessage(

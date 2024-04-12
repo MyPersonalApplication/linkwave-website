@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   faBriefcase as faSolidBriefcase,
@@ -10,13 +10,15 @@ import { PostComponent } from 'src/app/component/dialog/post/post.component';
 import { PostList } from 'src/app/models/post';
 import { Profile, UserInfo } from 'src/app/models/profile';
 import mockUserProfile from 'src/app/mock/user-profile.json';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
 })
-export class TimelineComponent {
+export class TimelineComponent implements OnInit {
+  userData!: UserInfo;
   faSolidBriefcase = faSolidBriefcase;
   faSolidHouse = faSolidHouse;
   faSolidLocationDot = faSolidLocationDot;
@@ -320,7 +322,11 @@ export class TimelineComponent {
     },
   ];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.userData = this.userData = this.authService.getUserData() as UserInfo;
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(PostComponent);
