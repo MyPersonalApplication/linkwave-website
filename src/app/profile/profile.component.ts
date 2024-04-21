@@ -20,9 +20,9 @@ interface Page {
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  userData!: UserInfo;
-  coverImage!: string;
+  coverImage: string | undefined;
   profileData: UserInfo | undefined;
+  isCurrentUser = false;
 
   pages: Page[] = [
     { text: 'Timeline', url: 'timeline', isActive: true },
@@ -42,10 +42,10 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userData = this.userData = this.authService.getUserData() as UserInfo;
-    this.coverImage =
-      this.userData.cover?.imageUrl ||
-      'assets/images/banner/profile-banner.jpg';
+    // this.userData = this.userData = this.authService.getUserData() as UserInfo;
+    // this.coverImage =
+    //   this.userData.cover?.imageUrl ||
+    //   'assets/images/banner/profile-banner.jpg';
     this.setActivePage();
     this.route.paramMap.subscribe((params) => {
       const userId = params.get('id');
@@ -61,6 +61,8 @@ export class ProfileComponent implements OnInit {
     this.userService.getProfile(userId).subscribe({
       next: (response: UserInfo) => {
         this.profileData = response;
+        this.coverImage =
+          response.cover?.imageUrl || 'assets/images/banner/profile-banner.jpg';
       },
       error: (response) => {
         this.showToast.showErrorMessage(
@@ -75,8 +77,11 @@ export class ProfileComponent implements OnInit {
   getCurrentProfile() {
     this.userService.getCurrentProfile().subscribe({
       next: (response: UserInfo) => {
+        this.isCurrentUser = true;
         this.profileData = response;
         this.authService.saveUserData(response);
+        this.coverImage =
+          response.cover?.imageUrl || 'assets/images/banner/profile-banner.jpg';
       },
       error: (response) => {
         this.showToast.showErrorMessage(
@@ -97,8 +102,8 @@ export class ProfileComponent implements OnInit {
       if (result) {
         this.userService.updateAvatar(this.profileData!.id, result).subscribe({
           next: (response: any) => {
-            this.loadProfileData(this.userData.id);
-            this.showToast.showSuccessMessasge(
+            this.loadProfileData(this.profileData!.id);
+            this.showToast.showSuccessMessage(
               'Success',
               response.message || 'Update successfully'
             );
@@ -124,8 +129,8 @@ export class ProfileComponent implements OnInit {
       if (result) {
         this.userService.updateCover(this.profileData!.id, result).subscribe({
           next: (response: any) => {
-            this.loadProfileData(this.userData.id);
-            this.showToast.showSuccessMessasge(
+            this.loadProfileData(this.profileData!.id);
+            this.showToast.showSuccessMessage(
               'Success',
               response.message || 'Update successfully'
             );

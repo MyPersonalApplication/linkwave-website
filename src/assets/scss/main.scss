@@ -1836,6 +1836,14 @@ textarea:focus {
   overflow: hidden;
 }
 
+.profile-thumb-large {
+  width: 80px;
+  height: 80px;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .profile-thumb.active {
   overflow: visible;
 }
@@ -1899,7 +1907,7 @@ textarea:focus {
 }
 
 .profile-banner-large {
-  height: 370px;
+  height: 500px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 992px) {
@@ -2931,15 +2939,7 @@ textarea:focus {
 }
 
 .friend-list-view:hover {
-  background-color: #dc4734;
-}
-
-.friend-list-view:hover .author a {
-  color: #fff;
-}
-
-.friend-list-view:hover .add-frnd {
-  color: #fff;
+  background-color: #f1f1f1;
 }
 
 .friend-list-view .add-frnd {

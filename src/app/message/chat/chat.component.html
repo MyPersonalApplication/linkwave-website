@@ -1,0 +1,130 @@
+<div class="ms-body" *ngIf="conversationId">
+  <div class="action-header p-3 clearfix">
+    <div
+      class="d-block d-md-none float-start"
+      id="ms-menu-trigger"
+      (click)="toggleMenu()"
+    >
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <div
+      class="float-start d-none d-md-block"
+      style="cursor: pointer"
+      [routerLink]="['/profile', friendInfo?.id]"
+    >
+      <img
+        [src]="
+          friendInfo?.avatar?.imageUrl
+            ? friendInfo?.avatar?.imageUrl
+            : 'assets/avatar/default-avartar.jpg'
+        "
+        alt=""
+        class="rounded-circle me-1"
+        height="45"
+        width="45"
+      />
+      <span class="fw-bold h6">
+        {{ friendInfo?.firstName }} {{ friendInfo?.lastName }}
+      </span>
+    </div>
+
+    <div class="d-flex justify-content-end gap-1">
+      <button mat-icon-button>
+        <mat-icon>call</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>video_call</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="messageInfor">
+        <mat-icon>infor</mat-icon>
+      </button>
+      <mat-menu #messageInfor="matMenu">
+        <button mat-menu-item>
+          <mat-icon>dialpad</mat-icon>
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <div id="message-list">
+    <div
+      *ngFor="let item of listMessages"
+      class="message-feed"
+      [class.media]="item?.sender?.id !== currentUser?.id"
+      [class.right]="item?.sender?.id === currentUser?.id"
+    >
+      <div
+        [class.float-start]="item?.sender?.id !== currentUser?.id"
+        [class.float-end]="item?.sender?.id === currentUser?.id"
+      >
+        <img
+          [src]="
+            item?.sender?.avatar?.imageUrl
+              ? item?.sender?.avatar?.imageUrl
+              : 'assets/avatar/default-avartar.jpg'
+          "
+          alt=""
+          class="rounded-circle"
+          [class.me-1]="item?.sender?.id !== currentUser?.id"
+          [class.ms-1]="item?.sender?.id === currentUser?.id"
+          height="45"
+          width="45"
+        />
+      </div>
+      <div class="media-body">
+        <div
+          class="mf-content"
+          [title]="
+            (item.createdAt | date : 'MM/dd/yyyy') +
+            ' at ' +
+            (item.createdAt | date : 'HH:mm')
+          "
+        >
+          {{ item.content }}
+        </div>
+
+        <!-- <small
+          class="mf-date"
+          [class.ps-5]="item?.sender?.id !== currentUser?.id"
+          [class.pe-5]="item?.sender?.id === currentUser?.id"
+        >
+          <p>{{ item.createdAt | date : "MM/dd/yyyy 'at' HH:mm" }}</p>
+        </small> -->
+      </div>
+    </div>
+  </div>
+
+  <form class="msb-reply p-2" [formGroup]="chatForm" (ngSubmit)="submit()">
+    <button mat-icon-button>
+      <mat-icon>add_reaction</mat-icon>
+    </button>
+    <input placeholder="What's on your mind..." formControlName="message" />
+    <button mat-icon-button type="submit">
+      <mat-icon>send</mat-icon>
+    </button>
+  </form>
+</div>
+<div
+  class="ms-body d-flex justify-content-center align-items-center"
+  style="height: 90vh"
+  *ngIf="!conversationId"
+>
+  <img
+    src="assets/gif/empty-states-nbg.gif"
+    alt="Empty State"
+    class="img-fluid"
+    width="500"
+  />
+</div>

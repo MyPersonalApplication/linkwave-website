@@ -2,7 +2,11 @@
   class="profile-banner-large bg-img"
   [style.background-image]="'url(' + coverImage + ')'"
 >
-  <div class="profile-banner-change" (click)="openDialogChangeCover()">
+  <div
+    *ngIf="isCurrentUser"
+    class="profile-banner-change"
+    (click)="openDialogChangeCover()"
+  >
     Change Picture
   </div>
 </div>
@@ -14,13 +18,14 @@
           <figure class="profile-picture">
             <img
               [src]="
-                userData.avatar?.imageUrl
-                  ? userData.avatar?.imageUrl
+                profileData?.avatar?.imageUrl
+                  ? profileData?.avatar?.imageUrl
                   : 'assets/avatar/default-avartar.jpg'
               "
               alt="profile picture"
             />
             <div
+              *ngIf="isCurrentUser"
               class="profile-picture-change"
               (click)="openDialogChangeAvatar()"
             >

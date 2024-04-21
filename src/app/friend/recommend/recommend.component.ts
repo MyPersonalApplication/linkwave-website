@@ -51,7 +51,7 @@ export class RecommendComponent implements OnInit {
   addFriend(userId: string) {
     this.friendRequestService.sendFriendRequest(userId).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Friend request sent'
         );
@@ -70,7 +70,7 @@ export class RecommendComponent implements OnInit {
   confirmFriendRequest(id: string) {
     this.friendRequestService.acceptFriendRequest(id).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Friend request accepted'
         );
@@ -97,7 +97,7 @@ export class RecommendComponent implements OnInit {
   processRemove(id: string) {
     this.friendRequestService.rejectFriendRequest(id).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Friend request removed'
         );
@@ -116,7 +116,7 @@ export class RecommendComponent implements OnInit {
   recallRequest(requestId: string) {
     this.friendRequestService.deleteFriendRequest(requestId).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Request recalled'
         );

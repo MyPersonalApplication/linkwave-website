@@ -41,7 +41,7 @@ export class AboutComponent implements OnInit {
   updateAvatarLoading = false;
   updateCoverLoading = false;
   isCurrentUser = false;
-  profileData!: UserInfo;
+  profileData: UserInfo | undefined;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
 
@@ -114,65 +114,6 @@ export class AboutComponent implements OnInit {
     });
   }
 
-  // openDialogChangeAvatar() {
-  //   const dialogRef = this.dialog.open(AvatarComponent, {
-  //     data: this.profileData?.avatar,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     if (result) {
-  //       this.updateAvatarLoading = true;
-  //       this.userService.updateAvatar(this.profileData!.id, result).subscribe({
-  //         next: (response: any) => {
-  //           this.loadProfileData(this.userId);
-  //           this.updateAvatarLoading = false;
-  //           this.showToast.showSuccessMessasge(
-  //             'Success',
-  //             response.message || 'Update successfully'
-  //           );
-  //         },
-  //         error: (response) => {
-  //           this.showToast.showErrorMessage(
-  //             'Error',
-  //             response.error?.message ||
-  //               'Something went wrong. Please try again later'
-  //           );
-  //         },
-  //       });
-  //     }
-  //   });
-  // }
-
-  // openDialogChangeCover() {
-  //   const dialogRef = this.dialog.open(CoverComponent, {
-  //     data: this.profileData?.cover,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     if (result) {
-  //       this.updateCoverLoading = true;
-  //       this.userService.updateCover(this.profileData!.id, result).subscribe({
-  //         next: (response: any) => {
-  //           this.loadProfileData(this.userId);
-  //           // this.authService.saveUserData(this.profileData);
-  //           this.updateCoverLoading = false;
-  //           this.showToast.showSuccessMessasge(
-  //             'Success',
-  //             response.message || 'Update successfully'
-  //           );
-  //         },
-  //         error: (response) => {
-  //           this.showToast.showErrorMessage(
-  //             'Error',
-  //             response.error?.message ||
-  //               'Something went wrong. Please try again later'
-  //           );
-  //         },
-  //       });
-  //     }
-  //   });
-  // }
-
   openDialogEditProfile() {
     const dialogRef = this.dialog.open(AboutMeComponent, {
       data: this.profileData,
@@ -183,7 +124,7 @@ export class AboutComponent implements OnInit {
         this.userService.updateProfile(result).subscribe({
           next: (response: any) => {
             this.loadProfileData(this.userId);
-            this.showToast.showSuccessMessasge(
+            this.showToast.showSuccessMessage(
               'Success',
               response.message || 'Update successfully'
             );
@@ -233,7 +174,7 @@ export class AboutComponent implements OnInit {
                 this.workExperiences = this.workExperiences.map((exp) =>
                   exp.id === result.id ? result : exp
                 );
-                this.showToast.showSuccessMessasge(
+                this.showToast.showSuccessMessage(
                   'Success',
                   'Update work experience successfully'
                 );
@@ -241,7 +182,7 @@ export class AboutComponent implements OnInit {
                 this.educationExperiences = this.educationExperiences.map(
                   (exp) => (exp.id === result.id ? result : exp)
                 );
-                this.showToast.showSuccessMessasge(
+                this.showToast.showSuccessMessage(
                   'Success',
                   'Update education experience successfully'
                 );
@@ -261,13 +202,13 @@ export class AboutComponent implements OnInit {
               this.profileData?.experiences?.push(response);
               if (result.experienceType === ExperienceType.WORK) {
                 this.workExperiences.push(response);
-                this.showToast.showSuccessMessasge(
+                this.showToast.showSuccessMessage(
                   'Success',
                   'Add work experience successfully'
                 );
               } else {
                 this.educationExperiences.push(response);
-                this.showToast.showSuccessMessasge(
+                this.showToast.showSuccessMessage(
                   'Success',
                   'Add education experience successfully'
                 );
@@ -292,7 +233,7 @@ export class AboutComponent implements OnInit {
               this.workExperiences = this.workExperiences.filter(
                 (exp) => exp.id !== result
               );
-              this.showToast.showSuccessMessasge(
+              this.showToast.showSuccessMessage(
                 'Success',
                 'Delete work experience successfully'
               );
@@ -300,7 +241,7 @@ export class AboutComponent implements OnInit {
               this.educationExperiences = this.educationExperiences.filter(
                 (exp) => exp.id !== result
               );
-              this.showToast.showSuccessMessasge(
+              this.showToast.showSuccessMessage(
                 'Success',
                 'Delete education experience successfully'
               );
@@ -337,7 +278,7 @@ export class AboutComponent implements OnInit {
               this.profileData!.skills = this.profileData!.skills?.map((s) =>
                 s.id === result.id ? result : s
               );
-              this.showToast.showSuccessMessasge(
+              this.showToast.showSuccessMessage(
                 'Success',
                 'Update skill successfully'
               );
@@ -354,7 +295,7 @@ export class AboutComponent implements OnInit {
           this.userService.addSkill(result).subscribe({
             next: (response: any) => {
               this.profileData!.skills?.push(response);
-              this.showToast.showSuccessMessasge(
+              this.showToast.showSuccessMessage(
                 'Success',
                 'Add skill successfully'
               );
@@ -374,7 +315,7 @@ export class AboutComponent implements OnInit {
             this.profileData!.skills = this.profileData!.skills?.filter(
               (s) => s.id !== result
             );
-            this.showToast.showSuccessMessasge(
+            this.showToast.showSuccessMessage(
               'Success',
               'Delete skill successfully'
             );

@@ -42,7 +42,7 @@ export class RequestComponent implements OnInit {
   confirmFriendRequest(id: string) {
     this.friendRequestService.acceptFriendRequest(id).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Friend request accepted'
         );
@@ -69,7 +69,7 @@ export class RequestComponent implements OnInit {
   processRemove(id: string) {
     this.friendRequestService.rejectFriendRequest(id).subscribe({
       next: (response) => {
-        this.showToast.showSuccessMessasge(
+        this.showToast.showSuccessMessage(
           'Success',
           response.message || 'Friend request removed'
         );

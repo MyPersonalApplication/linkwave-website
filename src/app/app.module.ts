@@ -50,6 +50,7 @@ import { RecommendComponent } from './friend/recommend/recommend.component';
 import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
 import { UserCardComponent } from './component/loading/user-card/user-card.component';
+import { ChatComponent } from './message/chat/chat.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -90,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RecommendComponent,
     RequestComponent,
     UserCardComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

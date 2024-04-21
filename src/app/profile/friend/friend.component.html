@@ -4,15 +4,15 @@
       <mat-card-content>
         <div class="d-flex justify-content-between align-items-center my-2">
           <div class="page-title-inner">
-            <h4 class="page-title">Friends (1250)</h4>
+            <h4 class="page-title">Friends ({{ friends.length }})</h4>
           </div>
-          <nav class="d-flex gap-5 nav-friends">
+          <!-- <nav class="d-flex gap-5 nav-friends">
             <div class="nav-item">All</div>
             <div class="nav-item">Recently</div>
             <div class="nav-item">Relative</div>
             <div class="nav-item">Collage</div>
             <div class="nav-item">Request</div>
-          </nav>
+          </nav> -->
         </div>
       </mat-card-content>
     </mat-card>
@@ -23,26 +23,63 @@
   <mat-card>
     <mat-card-content class="px-4">
       <div class="row">
-        <div *ngFor="let friend of friends" class="col-lg-3 col-sm-6 mb-3">
+        <div *ngFor="let friend of friends" class="col-md-6 mb-3">
           <div class="friend-list-view">
             <!-- profile picture end -->
             <div class="profile-thumb">
-              <a href="#">
-                <figure class="profile-thumb-middle">
-                  <img [src]="friend.avatarUrl" alt="profile picture" />
+              <div
+                class="cursor-pointer"
+                [routerLink]="['/profile', friend?.user?.id]"
+              >
+                <figure class="profile-thumb-large">
+                  <img
+                    [src]="
+                      friend?.user?.avatar?.imageUrl
+                        ? friend?.user?.avatar?.imageUrl
+                        : 'assets/avatar/default-avartar.jpg'
+                    "
+                    alt="profile picture"
+                  />
                 </figure>
-              </a>
+              </div>
             </div>
             <!-- profile picture end -->
 
             <div class="posted-author">
-              <h6 class="author">
-                <a href="profile.html">{{ friend.name }}</a>
-              </h6>
-              <div class="add-frnd">Add Friend</div>
+              <h5
+                class="mb-2 fw-bold cursor-pointer"
+                [routerLink]="['/profile', friend?.user?.id]"
+              >
+                {{ friend.user.firstName }} {{ friend.user.lastName }}
+              </h5>
+              <div class="add-frnd">
+                <button
+                  mat-raised-button
+                  color="warn"
+                  (click)="unFriend(friend?.user?.id)"
+                >
+                  Unfriend
+                </button>
+                <button
+                  mat-stroked-button
+                  color="warn"
+                  (click)="handleMessage(friend?.user?.id)"
+                  class="ms-2"
+                >
+                  Message
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div *ngIf="friends.length == 0" class="text-center">
+        <img
+          src="assets/gif/empty-states-nbg.gif"
+          alt="Empty State"
+          class="img-fluid"
+          width="500"
+        />
       </div>
     </mat-card-content>
   </mat-card>

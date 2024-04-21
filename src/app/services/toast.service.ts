@@ -25,7 +25,7 @@ export class ToastService {
     });
   }
 
-  showSuccessMessasge(title: string, message: string) {
+  showSuccessMessage(title: string, message: string) {
     const displayMessage = this.translate.instant(message);
     this.toastr.findDuplicate(title, displayMessage, true, false);
     this.toastr.success(displayMessage, title, {

@@ -94,7 +94,7 @@ export class NotificationComponent {
 
   removeNotification(id: string): void {
     this.notifications = this.notifications.filter((n) => n.id !== id);
-    this.showToast.showSuccessMessasge(
+    this.showToast.showSuccessMessage(
       'Success',
       'Remove notification successfully'
     );

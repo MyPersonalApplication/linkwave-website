@@ -12,14 +12,17 @@ $background-color_1: #edecec;
   margin: 0 auto;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
   &:after {
     content: " ";
     display: table;
   }
+
   &:before {
     content: " ";
     display: table;
   }
+
   .ms-menu {
     position: absolute;
     left: 0;
@@ -38,102 +41,13 @@ $background-color_1: #edecec;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   }
 }
-#ms-menu-trigger.toggled {
-  i {
-    &:before {
-      content: "\f2ea";
-    }
-  }
-}
 
 :is(img) {
   object-fit: cover;
 }
 
-.message-feed {
-  padding: 20px;
-
-  &:not(.right) {
-    .mf-content {
-      background: $color_main;
-      color: $color_2;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    }
-  }
-}
-.message-feed.right {
-  .mf-content {
-    background: #eee;
-    text-align: left;
-  }
-  text-align: right;
-}
-.mf-content {
-  padding: 12px 17px 13px;
-  border-radius: 2px;
-  display: inline-block;
-  max-width: 80%;
-  border-radius: 5px;
-}
-.mf-date {
-  display: block;
-  color: $color_3;
-  margin-top: 7px;
-  > .mat-icon {
-    font-size: 14px;
-    line-height: 100%;
-    position: relative;
-    top: 12px;
-  }
-}
-.msb-reply {
-  display: flex;
-  align-items: center;
-  box-shadow: 0 -20px 20px -5px #fff;
-  position: relative;
-  border-top: 1px solid #eee;
-  background: #f8f8f8;
-
-  input {
-    width: 100%;
-    font-size: 13px;
-    border: 0;
-    padding: 10px 15px;
-    resize: none;
-
-    &:focus {
-      outline: 0;
-    }
-  }
-
-  button {
-    color: $color_main;
-    &:hover {
-      background: #f2f2f2;
-    }
-  }
-}
-
-.action-header {
-  background: #f8f8f8;
-}
-
-.ms-body {
-  background: #fff;
-}
-
 .ms-user {
   background: #f8f8f8;
-}
-
-#message-list {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 75vh;
 }
 
 #friend-list {
@@ -153,14 +67,6 @@ $background-color_1: #edecec;
   }
 }
 
-@media (min-width: 768px) {
-  #messages-main {
-    .ms-body {
-      padding-left: 300px;
-    }
-  }
-}
-
 @media (max-width: 767px) {
   main {
     padding: 0;
@@ -172,11 +78,9 @@ $background-color_1: #edecec;
         z-index: 1;
         top: 65px;
       }
+
       .ms-menu.toggled {
         display: block;
-      }
-      .ms-body {
-        overflow: hidden;
       }
 
       #friend-list {
@@ -192,4 +96,12 @@ $background-color_1: #edecec;
       background: #f8f8f8;
     }
   }
+}
+
+.unread-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #f44336; /* You can change the color to suit your preference */
+  border-radius: 50%;
 }
