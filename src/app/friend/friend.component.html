@@ -72,7 +72,7 @@
     <app-user-card *ngIf="isLoadingRecommend" [count]="6"></app-user-card>
   </div>
   <div
-    *ngIf="!isLoadingRecommend && recommends.length == 0"
+    *ngIf="!isLoadingRecommend && getRecommendFriendsLength == 0"
     class="text-center"
   >
     <img

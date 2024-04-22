@@ -27,9 +27,7 @@ export class ProfileComponent implements OnInit {
   pages: Page[] = [
     { text: 'Timeline', url: 'timeline', isActive: true },
     { text: 'About', url: 'about', isActive: false },
-    // { text: 'Photos', url: 'photos', isActive: false },
     { text: 'Friends', url: 'friends', isActive: false },
-    // { text: 'More', url: 'more', isActive: false },
   ];
 
   constructor(
@@ -42,10 +40,6 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.userData = this.userData = this.authService.getUserData() as UserInfo;
-    // this.coverImage =
-    //   this.userData.cover?.imageUrl ||
-    //   'assets/images/banner/profile-banner.jpg';
     this.setActivePage();
     this.route.paramMap.subscribe((params) => {
       const userId = params.get('id');

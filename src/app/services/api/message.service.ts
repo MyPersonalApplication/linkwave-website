@@ -7,8 +7,16 @@ import { Injectable } from '@angular/core';
 export class MessageService {
   constructor(private http: HttpClient) {}
 
-  sendMessage(conversationId: string, content: string) {
-    return this.http.post<any>('/api/messages', { conversationId, content });
+  sendMessage(
+    conversationId: string,
+    content: string,
+    senderId: string | null
+  ) {
+    return this.http.post<any>('/api/messages', {
+      conversationId,
+      content,
+      senderId,
+    });
   }
 
   markAsRead(listMessageIds: string[]) {

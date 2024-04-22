@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FriendShip } from 'src/app/models/friendship';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { FriendShipService } from 'src/app/services/api/friendship.service';
+import { MessageService } from 'src/app/services/api/message.service';
 import { SwalService } from 'src/app/services/swal.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -18,7 +20,9 @@ export class FriendComponent implements OnInit {
     private showToast: ToastService,
     private friendShipService: FriendShipService,
     private conversationService: ConversationService,
-    private swalService: SwalService
+    private messageService: MessageService,
+    private swalService: SwalService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,14 +76,14 @@ export class FriendComponent implements OnInit {
   }
 
   handleMessage(friendId: string | undefined) {
-    // Open the chat box with the selected friend
-    console.log('Message', friendId);
     if (!friendId) {
       return;
     }
     this.conversationService.createConversation(friendId).subscribe({
       next: (response) => {
-        console.log(response);
+        this.router.navigate(['/message'], {
+          queryParams: { id: response.id },
+        });
       },
       error: (response) => {
         this.showToast.showErrorMessage(

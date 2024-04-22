@@ -43,16 +43,12 @@
       </button>
       <mat-menu #messageInfor="matMenu">
         <button mat-menu-item>
-          <mat-icon>dialpad</mat-icon>
-          <span>Redial</span>
-        </button>
-        <button mat-menu-item disabled>
-          <mat-icon>voicemail</mat-icon>
-          <span>Check voice mail</span>
+          <mat-icon>archive</mat-icon>
+          <span>Archive</span>
         </button>
         <button mat-menu-item>
-          <mat-icon>notifications_off</mat-icon>
-          <span>Disable alerts</span>
+          <mat-icon>delete</mat-icon>
+          <span>Remove</span>
         </button>
       </mat-menu>
     </div>
@@ -65,43 +61,37 @@
       [class.media]="item?.sender?.id !== currentUser?.id"
       [class.right]="item?.sender?.id === currentUser?.id"
     >
-      <div
-        [class.float-start]="item?.sender?.id !== currentUser?.id"
-        [class.float-end]="item?.sender?.id === currentUser?.id"
-      >
-        <img
-          [src]="
-            item?.sender?.avatar?.imageUrl
-              ? item?.sender?.avatar?.imageUrl
-              : 'assets/avatar/default-avartar.jpg'
-          "
-          alt=""
-          class="rounded-circle"
-          [class.me-1]="item?.sender?.id !== currentUser?.id"
-          [class.ms-1]="item?.sender?.id === currentUser?.id"
-          height="45"
-          width="45"
-        />
-      </div>
-      <div class="media-body">
+      <div *ngIf="item.content !== ''">
         <div
-          class="mf-content"
-          [title]="
-            (item.createdAt | date : 'MM/dd/yyyy') +
-            ' at ' +
-            (item.createdAt | date : 'HH:mm')
-          "
+          [class.float-start]="item?.sender?.id !== currentUser?.id"
+          [class.float-end]="item?.sender?.id === currentUser?.id"
         >
-          {{ item.content }}
+          <img
+            [src]="
+              item?.sender?.avatar?.imageUrl
+                ? item?.sender?.avatar?.imageUrl
+                : 'assets/avatar/default-avartar.jpg'
+            "
+            alt=""
+            class="rounded-circle"
+            [class.me-1]="item?.sender?.id !== currentUser?.id"
+            [class.ms-1]="item?.sender?.id === currentUser?.id"
+            height="45"
+            width="45"
+          />
         </div>
-
-        <!-- <small
-          class="mf-date"
-          [class.ps-5]="item?.sender?.id !== currentUser?.id"
-          [class.pe-5]="item?.sender?.id === currentUser?.id"
-        >
-          <p>{{ item.createdAt | date : "MM/dd/yyyy 'at' HH:mm" }}</p>
-        </small> -->
+        <div class="media-body">
+          <div
+            class="mf-content"
+            [title]="
+              (item.createdAt | date : 'MM/dd/yyyy') +
+              ' at ' +
+              (item.createdAt | date : 'HH:mm')
+            "
+          >
+            {{ item.content }}
+          </div>
+        </div>
       </div>
     </div>
   </div>

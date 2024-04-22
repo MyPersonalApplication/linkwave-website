@@ -5,15 +5,26 @@
         class="ms-user p-3 d-flex justify-content-between align-items-center"
       >
         <h3 class="m-0 fw-bold">Message</h3>
-        <button mat-icon-button>
-          <mat-icon>add_circle </mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="messageOption">
+          <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #messageOption="matMenu">
+          <button mat-menu-item>
+            <mat-icon>add_circle</mat-icon>
+            <span>New message</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>visibility</mat-icon>
+            <span>View archive</span>
+          </button>
+        </mat-menu>
       </div>
       <mat-list id="friend-list">
         <div>
           <mat-list-item
-            *ngFor="let item of messageList"
+            *ngFor="let item of listConversations"
             (click)="handleChat(item.id)"
+            [class.active]="item.id === conversationId"
           >
             <img
               matListItemAvatar
@@ -31,7 +42,12 @@
                 *ngIf="item.unreadCount.length > 0"
               ></span>
             </span>
-            <span matListItemLine class="ms-1">{{ item.lastMessage }}</span>
+            <span
+              matListItemLine
+              class="ms-1"
+              *ngIf="item.lastMessage !== ''"
+              >{{ item.lastMessage }}</span
+            >
             <span matListItemLine>
               {{ item.lastMessageTime | date : "short" }}
             </span>
@@ -42,7 +58,8 @@
 
     <app-chat
       (toggle)="toggleMenu()"
-      (markAsRead)="loadConversations()"
+      (markAsRead)="loadConversations(undefined)"
+      (sendMessage)="loadConversations(undefined)"
       [conversationId]="conversationId"
     ></app-chat>
   </div>

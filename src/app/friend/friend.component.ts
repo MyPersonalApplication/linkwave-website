@@ -14,6 +14,7 @@ import { UserInfo } from '../models/profile';
 export class UserFriendComponent implements OnInit {
   isLoadingRecommend = true;
   isLoadingRequest = true;
+  getRecommendFriendsLength: number = 0;
 
   recommends: FriendRecommend[] = [];
   friendRequests: FriendRequest[] = [];
@@ -35,6 +36,9 @@ export class UserFriendComponent implements OnInit {
       next: (response: FriendRecommend[]) => {
         this.isLoadingRecommend = false;
         this.recommends = response;
+        this.getRecommendFriendsLength = response.filter(
+          (item) => item.friend === false
+        ).length;
       },
       error: (response) => {
         this.showToast.showErrorMessage(

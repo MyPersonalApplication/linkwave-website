@@ -56,6 +56,11 @@ $background-color_1: #edecec;
   display: flex;
   flex-direction: column;
   height: 80vh;
+  padding-top: 0;
+
+  &.active {
+    background: #f8f8f8;
+  }
 
   span {
     font-family: "Poppins", sans-serif;
@@ -92,6 +97,10 @@ $background-color_1: #edecec;
 
 :host ::ng-deep {
   .mat-mdc-list-item {
+    &.active {
+      background: #f1f1f1;
+    }
+
     &:hover {
       background: #f8f8f8;
     }

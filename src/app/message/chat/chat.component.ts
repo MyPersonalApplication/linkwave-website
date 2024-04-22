@@ -8,7 +8,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Conversation, Message } from 'src/app/models/conversation';
+import {
+  Conversation,
+  Message,
+  Participant,
+} from 'src/app/models/conversation';
 import { UserInfo } from 'src/app/models/profile';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
@@ -23,6 +27,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class ChatComponent implements OnInit, OnChanges {
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() markAsRead: EventEmitter<void> = new EventEmitter<void>();
+  @Output() sendMessage: EventEmitter<void> = new EventEmitter<void>();
   @Input() conversationId!: string;
   friendInfo: UserInfo | undefined;
   listMessages: Message[] = [];
@@ -54,16 +59,20 @@ export class ChatComponent implements OnInit, OnChanges {
       .getConversationById(this.conversationId)
       .subscribe({
         next: (response: Conversation) => {
+          console.log(
+            '🚀 ~ ChatComponent ~ loadConversations ~ response:',
+            response
+          );
           // Get current user info
           const currentUser: UserInfo =
             this.authService.getUserData() as UserInfo;
           this.currentUser = currentUser;
 
           // Get friend info and list of messages
-          const friend = response.messages.find(
-            (message: Message) => message.sender.id !== currentUser.id
+          const friend = response.participants.find(
+            (participant: Participant) => participant.user.id !== currentUser.id
           );
-          this.friendInfo = friend?.sender;
+          this.friendInfo = friend?.user;
           this.listMessages = response.messages;
 
           // Mark all messages as read
@@ -107,14 +116,13 @@ export class ChatComponent implements OnInit, OnChanges {
       return;
     }
 
-    console.log(this.chatForm.value.message);
-
     this.messageService
-      .sendMessage(this.conversationId, this.chatForm.value.message)
+      .sendMessage(this.conversationId, this.chatForm.value.message, null)
       .subscribe({
         next: (response: Message) => {
           this.listMessages.push(response);
           this.chatForm.reset();
+          this.sendMessage.emit();
         },
         error: (response) => {
           this.showToast.showErrorMessage(
