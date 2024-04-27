@@ -51,10 +51,13 @@ import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
 import { UserCardComponent } from './component/loading/user-card/user-card.component';
 import { ChatComponent } from './message/chat/chat.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
 @NgModule({
   declarations: [
@@ -112,6 +115,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxSkeletonLoaderModule,
     ImageCropperModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     {

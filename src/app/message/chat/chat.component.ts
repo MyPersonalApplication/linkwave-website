@@ -14,6 +14,7 @@ import {
   Participant,
 } from 'src/app/models/conversation';
 import { UserInfo } from 'src/app/models/profile';
+import { ChatService } from 'src/app/services/api/chat.service';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -39,6 +40,7 @@ export class ChatComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private conversationService: ConversationService,
     private messageService: MessageService,
+    private chatService: ChatService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -46,6 +48,9 @@ export class ChatComponent implements OnInit, OnChanges {
     this.chatForm = this.formBuilder.group({
       message: [''],
     });
+    // this.chatService.getMessage().subscribe((message: string) => {
+    //   console.log(message);
+    // });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,10 +64,6 @@ export class ChatComponent implements OnInit, OnChanges {
       .getConversationById(this.conversationId)
       .subscribe({
         next: (response: Conversation) => {
-          console.log(
-            '🚀 ~ ChatComponent ~ loadConversations ~ response:',
-            response
-          );
           // Get current user info
           const currentUser: UserInfo =
             this.authService.getUserData() as UserInfo;
