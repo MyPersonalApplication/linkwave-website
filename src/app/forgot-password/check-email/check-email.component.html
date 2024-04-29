@@ -1,0 +1,61 @@
+<div class="wrapper">
+  <div class="content-wrapper">
+    <div class="title">
+      <span class="main-title">Check Your Email</span>
+      <span class="sub-title"
+        >We've sent a link to reset your password for<br />
+        <b>{{ email }}</b></span
+      >
+      <span class="sub-title"></span>
+    </div>
+    <div class="form-wrapper">
+      <span class="resend-title">Didn't receive the email?</span>
+      <span *ngIf="isWaiting" class="resend-countdown">
+        <!-- Resend email after {{ timer | async }} -->
+        Resend email after {{ timer | async }}
+      </span>
+      <div class="w-100 text-center">
+        <button
+          *ngIf="!isWaiting && !isLoading"
+          (click)="resendEmail()"
+          type="submit"
+          mat-flat-button
+          extended
+          color="warn"
+          class="btn-submit"
+        >
+          Resend Email
+        </button>
+        <button
+          *ngIf="isWaiting"
+          type="button"
+          mat-flat-button
+          extended
+          color="disable"
+          class="btn-submit"
+          disabled
+        >
+          Resend Email
+        </button>
+        <button
+          *ngIf="isLoading"
+          type="button"
+          mat-flat-button
+          extended
+          color="disable"
+          class="btn-loading"
+        >
+          <mat-icon
+            ><mat-spinner color="white" diameter="18"> </mat-spinner
+          ></mat-icon>
+        </button>
+      </div>
+      <div class="w-100 text-center">
+        <button mat-button class="btn-back text-secondary" routerLink="/login">
+          <mat-icon>arrow_back</mat-icon>
+          Back to login
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

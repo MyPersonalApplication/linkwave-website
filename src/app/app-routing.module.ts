@@ -21,6 +21,8 @@ import { MoreComponent } from './profile/more/more.component';
 import { RecommendComponent } from './friend/recommend/recommend.component';
 import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
 
 const routes: Routes = [
   {
@@ -164,6 +166,18 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         title: 'Register',
+        canActivate: [UnAuthenticationGuard],
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+        title: 'Forgot Password',
+        canActivate: [UnAuthenticationGuard],
+      },
+      {
+        path: 'check-email',
+        component: CheckEmailComponent,
+        title: 'Check Email',
         canActivate: [UnAuthenticationGuard],
       },
     ],

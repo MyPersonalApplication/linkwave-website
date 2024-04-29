@@ -52,6 +52,8 @@ import { UserFriendComponent } from './friend/friend.component';
 import { UserCardComponent } from './component/loading/user-card/user-card.component';
 import { ChatComponent } from './message/chat/chat.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -95,6 +97,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     RequestComponent,
     UserCardComponent,
     ChatComponent,
+    ForgotPasswordComponent,
+    CheckEmailComponent,
   ],
   imports: [
     BrowserModule,

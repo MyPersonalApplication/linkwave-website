@@ -54,6 +54,7 @@ $font-family_1: "Material-Design-Iconic-Font";
 .signin-content {
   display: flex;
   display: -webkit-flex;
+  align-items: center;
   padding-top: 67px;
   padding-bottom: 87px;
 }
@@ -140,7 +141,7 @@ a {
 }
 
 :is(img) {
-  max-width: 65%;
+  max-width: 100%;
   height: auto;
 }
 
@@ -170,7 +171,7 @@ h2 {
   clear: both;
 }
 .container-login {
-  width: 900px;
+  width: 1300px;
   background: #fff;
   margin: 0 auto;
   box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
@@ -213,15 +214,13 @@ h2 {
 .signin-form {
   width: 50%;
   overflow: hidden;
-  margin-right: 90px;
-  margin-left: 80px;
+  margin-right: 55px;
+  margin-left: 55px;
 }
 .signin-image {
   width: 50%;
   overflow: hidden;
-  margin-left: 110px;
-  margin-right: 20px;
-  margin-top: 10px;
+  margin: 0 55px;
 }
 .form-title {
   margin-bottom: 12px;
@@ -325,7 +324,7 @@ label.valid {
 }
 @media screen and (min-width: 1024px) {
   .container-login {
-    max-width: 1200px;
+    max-width: 1100px;
   }
 }
 @media screen and (max-width: 768px) {

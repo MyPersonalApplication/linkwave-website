@@ -12,26 +12,6 @@
           >
             Create an account
           </a>
-          <div class="social-login">
-            <span class="social-label">Or login with</span>
-            <ul class="socials">
-              <li>
-                <a href="#">
-                  <i class="display-flex-center zmdi zmdi-facebook"></i
-                ></a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="display-flex-center zmdi zmdi-twitter"></i
-                ></a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="display-flex-center zmdi zmdi-google"></i
-                ></a>
-              </li>
-            </ul>
-          </div>
         </div>
 
         <div class="signin-form">
@@ -96,16 +76,24 @@
                 </small>
               </div>
             </div>
-            <div class="form-check mb-3">
-              <!-- <mat-checkbox color="primary">Remember me</mat-checkbox> -->
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="remember-me"
-              />
-              <label class="form-check-label" for="remember-me">
-                Remember me
-              </label>
+            <div class="d-flex justify-content-between">
+              <div class="form-check mb-3">
+                <!-- <mat-checkbox color="primary">Remember me</mat-checkbox> -->
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="remember-me"
+                />
+                <label class="form-check-label" for="remember-me">
+                  Remember me
+                </label>
+              </div>
+              <a
+                routerLink="/forgot-password"
+                class="signup-image-link text-decoration-underline"
+              >
+                Forgot password?
+              </a>
             </div>
             <button
               *ngIf="!isLoading"
@@ -128,6 +116,26 @@
               </mat-icon>
             </button>
           </form>
+          <!-- <div class="social-login">
+            <span class="social-label">Or login with</span>
+            <ul class="socials">
+              <li>
+                <a href="#">
+                  <i class="display-flex-center zmdi zmdi-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="display-flex-center zmdi zmdi-twitter"></i
+                ></a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="display-flex-center zmdi zmdi-google"></i
+                ></a>
+              </li>
+            </ul>
+          </div> -->
         </div>
       </div>
     </div>
