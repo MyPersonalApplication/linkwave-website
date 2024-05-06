@@ -70,10 +70,6 @@ export class RegisterComponent {
     );
   }
 
-  get submitData() {
-    return this.registrationForm.value;
-  }
-
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
   }

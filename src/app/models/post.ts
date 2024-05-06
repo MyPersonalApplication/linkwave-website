@@ -3,18 +3,28 @@ import { UserInfo } from './profile';
 export interface PostList {
   id: string;
   content: string;
-  isLiked: boolean;
-  likes: number;
-  comments: number;
-  shares: number;
-  createdAt?: Date;
   user: UserInfo;
-  media: Array<PostMedia>;
+  lstMedia: Array<PostMedia>;
+  lstLikes: Array<PostLike>;
+  lstComments: Array<PostComment>;
+  createdAt: Date;
 }
 
 export interface PostMedia {
   id: string;
-  url: string;
-  caption: string;
+  mediaUrl: string;
+  mediaId: string;
   isVideo: boolean;
+}
+
+export interface PostLike {
+  id: string;
+  user: UserInfo;
+}
+
+export interface PostComment {
+  id: string;
+  content: string;
+  user: UserInfo;
+  createdAt: Date;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -8,10 +8,7 @@ import {
   faLinkedin as faBrandLinkedin,
   faInstagramSquare as faBrandInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { concatMap, debounce } from 'rxjs';
 import { AboutMeComponent } from 'src/app/component/dialog/about-me/about-me.component';
-import { AvatarComponent } from 'src/app/component/dialog/avatar/avatar.component';
-import { CoverComponent } from 'src/app/component/dialog/cover/cover.component';
 import { ExperienceComponent } from 'src/app/component/dialog/experience/experience.component';
 import { SkillComponent } from 'src/app/component/dialog/skill/skill.component';
 import {
@@ -23,6 +20,7 @@ import {
 import { UserService } from 'src/app/services/api/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { passwordMatchingValidatior } from 'src/app/shared/utility/validator/password.validator';
 
 @Component({
   selector: 'app-about',
@@ -44,20 +42,46 @@ export class AboutComponent implements OnInit {
   profileData: UserInfo | undefined;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
+  changePasswordForm!: FormGroup;
+  hideOldPassword: boolean = true;
+  hidePassword: boolean = true;
+  hideConfirm: boolean = true;
+  isLoading: boolean = false;
 
   constructor(
     private showToast: ToastService,
     private route: ActivatedRoute,
     private userService: UserService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.changePasswordForm = this.formBuilder.group(
+      {
+        oldPassword: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: passwordMatchingValidatior }
+    );
     this.route.parent?.paramMap.subscribe((params) => {
       this.userId = params.get('id')!;
       this.loadProfileData(this.userId);
     });
+  }
+
+  get oldPassword() {
+    return this.changePasswordForm.get('oldPassword') as FormGroup;
+  }
+
+  get password() {
+    return this.changePasswordForm.get('password') as FormGroup;
+  }
+
+  get confirmPassword() {
+    return this.changePasswordForm.get('confirmPassword') as FormGroup;
   }
 
   loadProfileData(userId: string | null) {
@@ -329,6 +353,49 @@ export class AboutComponent implements OnInit {
           },
         });
       }
+    });
+  }
+
+  toggleOldPasswordVisibility(): void {
+    this.hideOldPassword = !this.hideOldPassword;
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmVisibility(): void {
+    this.hideConfirm = !this.hideConfirm;
+  }
+
+  submit(): void {
+    if (this.changePasswordForm.invalid) {
+      this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
+      return;
+    }
+
+    const requestData = {
+      oldPassword: this.changePasswordForm.value.oldPassword,
+      newPassword: this.changePasswordForm.value.password,
+    };
+
+    this.isLoading = true;
+    this.userService.changePassword(requestData).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.showToast.showSuccessMessage(
+          'Success',
+          'Change password successfully'
+        );
+        this.changePasswordForm.reset();
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.showToast.showErrorMessage(
+          'Error',
+          error.error?.message || 'Change password failed. Please try again'
+        );
+      },
     });
   }
 }

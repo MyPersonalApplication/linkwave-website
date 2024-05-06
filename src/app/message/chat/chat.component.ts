@@ -19,6 +19,7 @@ import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { StompService } from 'src/app/services/ws/stomp.service';
 
 @Component({
   selector: 'app-chat',
@@ -40,17 +41,18 @@ export class ChatComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private conversationService: ConversationService,
     private messageService: MessageService,
-    private chatService: ChatService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private stompService: StompService
   ) {}
 
   ngOnInit(): void {
     this.chatForm = this.formBuilder.group({
       message: [''],
     });
-    // this.chatService.getMessage().subscribe((message: string) => {
-    //   console.log(message);
-    // });
+    this.stompService.subscribe('/topic/chat', (message) => {
+      console.log(message);
+      this.loadConversations();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

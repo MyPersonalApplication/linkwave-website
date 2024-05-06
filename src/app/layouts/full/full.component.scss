@@ -34,3 +34,7 @@
   height: 40px;
   object-fit: cover;
 }
+
+.sticky-top {
+  z-index: 900 !important;
+}

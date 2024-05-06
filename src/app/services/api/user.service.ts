@@ -18,6 +18,10 @@ export class UserService {
     return this.http.get<UserInfo>('/api/users/profile/me');
   }
 
+  changePassword(data: any) {
+    return this.http.post('/api/users/change-password', data);
+  }
+
   getProfile(userId: string) {
     return this.http.get<UserInfo>(`/api/users/profile/${userId}`);
   }

@@ -54,12 +54,18 @@ import { ChatComponent } from './message/chat/chat.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
+import { StompService } from './services/ws/stomp.service';
+import { PostLikeComponent } from './component/dialog/post-like/post-like.component';
+import { PostCommentComponent } from './component/dialog/post-comment/post-comment.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
+// const config: SocketIoConfig = {
+//   url: 'http://localhost:8080/ws-chat/',
+//   options: {},
+// };
 
 @NgModule({
   declarations: [
@@ -99,6 +105,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     ChatComponent,
     ForgotPasswordComponent,
     CheckEmailComponent,
+    PostLikeComponent,
+    PostCommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,7 +127,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     }),
     NgxSkeletonLoaderModule,
     ImageCropperModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
   ],
   providers: [
     {
@@ -128,6 +136,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
       multi: true,
     },
     AuthService,
+    StompService,
   ],
   bootstrap: [AppComponent],
 })

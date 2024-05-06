@@ -150,6 +150,140 @@
             </div>
           </div>
         </div>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title fw-bold mb-2">Change Password</h5>
+          </div>
+
+          <mat-divider class="mb-3"></mat-divider>
+
+          <form
+            class="change-password-form"
+            id="change-password-form"
+            [formGroup]="changePasswordForm"
+            (ngSubmit)="submit()"
+          >
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input
+                  [type]="hideOldPassword ? 'password' : 'text'"
+                  class="form-control"
+                  [class.is-invalid]="
+                    oldPassword.invalid && oldPassword.touched
+                  "
+                  id="oldPassword"
+                  placeholder="Old Password"
+                  autocomplete="off"
+                  formControlName="oldPassword"
+                />
+                <label for="oldPassword">Old Password</label>
+              </div>
+              <span
+                class="input-group-text"
+                (click)="toggleOldPasswordVisibility()"
+              >
+                <mat-icon *ngIf="hideOldPassword">visibility</mat-icon>
+                <mat-icon *ngIf="!hideOldPassword">visibility_off</mat-icon>
+              </span>
+              <div
+                *ngIf="oldPassword?.invalid && oldPassword?.touched"
+                class="invalid-feedback"
+              >
+                <small *ngIf="oldPassword?.errors?.['required']">
+                  Please enter old password
+                </small>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input
+                  [type]="hidePassword ? 'password' : 'text'"
+                  class="form-control"
+                  [class.is-invalid]="password.invalid && password.touched"
+                  id="password"
+                  placeholder="Password"
+                  autocomplete="off"
+                  formControlName="password"
+                />
+                <label for="password">Password</label>
+              </div>
+              <span
+                class="input-group-text"
+                (click)="togglePasswordVisibility()"
+              >
+                <mat-icon *ngIf="hidePassword">visibility</mat-icon>
+                <mat-icon *ngIf="!hidePassword">visibility_off</mat-icon>
+              </span>
+              <div
+                *ngIf="password?.invalid && password?.touched"
+                class="invalid-feedback"
+              >
+                <small *ngIf="password?.errors?.['required']">
+                  Please enter password
+                </small>
+                <small *ngIf="password?.errors?.['minlength']">
+                  Please enter at least 8 characters
+                </small>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input
+                  [type]="hideConfirm ? 'password' : 'text'"
+                  class="form-control"
+                  [class.is-invalid]="
+                    confirmPassword.invalid && confirmPassword.touched
+                  "
+                  id="confirm-password"
+                  placeholder="Confirm Password"
+                  formControlName="confirmPassword"
+                  autocomplete="off"
+                />
+                <label for="confirm-password">Confirm Password</label>
+              </div>
+              <span
+                class="input-group-text"
+                (click)="toggleConfirmVisibility()"
+              >
+                <mat-icon *ngIf="hideConfirm">visibility</mat-icon>
+                <mat-icon *ngIf="!hideConfirm">visibility_off</mat-icon>
+              </span>
+              <div
+                *ngIf="confirmPassword?.invalid && confirmPassword?.touched"
+                class="invalid-feedback"
+              >
+                <small *ngIf="confirmPassword?.errors?.['required']">
+                  Please enter confirm password
+                </small>
+                <small *ngIf="confirmPassword?.errors?.['mismatch']">
+                  Password and confirmation do not match.
+                </small>
+              </div>
+            </div>
+            <div class="form-group form-button">
+              <button
+                *ngIf="!isLoading"
+                type="submit"
+                mat-raised-button
+                color="warn"
+                class="form-submit"
+              >
+                Change Password
+              </button>
+              <button
+                *ngIf="isLoading"
+                type="submit"
+                mat-raised-button
+                class="form-submit"
+                disabled
+              >
+                <mat-icon>
+                  <mat-spinner color="warn" diameter="18"></mat-spinner>
+                </mat-icon>
+              </button>
+            </div>
+          </form>
+        </div>
       </mat-card-content>
     </mat-card>
   </mat-tab>
@@ -181,7 +315,7 @@
                       {{
                         experience.endDate
                           ? (experience.endDate | date : "MM/yyyy")
-                          : "Current"
+                          : "Present"
                       }}
                     </div>
                     <div class="small fw-bolder">
@@ -250,7 +384,7 @@
                       {{
                         experience.endDate
                           ? (experience.endDate | date : "MM/yyyy")
-                          : "Current"
+                          : "Present"
                       }}
                     </div>
                     <div class="small fw-bolder">

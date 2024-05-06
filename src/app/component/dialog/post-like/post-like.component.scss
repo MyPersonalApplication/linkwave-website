@@ -1,0 +1,23 @@
+@media screen and (min-width: 767px) {
+  .w-md-600 {
+    width: 600px;
+  }
+}
+
+h2 {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.list-group-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}

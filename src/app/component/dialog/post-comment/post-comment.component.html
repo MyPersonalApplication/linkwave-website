@@ -1,0 +1,140 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h2 mat-dialog-title class="fw-bold">View comment</h2>
+  <button mat-dialog-close type="button" class="btn-close me-3" aria-label="Close"></button>
+</div>
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl-8">
+      <div class="wrapper">
+        <div id="carouselExampleIndicators" class="carousel slide">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+              aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+              aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let item of post?.lstMedia; let i = index" [class.active]="i == 0">
+              <img *ngIf="!item.isVideo" [src]="item.mediaUrl" class="d-block" alt="Post Media" />
+              <app-video-player *ngIf="item.isVideo" [videoUrl]="item.mediaUrl"></app-video-player>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mt-5 mt-lg-0">
+      <div id="comments">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex gap-2 align-items-center">
+            <div class="profile-thumb">
+              <div class="author" [routerLink]="['/profile', post.user.id]">
+                <img [src]="
+                                  post.user.avatar?.imageUrl
+                                    ? post.user.avatar?.imageUrl
+                                    : 'assets/avatar/default-avartar.jpg'
+                                " alt="profile picture" class="rounded-circle avatar-post" />
+              </div>
+            </div>
+
+            <div class="ms-2">
+              <h6 class="fw-bold author mb-1" [routerLink]="['/profile', post.user.id]">
+                {{ post.user.firstName }} {{ post.user.lastName }}
+              </h6>
+              <span class="post-time">
+                {{ post.createdAt | date : "short" }}
+              </span>
+            </div>
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menuPostSettings">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menuPostSettings="matMenu">
+            <button mat-menu-item>
+              <mat-icon>bookmark</mat-icon>
+              <span>Save post</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>cancel_presentation</mat-icon>
+              <span>Hide post</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>disabled_visible</mat-icon>
+              <span>Unfollow pagename</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>report</mat-icon>
+              <span>Report post</span>
+            </button>
+          </mat-menu>
+        </div>
+        <div class="mt-2">
+          <p class="post-desc">
+            {{ post.content }}
+          </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="post-meta-like">
+            <fa-icon *ngIf="!isLikedPost()" [icon]="faRegularHeart" size="lg" style="color: #ff3232"
+              (click)="likePost()"></fa-icon>
+            <fa-icon *ngIf="isLikedPost()" [icon]="faSolidHeart" size="lg" style="color: #ff3232"
+              (click)="likePost()"></fa-icon>
+            <span>
+              {{ post.lstLikes.length }}
+            </span>
+            <span class="d-none d-lg-block ps-1">people</span>
+          </div>
+          <div class="post-comment">
+            <fa-icon [icon]="faRegularComments"></fa-icon>
+            <span>
+              {{ post.lstComments.length }}
+            </span>
+            <span class="d-none d-lg-block ps-1">comments</span>
+          </div>
+        </div>
+        <mat-divider class="my-3"></mat-divider>
+        <div class="d-flex gap-2 mb-3" *ngFor="let item of post?.lstComments">
+          <div class="avatar">
+            <img [src]="
+                        item.user.avatar?.imageUrl
+                          ? item.user.avatar?.imageUrl
+                          : 'assets/avatar/default-avartar.jpg'
+                      " class="rounded-circle" alt="User Image">
+          </div>
+          <div class="w-100">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-title mb-0">{{ item.user.firstName }} {{ item.user.lastName }}</h6>
+                <p class="card-text">{{ item.content }}</p>
+              </div>
+            </div>
+            <span class="post-time">
+              {{ item.createdAt | date : "short" }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <form class="msb-reply p-2">
+        <button mat-icon-button>
+          <mat-icon>add_reaction</mat-icon>
+        </button>
+        <input placeholder="Comment here" />
+        <button mat-icon-button type="submit">
+          <mat-icon>send</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>

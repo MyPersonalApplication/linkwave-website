@@ -1,23 +1,19 @@
 <mat-card class="mb-4" *ngFor="let post of postList">
   <mat-card-content>
-    <!-- post title start -->
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex gap-2 align-items-center">
         <div class="profile-thumb">
           <div class="author" [routerLink]="['/profile', post.user.id]">
-            <img
-              src="assets/avatar/default-avartar.jpg"
-              alt="profile picture"
-              class="rounded-circle avatar-post"
-            />
+            <img [src]="
+                post.user.avatar?.imageUrl
+                  ? post.user.avatar?.imageUrl
+                  : 'assets/avatar/default-avartar.jpg'
+              " alt="profile picture" class="rounded-circle avatar-post" />
           </div>
         </div>
 
         <div class="ms-2">
-          <h6
-            class="fw-bold author mb-1"
-            [routerLink]="['/profile', post.user.id]"
-          >
+          <h6 class="fw-bold author mb-1" [routerLink]="['/profile', post.user.id]">
             {{ post.user.firstName }} {{ post.user.lastName }}
           </h6>
           <span class="post-time">
@@ -48,128 +44,69 @@
         </button>
       </mat-menu>
     </div>
-    <!-- post title start -->
+
     <div class="mt-2">
       <p class="post-desc">
         {{ post.content }}
       </p>
-      <div *ngIf="post.media.length != 0" class="gallery">
-        <ng-container *ngIf="post.media.length == 1">
-          <ng-container *ngFor="let item of post.media">
-            <figure
-              *ngIf="!item.isVideo"
-              class="mb-0 gallery__item gallery_1_item--1"
-              data-aos="zoom-in-up"
-            >
-              <img
-                [src]="item.url"
-                [alt]="item.caption"
-                class="gallery__img rounded"
-              />
+      <div *ngIf="post.lstMedia.length != 0" class="gallery">
+        <ng-container *ngIf="post.lstMedia.length == 1">
+          <ng-container *ngFor="let item of post.lstMedia">
+            <figure *ngIf="!item.isVideo" class="mb-0 gallery__item gallery_1_item--1" data-aos="zoom-in-up">
+              <img [src]="item.mediaUrl" alt="Post Media" class="gallery__img rounded" />
             </figure>
-            <div
-              *ngIf="item.isVideo"
-              class="gallery__item gallery_1_item--1"
-              data-aos="zoom-in-up"
-            >
-              <app-video-player [videoUrl]="item.url"></app-video-player>
+            <div *ngIf="item.isVideo" class="gallery__item gallery_1_item--1" data-aos="zoom-in-up">
+              <app-video-player [videoUrl]="item.mediaUrl"></app-video-player>
             </div>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="post.media.length == 2">
-          <ng-container *ngFor="let item of post.media; let i = index">
-            <figure
-              *ngIf="!item.isVideo"
-              class="mb-0 gallery__item gallery_2_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <img
-                [src]="item.url"
-                [alt]="item.caption"
-                class="gallery__img rounded"
-              />
+        <ng-container *ngIf="post.lstMedia.length == 2">
+          <ng-container *ngFor="let item of post.lstMedia; let i = index">
+            <figure *ngIf="!item.isVideo" class="mb-0 gallery__item gallery_2_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <img [src]="item.mediaUrl" alt="Post Media" class="gallery__img rounded" />
             </figure>
-            <div
-              *ngIf="item.isVideo"
-              class="gallery__item video_2_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <app-video-player [videoUrl]="item.url"></app-video-player>
+            <div *ngIf="item.isVideo" class="gallery__item video_2_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <app-video-player [videoUrl]="item.mediaUrl"></app-video-player>
             </div>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="post.media.length == 3">
-          <ng-container *ngFor="let item of post.media; let i = index">
-            <figure
-              *ngIf="!item.isVideo"
-              class="mb-0 gallery__item gallery_3_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <img
-                [src]="item.url"
-                [alt]="item.caption"
-                class="gallery__img rounded"
-              />
+        <ng-container *ngIf="post.lstMedia.length == 3">
+          <ng-container *ngFor="let item of post.lstMedia; let i = index">
+            <figure *ngIf="!item.isVideo" class="mb-0 gallery__item gallery_3_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <img [src]="item.mediaUrl" alt="Post Media" class="gallery__img rounded" />
             </figure>
-            <div
-              *ngIf="item.isVideo"
-              class="gallery__item video_3_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <app-video-player [videoUrl]="item.url"></app-video-player>
+            <div *ngIf="item.isVideo" class="gallery__item video_3_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <app-video-player [videoUrl]="item.mediaUrl"></app-video-player>
             </div>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="post.media.length >= 4">
-          <ng-container *ngFor="let item of post.media; let i = index">
-            <figure
-              *ngIf="!item.isVideo"
-              class="mb-0 gallery__item gallery_4_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <img
-                [src]="item.url"
-                [alt]="item.caption"
-                class="gallery__img rounded"
-              />
+        <ng-container *ngIf="post.lstMedia.length >= 4">
+          <ng-container *ngFor="let item of post.lstMedia; let i = index">
+            <figure *ngIf="!item.isVideo" class="mb-0 gallery__item gallery_4_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <img [src]="item.mediaUrl" alt="Post Media" class="gallery__img rounded" />
             </figure>
-            <div
-              *ngIf="item.isVideo"
-              class="gallery__item video_4_item--{{ i + 1 }}"
-              data-aos="zoom-in-up"
-            >
-              <app-video-player [videoUrl]="item.url"></app-video-player>
+            <div *ngIf="item.isVideo" class="gallery__item video_4_item--{{ i + 1 }}" data-aos="zoom-in-up">
+              <app-video-player [videoUrl]="item.mediaUrl"></app-video-player>
             </div>
           </ng-container>
         </ng-container>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <div class="post-meta-like">
-          <fa-icon
-            *ngIf="!post.isLiked"
-            [icon]="faRegularHeart"
-            size="lg"
-            style="color: #ff3232"
-            (click)="likePost(post.id)"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="post.isLiked"
-            [icon]="faSolidHeart"
-            size="lg"
-            style="color: #ff3232"
-            (click)="likePost(post.id)"
-          ></fa-icon>
-          <span>{{ post.likes }} people like this</span>
+          <fa-icon *ngIf="!isLikedPost(post.id)" [icon]="faRegularHeart" size="lg" style="color: #ff3232"
+            (click)="likePost(post.id)"></fa-icon>
+          <fa-icon *ngIf="isLikedPost(post.id)" [icon]="faSolidHeart" size="lg" style="color: #ff3232"
+            (click)="likePost(post.id)"></fa-icon>
+          <span (click)="openDialogPostLike(post.id)">
+            {{ post.lstLikes.length }} people
+          </span>
         </div>
         <div class="d-flex gap-4">
           <div class="post-comment">
             <fa-icon [icon]="faRegularComments"></fa-icon>
-            <span>{{ post.comments }}</span>
-          </div>
-          <div class="post-share">
-            <!-- <i class="bi bi-share"></i> -->
-            <fa-icon [icon]="faRegularShareFromSquare"></fa-icon>
-            <span>{{ post.shares }}</span>
+            <span (click)="openDialogPostComment(post.id)">
+              {{ post.lstComments.length }} comments
+            </span>
           </div>
         </div>
       </div>

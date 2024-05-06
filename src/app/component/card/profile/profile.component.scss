@@ -16,3 +16,11 @@
   pointer-events: none;
   border: 10px solid rgba(198, 165, 107, 0.3);
 }
+
+.about-me {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+}
