@@ -5,33 +5,30 @@
 <mat-dialog-content>
   <div class="row">
     <div class="col-12 col-lg-6 col-xl-8">
-      <div class="wrapper">
-        <div id="carouselExampleIndicators" class="carousel slide">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-              aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-              aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-              aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item" *ngFor="let item of post?.lstMedia; let i = index" [class.active]="i == 0">
-              <img *ngIf="!item.isVideo" [src]="item.mediaUrl" class="d-block" alt="Post Media" />
-              <app-video-player *ngIf="item.isVideo" [videoUrl]="item.mediaUrl"></app-video-player>
+      <div id="carouselExampleIndicators" class="carousel slide bg-dark">
+        <div class="carousel-indicators">
+          <button type="button" *ngFor="let item of post?.lstMedia; let i = index"
+            data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class.active]="i == 0"
+            aria-current="true" [attr.aria-label]="'Slide ' + (i+1)"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let item of post?.lstMedia; let i = index" [class.active]="i == 0">
+            <div class="wrapper">
+              <img *ngIf="!item.isVideo" [src]="item.mediaUrl" class="img-fluid" alt="Post Media" />
+              <app-video-player *ngIf="item.isVideo" [videoUrl]="item.mediaUrl" class="video-fluid"></app-video-player>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
     <div class="col-12 col-lg-6 col-xl-4 mt-5 mt-lg-0">

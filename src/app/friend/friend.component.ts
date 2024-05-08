@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { UserInfo } from '../models/profile';
 
 @Component({
-  selector: 'app-friend',
+  selector: 'app-user-friend',
   templateUrl: './friend.component.html',
   styleUrls: ['./friend.component.scss'],
 })

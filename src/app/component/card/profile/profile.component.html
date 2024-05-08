@@ -1,25 +1,18 @@
 <mat-card>
   <figure class="profile-banner-small">
     <a [routerLink]="['/profile', 1]">
-      <img
-        [src]="
+      <img [src]="
           userData.cover?.imageUrl
             ? userData.cover?.imageUrl
             : 'assets/images/banner/profile-banner.jpg'
-        "
-        alt=""
-        class="img-fluid"
-      />
+        " alt="" class="img-fluid" />
     </a>
     <a [routerLink]="['/profile', 1]" class="profile-thumb-2">
-      <img
-        [src]="
+      <img [src]="
           userData.avatar?.imageUrl
             ? userData.avatar?.imageUrl
             : 'assets/avatar/default-avartar.jpg'
-        "
-        alt=""
-      />
+        " alt="" />
     </a>
   </figure>
   <mat-card-content>
@@ -27,7 +20,7 @@
       {{ userData.firstName }} {{ userData.lastName }}
     </h6>
     <div class="about-me">
-      <p class="text-center mt-2">
+      <p class="text-center mt-2" *ngIf="userData.profile.aboutMe">
         {{ userData.profile.aboutMe }}
       </p>
     </div>

@@ -3,41 +3,39 @@
     <aside class="widget-area profile-sidebar">
       <mat-card>
         <mat-card-content>
-          <h4 class="widget-title">Erik Jhonson</h4>
+          <h4 class="widget-title">{{ profileData?.firstName }} {{ profileData?.lastName }}</h4>
           <div class="widget-body">
             <div class="about-author">
-              <p>
-                I Do not know how? But I believe that it is possible one day if
-                I stay with my dream all time
+              <p *ngIf="profileData?.profile?.aboutMe">
+                {{ profileData?.profile?.aboutMe }}
               </p>
-              <ul class="author-into-list">
-                <li>
-                  <a href="#">
-                    <fa-icon [icon]="faSolidBriefcase" size="lg"></fa-icon>
-                    <span class="ms-2">Web Developer</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <fa-icon [icon]="faSolidHouse" size="lg"></fa-icon>
-                    <span class="ms-2">Melbourne, Australia</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <fa-icon [icon]="faSolidLocationDot" size="lg"></fa-icon>
-                    <span class="ms-2">Pulshar, Melbourne</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <!-- <fa-icon :icon="['fas', 'heart-pulse']" /> -->
-                    <fa-icon [icon]="faSolidHeartPulse" size="lg"></fa-icon>
-                    <span class="ms-2">Travel, Swimming</span>
-                  </a>
-                </li>
-              </ul>
             </div>
+            <ul class="author-into-list">
+              <li *ngIf="getPositionWork()">
+                <a href="#">
+                  <fa-icon [icon]="faSolidBriefcase" size="lg"></fa-icon>
+                  <span class="ms-2">{{ getPositionWork() }}</span>
+                </a>
+              </li>
+              <li *ngIf="profileData?.profile?.address">
+                <a href="#">
+                  <fa-icon [icon]="faSolidHouse" size="lg"></fa-icon>
+                  <span class="ms-2">{{ profileData?.profile?.address }}</span>
+                </a>
+              </li>
+              <li *ngIf="profileData?.profile?.country">
+                <a href="#">
+                  <fa-icon [icon]="faSolidLocationDot" size="lg"></fa-icon>
+                  <span class="ms-2">{{ profileData?.profile?.country }}</span>
+                </a>
+              </li>
+              <li *ngIf="hobbiesLength() > 0">
+                <a href="#">
+                  <fa-icon [icon]="faSolidHeartPulse" size="lg"></fa-icon>
+                  <span class="ms-2">{{ formatHobbies() }}</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </mat-card-content>
       </mat-card>
@@ -71,10 +69,11 @@
           <div class="profile-thumb">
             <a href="#">
               <figure class="profile-thumb-middle">
-                <img
-                  src="assets/images/profile/profile-small-37.jpg"
-                  alt="profile picture"
-                />
+                <img [src]="
+                profileData?.avatar?.imageUrl
+                  ? profileData?.avatar?.imageUrl
+                  : 'assets/avatar/default-avartar.jpg'
+              " alt="profile picture" />
               </figure>
             </a>
           </div>
@@ -82,12 +81,7 @@
 
           <!-- share content box start -->
           <div class="ms-2 w-100">
-            <input
-              class="form-control"
-              aria-disabled="true"
-              placeholder="Say Something"
-              (click)="openDialog()"
-            />
+            <input class="form-control" aria-disabled="true" placeholder="Say Something" (click)="openDialog()" />
           </div>
           <!-- share content box end -->
         </div>
@@ -100,7 +94,8 @@
   <div class="col-lg-3 order-3">
     <aside class="widget-area">
       <!-- widget single item start -->
-      <app-page-like></app-page-like>
+      <!-- <app-page-like></app-page-like> -->
+      <app-friends-zone></app-friends-zone>
       <!-- widget single item end -->
     </aside>
   </div>

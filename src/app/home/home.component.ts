@@ -2,9 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostComponent } from '../component/dialog/post/post.component';
 import { faHandPointUp as faRegularHandPointUp } from '@fortawesome/free-regular-svg-icons';
-import { PostList } from '../models/post';
+import { PostList, PostMedia } from '../models/post';
 import { Profile, UserInfo } from '../models/profile';
-import mockUserProfile from 'src/app/mock/user-profile.json';
 import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/api/post.service';
 import { ToastService } from '../services/toast.service';
@@ -18,15 +17,18 @@ export class HomeComponent implements OnInit {
   faRegularHandPointUp = faRegularHandPointUp;
   showScrollTop = false;
   postList: PostList[] = [];
+  currentUser!: UserInfo;
 
   constructor(
     private dialog: MatDialog,
     private showToast: ToastService,
-    private postService: PostService
+    private postService: PostService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadPosts();
+    this.currentUser = this.authService.getUserData() as UserInfo;
   }
 
   loadPosts() {
@@ -45,10 +47,47 @@ export class HomeComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(PostComponent);
+    const dialogRef = this.dialog.open(PostComponent, {
+      maxHeight: '80%',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        console.log(result);
+        this.postService.createPost(result).subscribe({
+          next: (postResponse: PostList) => {
+            const postId = postResponse.id;
+            if (result.files.length > 0) {
+              this.postService.createPostMedia(postId, result.files).subscribe({
+                next: (response: PostMedia[]) => {
+                  postResponse.lstMedia = response;
+                  postResponse.lstLikes = [];
+                  postResponse.lstComments = [];
+                },
+                error: (response) => {
+                  this.showToast.showErrorMessage(
+                    'Error',
+                    response.error?.message ||
+                      'Something went wrong. Please try again later'
+                  );
+                },
+              });
+            } else {
+              postResponse.lstMedia = [];
+              postResponse.lstLikes = [];
+              postResponse.lstComments = [];
+            }
+            this.postList.unshift(postResponse);
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
     });
   }
 

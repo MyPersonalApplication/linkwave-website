@@ -20,3 +20,11 @@
     transform: translateX(-50%) translateY(-50%);
   }
 }
+
+.about-author {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+}

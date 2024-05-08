@@ -17,3 +17,24 @@ h2 {
 textarea {
   overflow-y: hidden;
 }
+
+.post-media {
+  position: relative;
+
+  .post-media-change {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  &:hover {
+    .post-media-change {
+      display: block;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+}

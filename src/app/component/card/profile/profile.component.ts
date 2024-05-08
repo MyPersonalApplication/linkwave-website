@@ -13,6 +13,6 @@ export class CardProfileComponent {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userData = this.userData = this.authService.getUserData() as UserInfo;
+    this.userData = this.authService.getUserData() as UserInfo;
   }
 }

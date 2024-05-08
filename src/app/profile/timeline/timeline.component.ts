@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   faBriefcase as faSolidBriefcase,
@@ -7,10 +7,10 @@ import {
   faHeartPulse as faSolidHeartPulse,
 } from '@fortawesome/free-solid-svg-icons';
 import { PostComponent } from 'src/app/component/dialog/post/post.component';
-import { PostList } from 'src/app/models/post';
-import { Profile, UserInfo } from 'src/app/models/profile';
-import mockUserProfile from 'src/app/mock/user-profile.json';
-import { AuthService } from 'src/app/services/auth.service';
+import { PostList, PostMedia } from 'src/app/models/post';
+import { UserInfo } from 'src/app/models/profile';
+import { PostService } from 'src/app/services/api/post.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-timeline',
@@ -18,7 +18,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./timeline.component.scss'],
 })
 export class TimelineComponent implements OnInit {
-  userData!: UserInfo;
+  @Input() profileData: UserInfo | undefined;
+  @Input() isCurrentUser!: boolean;
+
   faSolidBriefcase = faSolidBriefcase;
   faSolidHouse = faSolidHouse;
   faSolidLocationDot = faSolidLocationDot;
@@ -55,17 +57,84 @@ export class TimelineComponent implements OnInit {
     },
   ];
 
-  constructor(public dialog: MatDialog, private authService: AuthService) {}
+  constructor(
+    public dialog: MatDialog,
+    private showToast: ToastService,
+    private postService: PostService
+  ) {}
 
   ngOnInit(): void {
-    this.userData = this.userData = this.authService.getUserData() as UserInfo;
+    this.loadPosts(this.profileData!.id);
+  }
+
+  loadPosts(userId: string) {
+    this.postService.getPostByUser(userId).subscribe({
+      next: (response) => {
+        this.postList = response;
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
+
+  formatHobbies() {
+    return this.profileData?.profile?.hobbies.join(', ');
+  }
+
+  hobbiesLength() {
+    return this.profileData?.profile?.hobbies.length ?? 0;
+  }
+
+  getPositionWork() {
+    const lstExperiences = this.profileData?.experiences;
+    return lstExperiences?.find((exp) => !exp.endDate)?.positionOrDegree ?? '';
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(PostComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        console.log(result);
+        this.postService.createPost(result).subscribe({
+          next: (postResponse: PostList) => {
+            const postId = postResponse.id;
+            if (result.files.length > 0) {
+              this.postService.createPostMedia(postId, result.files).subscribe({
+                next: (response: PostMedia[]) => {
+                  postResponse.lstMedia = response;
+                  postResponse.lstLikes = [];
+                  postResponse.lstComments = [];
+                },
+                error: (response) => {
+                  this.showToast.showErrorMessage(
+                    'Error',
+                    response.error?.message ||
+                      'Something went wrong. Please try again later'
+                  );
+                },
+              });
+            } else {
+              postResponse.lstMedia = [];
+              postResponse.lstLikes = [];
+              postResponse.lstComments = [];
+            }
+            this.postList.unshift(postResponse);
+          },
+          error: (response) => {
+            this.showToast.showErrorMessage(
+              'Error',
+              response.error?.message ||
+                'Something went wrong. Please try again later'
+            );
+          },
+        });
+      }
     });
   }
 }

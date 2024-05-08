@@ -11,8 +11,16 @@ export class PostService {
     return this.http.get<any>('/api/posts');
   }
 
+  getPostByUser(userId: string) {
+    return this.http.get<any>(`/api/posts/user/${userId}`);
+  }
+
   getPost(postId: string) {
     return this.http.get<any>(`/api/posts/${postId}`);
+  }
+
+  createPost(post: any) {
+    return this.http.post<any>('/api/posts', post);
   }
 
   likePost(postId: string) {
@@ -25,5 +33,14 @@ export class PostService {
 
   getPostLikes(postId: string) {
     return this.http.get<any>(`/api/posts/${postId}/likes`);
+  }
+
+  createPostMedia(postId: string, files: File[]) {
+    const formData = new FormData();
+    // formData.append('multipartFile', files);
+    files.forEach((file) => {
+      formData.append('multipartFile', file);
+    });
+    return this.http.post<any>(`/api/posts/${postId}/media`, formData);
   }
 }

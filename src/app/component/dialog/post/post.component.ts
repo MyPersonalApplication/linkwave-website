@@ -10,6 +10,8 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PostComponent {
   postForm!: FormGroup;
+  files: File[] = [];
+  mediaReviews: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<PostComponent>,
@@ -21,9 +23,23 @@ export class PostComponent {
 
   initFormGroup() {
     this.postForm = this.formBuilder.group({
-      title: [''],
       content: [''],
     });
+  }
+
+  onSelectFile(event: any) {
+    this.files = [...this.files, ...Array.from<File>(event.target.files)];
+    this.mediaReviews = this.files.map((file) => {
+      return {
+        file,
+        objectUrl: URL.createObjectURL(file),
+      };
+    });
+  }
+
+  removeReview(index: number) {
+    this.mediaReviews.splice(index, 1);
+    this.files.splice(index, 1);
   }
 
   onSavePost(): void {
@@ -31,6 +47,12 @@ export class PostComponent {
       this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
       return;
     }
-    this.dialogRef.close(this.postForm.value);
+
+    const response = {
+      ...this.postForm.value,
+      files: this.files,
+    };
+
+    this.dialogRef.close(response);
   }
 }

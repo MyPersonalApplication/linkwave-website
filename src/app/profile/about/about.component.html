@@ -6,48 +6,6 @@
           <div class="page-title-inner">
             <h4 class="page-title">About</h4>
           </div>
-          <!-- <nav class="d-flex gap-4 gap-lg-5 nav-about">
-            <div class="nav-item">
-              <a href="#" class="text-reset">
-                <span class="d-none d-lg-block">Facebook</span>
-                <fa-icon
-                  class="d-block d-lg-none"
-                  [icon]="faBrandFacebook"
-                  size="lg"
-                ></fa-icon>
-              </a>
-            </div>
-            <div class="nav-item">
-              <a href="#" class="text-reset">
-                <span class="d-none d-lg-block">Github</span>
-                <fa-icon
-                  class="d-block d-lg-none"
-                  [icon]="faBrandGithub"
-                  size="lg"
-                ></fa-icon>
-              </a>
-            </div>
-            <div class="nav-item">
-              <a href="#" class="text-reset">
-                <span class="d-none d-lg-block">Linkedin</span>
-                <fa-icon
-                  class="d-block d-lg-none"
-                  [icon]="faBrandLinkedin"
-                  size="lg"
-                ></fa-icon>
-              </a>
-            </div>
-            <div class="nav-item">
-              <a href="#" class="text-reset">
-                <span class="d-none d-lg-block">Instagram</span>
-                <fa-icon
-                  class="d-block d-lg-none"
-                  [icon]="faBrandInstagram"
-                  size="lg"
-                ></fa-icon>
-              </a>
-            </div>
-          </nav> -->
         </div>
       </mat-card-content>
     </mat-card>
@@ -61,22 +19,14 @@
         <div class="mb-3">
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title fw-bold mb-2">Profile Details</h5>
-            <button
-              *ngIf="isCurrentUser"
-              mat-icon-button
-              (click)="openDialogEditProfile()"
-            >
+            <button *ngIf="isCurrentUser" mat-icon-button (click)="openDialogEditProfile()">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
 
           <mat-divider class="mb-3"></mat-divider>
 
-          <ngx-skeleton-loader
-            *ngIf="contentLoading"
-            count="9"
-            appearance="line"
-          />
+          <ngx-skeleton-loader *ngIf="contentLoading" count="9" appearance="line" />
 
           <div *ngIf="!contentLoading">
             <div class="row info">
@@ -150,45 +100,27 @@
             </div>
           </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="isCurrentUser">
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title fw-bold mb-2">Change Password</h5>
           </div>
 
           <mat-divider class="mb-3"></mat-divider>
 
-          <form
-            class="change-password-form"
-            id="change-password-form"
-            [formGroup]="changePasswordForm"
-            (ngSubmit)="submit()"
-          >
+          <form class="change-password-form" id="change-password-form" [formGroup]="changePasswordForm"
+            (ngSubmit)="submit()">
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input
-                  [type]="hideOldPassword ? 'password' : 'text'"
-                  class="form-control"
-                  [class.is-invalid]="
+                <input [type]="hideOldPassword ? 'password' : 'text'" class="form-control" [class.is-invalid]="
                     oldPassword.invalid && oldPassword.touched
-                  "
-                  id="oldPassword"
-                  placeholder="Old Password"
-                  autocomplete="off"
-                  formControlName="oldPassword"
-                />
+                  " id="oldPassword" placeholder="Old Password" autocomplete="off" formControlName="oldPassword" />
                 <label for="oldPassword">Old Password</label>
               </div>
-              <span
-                class="input-group-text"
-                (click)="toggleOldPasswordVisibility()"
-              >
+              <span class="input-group-text" (click)="toggleOldPasswordVisibility()">
                 <mat-icon *ngIf="hideOldPassword">visibility</mat-icon>
                 <mat-icon *ngIf="!hideOldPassword">visibility_off</mat-icon>
               </span>
-              <div
-                *ngIf="oldPassword?.invalid && oldPassword?.touched"
-                class="invalid-feedback"
-              >
+              <div *ngIf="oldPassword?.invalid && oldPassword?.touched" class="invalid-feedback">
                 <small *ngIf="oldPassword?.errors?.['required']">
                   Please enter old password
                 </small>
@@ -196,28 +128,16 @@
             </div>
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input
-                  [type]="hidePassword ? 'password' : 'text'"
-                  class="form-control"
-                  [class.is-invalid]="password.invalid && password.touched"
-                  id="password"
-                  placeholder="Password"
-                  autocomplete="off"
-                  formControlName="password"
-                />
+                <input [type]="hidePassword ? 'password' : 'text'" class="form-control"
+                  [class.is-invalid]="password.invalid && password.touched" id="password" placeholder="Password"
+                  autocomplete="off" formControlName="password" />
                 <label for="password">Password</label>
               </div>
-              <span
-                class="input-group-text"
-                (click)="togglePasswordVisibility()"
-              >
+              <span class="input-group-text" (click)="togglePasswordVisibility()">
                 <mat-icon *ngIf="hidePassword">visibility</mat-icon>
                 <mat-icon *ngIf="!hidePassword">visibility_off</mat-icon>
               </span>
-              <div
-                *ngIf="password?.invalid && password?.touched"
-                class="invalid-feedback"
-              >
+              <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
                 <small *ngIf="password?.errors?.['required']">
                   Please enter password
                 </small>
@@ -228,30 +148,17 @@
             </div>
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input
-                  [type]="hideConfirm ? 'password' : 'text'"
-                  class="form-control"
-                  [class.is-invalid]="
+                <input [type]="hideConfirm ? 'password' : 'text'" class="form-control" [class.is-invalid]="
                     confirmPassword.invalid && confirmPassword.touched
-                  "
-                  id="confirm-password"
-                  placeholder="Confirm Password"
-                  formControlName="confirmPassword"
-                  autocomplete="off"
-                />
+                  " id="confirm-password" placeholder="Confirm Password" formControlName="confirmPassword"
+                  autocomplete="off" />
                 <label for="confirm-password">Confirm Password</label>
               </div>
-              <span
-                class="input-group-text"
-                (click)="toggleConfirmVisibility()"
-              >
+              <span class="input-group-text" (click)="toggleConfirmVisibility()">
                 <mat-icon *ngIf="hideConfirm">visibility</mat-icon>
                 <mat-icon *ngIf="!hideConfirm">visibility_off</mat-icon>
               </span>
-              <div
-                *ngIf="confirmPassword?.invalid && confirmPassword?.touched"
-                class="invalid-feedback"
-              >
+              <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="invalid-feedback">
                 <small *ngIf="confirmPassword?.errors?.['required']">
                   Please enter confirm password
                 </small>
@@ -261,22 +168,10 @@
               </div>
             </div>
             <div class="form-group form-button">
-              <button
-                *ngIf="!isLoading"
-                type="submit"
-                mat-raised-button
-                color="warn"
-                class="form-submit"
-              >
+              <button *ngIf="!isLoading" type="submit" mat-raised-button color="warn" class="form-submit">
                 Change Password
               </button>
-              <button
-                *ngIf="isLoading"
-                type="submit"
-                mat-raised-button
-                class="form-submit"
-                disabled
-              >
+              <button *ngIf="isLoading" type="submit" mat-raised-button class="form-submit" disabled>
                 <mat-icon>
                   <mat-spinner color="warn" diameter="18"></mat-spinner>
                 </mat-icon>
@@ -291,16 +186,10 @@
   <mat-tab label="Work & Education">
     <mat-card class="mb-3">
       <mat-card-content>
-        <div
-          class="experience-desc-title d-flex justify-content-between align-items-center"
-        >
+        <div class="experience-desc-title d-flex justify-content-between align-items-center">
           <h6 class="author">Work</h6>
 
-          <button
-            *ngIf="isCurrentUser"
-            mat-icon-button
-            (click)="openDialogExperience('', ExperienceType.WORK)"
-          >
+          <button *ngIf="isCurrentUser" mat-icon-button (click)="openDialogExperience('', ExperienceType.WORK)">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -313,9 +202,9 @@
                     <div class="text-danger fw-bolder mb-2">
                       {{ experience.startDate | date : "MM/yyyy" }} -
                       {{
-                        experience.endDate
-                          ? (experience.endDate | date : "MM/yyyy")
-                          : "Present"
+                      experience.endDate
+                      ? (experience.endDate | date : "MM/yyyy")
+                      : "Present"
                       }}
                     </div>
                     <div class="small fw-bolder">
@@ -337,39 +226,24 @@
               </div>
             </div>
             <div class="col-2 col-md-1">
-              <button
-                *ngIf="isCurrentUser"
-                mat-icon-button
-                (click)="
+              <button *ngIf="isCurrentUser" mat-icon-button (click)="
                   openDialogExperience(experience.id, ExperienceType.WORK)
-                "
-              >
+                ">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
           </div>
         </div>
         <div *ngIf="workExperiences.length == 0" class="text-center">
-          <img
-            src="assets/gif/empty-states-nbg.gif"
-            alt="Empty State"
-            class="img-fluid"
-            width="500"
-          />
+          <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" />
         </div>
 
         <mat-divider class="my-4"></mat-divider>
 
-        <div
-          class="experience-desc-title d-flex justify-content-between align-items-center"
-        >
+        <div class="experience-desc-title d-flex justify-content-between align-items-center">
           <h6 class="author">Education</h6>
 
-          <button
-            *ngIf="isCurrentUser"
-            mat-icon-button
-            (click)="openDialogExperience('', ExperienceType.EDUCATION)"
-          >
+          <button *ngIf="isCurrentUser" mat-icon-button (click)="openDialogExperience('', ExperienceType.EDUCATION)">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -382,9 +256,9 @@
                     <div class="text-danger fw-bolder mb-2">
                       {{ experience.startDate | date : "MM/yyyy" }} -
                       {{
-                        experience.endDate
-                          ? (experience.endDate | date : "MM/yyyy")
-                          : "Present"
+                      experience.endDate
+                      ? (experience.endDate | date : "MM/yyyy")
+                      : "Present"
                       }}
                     </div>
                     <div class="small fw-bolder">
@@ -406,25 +280,16 @@
               </div>
             </div>
             <div class="col-2 col-md-1">
-              <button
-                *ngIf="isCurrentUser"
-                mat-icon-button
-                (click)="
+              <button *ngIf="isCurrentUser" mat-icon-button (click)="
                   openDialogExperience(experience.id, ExperienceType.EDUCATION)
-                "
-              >
+                ">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
           </div>
         </div>
         <div *ngIf="educationExperiences.length == 0" class="text-center">
-          <img
-            src="assets/gif/empty-states-nbg.gif"
-            alt="Empty State"
-            class="img-fluid"
-            width="500"
-          />
+          <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" />
         </div>
       </mat-card-content>
     </mat-card>
@@ -432,16 +297,10 @@
   <mat-tab label="Skills">
     <mat-card class="mb-3">
       <mat-card-content>
-        <div
-          class="experience-desc-title d-flex justify-content-between align-items-center mb-3"
-        >
+        <div class="experience-desc-title d-flex justify-content-between align-items-center mb-3">
           <h6 class="author">Skills</h6>
 
-          <button
-            *ngIf="isCurrentUser"
-            mat-icon-button
-            (click)="openDialogSkill('')"
-          >
+          <button *ngIf="isCurrentUser" mat-icon-button (click)="openDialogSkill('')">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -456,27 +315,15 @@
               </div>
             </div>
             <div class="col-2 text-end align-center">
-              <button
-                *ngIf="isCurrentUser"
-                mat-icon-button
-                (click)="openDialogSkill(item.id)"
-              >
+              <button *ngIf="isCurrentUser" mat-icon-button (click)="openDialogSkill(item.id)">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
           </div>
-          <mat-divider
-            *ngIf="index !== profileData?.skills?.length! - 1"
-            class="my-3"
-          ></mat-divider>
+          <mat-divider *ngIf="index !== profileData?.skills?.length! - 1" class="my-3"></mat-divider>
         </div>
         <div *ngIf="profileData?.skills?.length == 0" class="text-center">
-          <img
-            src="assets/gif/empty-states-nbg.gif"
-            alt="Empty State"
-            class="img-fluid"
-            width="500"
-          />
+          <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" />
         </div>
       </mat-card-content>
     </mat-card>

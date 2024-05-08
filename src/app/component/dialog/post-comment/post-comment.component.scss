@@ -13,8 +13,18 @@ $color_main: #f44336;
 // }
 
 .wrapper {
-  display: flex;
-  justify-content: center;
+  height: 77vh;
+  text-align: center;
+
+  .img-fluid,
+  .video-fluid {
+    height: 77vh;
+  }
+
+  .video-fluid {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 #comments {

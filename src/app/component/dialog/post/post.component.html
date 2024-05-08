@@ -1,18 +1,22 @@
-<form
-  [formGroup]="postForm"
-  (ngSubmit)="onSavePost()"
-  enctype="multipart/form-data"
->
+<form [formGroup]="postForm" (ngSubmit)="onSavePost()" enctype="multipart/form-data">
   <h2 mat-dialog-title class="fw-bold">Share Your Mood</h2>
   <mat-dialog-content>
     <div class="w-lg-800 w-md-600 pt-2">
-      <textarea
-        name="share"
-        class="form-control"
-        placeholder="Say Something"
-        rows="5"
-        appTextareaAutoresize
-      ></textarea>
+      <textarea name="share" class="form-control" formControlName="content" placeholder="Say Something" rows="5"
+        appTextareaAutoresize></textarea>
+      <div class="input-group mt-2">
+        <input type="file" class="form-control" multiple id="post-media" (change)="onSelectFile($event)" />
+      </div>
+      <div class="d-flex flex-column">
+        <figure class="figure post-media" *ngFor="let item of mediaReviews; let i = index">
+          <img [src]="item.objectUrl" class="figure-img img-fluid rounded mt-2 w-100" [alt]="item.file.name" />
+          <div class="post-media-change">
+            <button mat-icon-button (click)="removeReview(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </figure>
+      </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

@@ -5,7 +5,7 @@
         <div class="col-lg-3 order-2 order-md-1">
           <aside class="widget-area">
             <app-card-profile></app-card-profile>
-            <app-page-like></app-page-like>
+            <!-- <app-page-like></app-page-like> -->
           </aside>
         </div>
 
@@ -17,10 +17,11 @@
                 <div class="profile-thumb">
                   <a href="#">
                     <figure class="profile-thumb-middle">
-                      <img
-                        src="assets/images/profile/profile-small-37.jpg"
-                        alt="profile picture"
-                      />
+                      <img [src]="
+                            currentUser.avatar?.imageUrl
+                              ? currentUser.avatar?.imageUrl
+                              : 'assets/avatar/default-avartar.jpg'
+                          " alt="profile picture" />
                     </figure>
                   </a>
                 </div>
@@ -28,12 +29,7 @@
 
                 <!-- share content box start -->
                 <div class="ms-2 w-100">
-                  <input
-                    class="form-control"
-                    aria-disabled="true"
-                    placeholder="Say Something"
-                    (click)="openDialog()"
-                  />
+                  <input class="form-control" aria-disabled="true" placeholder="Say Something" (click)="openDialog()" />
                 </div>
                 <!-- share content box end -->
               </div>
@@ -52,10 +48,6 @@
             <!-- widget single item start -->
             <!-- <AdvertizementComponent :advertizement="advertizement" /> -->
             <!-- widget single item end -->
-
-            <!-- widget single item start -->
-            <!-- <FriendsZone :friendsZone="friendsZone" /> -->
-            <!-- widget single item end -->
           </aside>
         </div>
       </div>
@@ -63,11 +55,7 @@
   </div>
 </main>
 <!-- Scroll to top start -->
-<div
-  class="scroll-top"
-  (click)="scrollToTop()"
-  [ngClass]="{ 'not-visible': !showScrollTop }"
->
+<div class="scroll-top" (click)="scrollToTop()" [ngClass]="{ 'not-visible': !showScrollTop }">
   <fa-icon [icon]="faRegularHandPointUp" size="lg"></fa-icon>
 </div>
 <!-- Scroll to Top End -->

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
 import {
   faFacebook as faBrandFacebook,
   faGithub as faBrandGithub,
@@ -18,7 +17,6 @@ import {
   UserInfo,
 } from 'src/app/models/profile';
 import { UserService } from 'src/app/services/api/user.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { passwordMatchingValidatior } from 'src/app/shared/utility/validator/password.validator';
 
@@ -28,18 +26,17 @@ import { passwordMatchingValidatior } from 'src/app/shared/utility/validator/pas
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
+  @Input() profileData: UserInfo | undefined;
+  @Input() isCurrentUser!: boolean;
+  @Output() reloadUser: EventEmitter<void> = new EventEmitter<void>();
+
   faBrandFacebook = faBrandFacebook;
   faBrandGithub = faBrandGithub;
   faBrandLinkedin = faBrandLinkedin;
   faBrandInstagram = faBrandInstagram;
 
-  private userId: string = '';
   ExperienceType = ExperienceType;
-  contentLoading = true;
-  updateAvatarLoading = false;
-  updateCoverLoading = false;
-  isCurrentUser = false;
-  profileData: UserInfo | undefined;
+  contentLoading = false;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
   changePasswordForm!: FormGroup;
@@ -50,9 +47,7 @@ export class AboutComponent implements OnInit {
 
   constructor(
     private showToast: ToastService,
-    private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder
   ) {}
@@ -66,10 +61,14 @@ export class AboutComponent implements OnInit {
       },
       { validators: passwordMatchingValidatior }
     );
-    this.route.parent?.paramMap.subscribe((params) => {
-      this.userId = params.get('id')!;
-      this.loadProfileData(this.userId);
-    });
+    this.workExperiences =
+      this.profileData?.experiences?.filter(
+        (exp) => exp.experienceType === ExperienceType.WORK
+      ) || [];
+    this.educationExperiences =
+      this.profileData?.experiences?.filter(
+        (exp) => exp.experienceType === ExperienceType.EDUCATION
+      ) || [];
   }
 
   get oldPassword() {
@@ -84,60 +83,6 @@ export class AboutComponent implements OnInit {
     return this.changePasswordForm.get('confirmPassword') as FormGroup;
   }
 
-  loadProfileData(userId: string | null) {
-    userId ? this.getProfile(userId) : this.getCurrentProfile();
-  }
-
-  getProfile(userId: string) {
-    this.userService.getProfile(userId).subscribe({
-      next: (response: UserInfo) => {
-        this.profileData = response;
-        this.workExperiences =
-          this.profileData?.experiences?.filter(
-            (exp) => exp.experienceType === ExperienceType.WORK
-          ) || [];
-        this.educationExperiences =
-          this.profileData?.experiences?.filter(
-            (exp) => exp.experienceType === ExperienceType.EDUCATION
-          ) || [];
-        this.contentLoading = false;
-      },
-      error: (response) => {
-        this.showToast.showErrorMessage(
-          'Error',
-          response.error?.message ||
-            'Something went wrong. Please try again later'
-        );
-      },
-    });
-  }
-
-  getCurrentProfile() {
-    this.userService.getCurrentProfile().subscribe({
-      next: (response: UserInfo) => {
-        this.isCurrentUser = true;
-        this.profileData = response;
-        this.workExperiences =
-          this.profileData?.experiences?.filter(
-            (exp) => exp.experienceType === ExperienceType.WORK
-          ) || [];
-        this.educationExperiences =
-          this.profileData?.experiences?.filter(
-            (exp) => exp.experienceType === ExperienceType.EDUCATION
-          ) || [];
-        this.contentLoading = false;
-        this.authService.saveUserData(response);
-      },
-      error: (response) => {
-        this.showToast.showErrorMessage(
-          'Error',
-          response.error?.message ||
-            'Something went wrong. Please try again later'
-        );
-      },
-    });
-  }
-
   openDialogEditProfile() {
     const dialogRef = this.dialog.open(AboutMeComponent, {
       data: this.profileData,
@@ -147,10 +92,10 @@ export class AboutComponent implements OnInit {
       if (result) {
         this.userService.updateProfile(result).subscribe({
           next: (response: any) => {
-            this.loadProfileData(this.userId);
+            this.reloadUser.emit();
             this.showToast.showSuccessMessage(
               'Success',
-              response.message || 'Update successfully'
+              'Update profile successfully'
             );
           },
           error: (response) => {
@@ -194,6 +139,7 @@ export class AboutComponent implements OnInit {
         if (result.id) {
           this.userService.updateExperience(result).subscribe({
             next: () => {
+              this.reloadUser.emit();
               if (result.experienceType === ExperienceType.WORK) {
                 this.workExperiences = this.workExperiences.map((exp) =>
                   exp.id === result.id ? result : exp
@@ -223,15 +169,15 @@ export class AboutComponent implements OnInit {
         } else {
           this.userService.addExperience(result).subscribe({
             next: (response: any) => {
-              this.profileData?.experiences?.push(response);
+              this.reloadUser.emit();
               if (result.experienceType === ExperienceType.WORK) {
-                this.workExperiences.push(response);
+                this.workExperiences.unshift(response);
                 this.showToast.showSuccessMessage(
                   'Success',
                   'Add work experience successfully'
                 );
               } else {
-                this.educationExperiences.push(response);
+                this.educationExperiences.unshift(response);
                 this.showToast.showSuccessMessage(
                   'Success',
                   'Add education experience successfully'
@@ -253,6 +199,7 @@ export class AboutComponent implements OnInit {
         );
         this.userService.deleteExperience(result).subscribe({
           next: () => {
+            this.reloadUser.emit();
             if (experience?.experienceType === ExperienceType.WORK) {
               this.workExperiences = this.workExperiences.filter(
                 (exp) => exp.id !== result
@@ -299,9 +246,7 @@ export class AboutComponent implements OnInit {
         if (result.id) {
           this.userService.updateSkill(result).subscribe({
             next: () => {
-              this.profileData!.skills = this.profileData!.skills?.map((s) =>
-                s.id === result.id ? result : s
-              );
+              this.reloadUser.emit();
               this.showToast.showSuccessMessage(
                 'Success',
                 'Update skill successfully'
@@ -318,7 +263,7 @@ export class AboutComponent implements OnInit {
         } else {
           this.userService.addSkill(result).subscribe({
             next: (response: any) => {
-              this.profileData!.skills?.push(response);
+              this.reloadUser.emit();
               this.showToast.showSuccessMessage(
                 'Success',
                 'Add skill successfully'

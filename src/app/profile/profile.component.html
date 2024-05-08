@@ -1,12 +1,5 @@
-<div
-  class="profile-banner-large bg-img"
-  [style.background-image]="'url(' + coverImage + ')'"
->
-  <div
-    *ngIf="isCurrentUser"
-    class="profile-banner-change"
-    (click)="openDialogChangeCover()"
-  >
+<div class="profile-banner-large bg-img" [style.background-image]="'url(' + coverImage + ')'">
+  <div *ngIf="isCurrentUser" class="profile-banner-change" (click)="openDialogChangeCover()">
     Change Picture
   </div>
 </div>
@@ -16,19 +9,12 @@
       <div class="col-lg-3">
         <div class="profile-picture-box">
           <figure class="profile-picture">
-            <img
-              [src]="
+            <img [src]="
                 profileData?.avatar?.imageUrl
                   ? profileData?.avatar?.imageUrl
                   : 'assets/avatar/default-avartar.jpg'
-              "
-              alt="profile picture"
-            />
-            <div
-              *ngIf="isCurrentUser"
-              class="profile-picture-change"
-              (click)="openDialogChangeAvatar()"
-            >
+              " alt="profile picture" />
+            <div *ngIf="isCurrentUser" class="profile-picture-change" (click)="openDialogChangeAvatar()">
               Change Picture
             </div>
           </figure>
@@ -38,16 +24,10 @@
         <div class="profile-menu-wrapper">
           <div class="header-top-navigation">
             <nav>
-              <ul
-                class="main-menu d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center"
-              >
+              <ul class="main-menu d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
                 <li *ngFor="let page of pages">
-                  <a
-                    [routerLink]="page.url"
-                    class="text-decoration-none"
-                    [ngClass]="{ active: page.isActive }"
-                    (click)="onClick(page)"
-                  >
+                  <a [routerLink]="page.url" class="text-decoration-none" [ngClass]="{ active: page.isActive }"
+                    (click)="onClick(page)">
                     {{ page.text }}
                   </a>
                 </li>
@@ -76,6 +56,19 @@
   </div>
 </div>
 
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="container" *ngIf="profileData">
+  <ng-container *ngFor="let page of pages">
+    <ng-container *ngIf="page.isActive">
+      <ng-container *ngIf="page.url == 'timeline'">
+        <app-timeline [profileData]="profileData" [isCurrentUser]="isCurrentUser"></app-timeline>
+      </ng-container>
+      <ng-container *ngIf="page.url == 'about'">
+        <app-about [profileData]="profileData" [isCurrentUser]="isCurrentUser"
+          (reloadUser)="loadProfileData(null)"></app-about>
+      </ng-container>
+      <ng-container *ngIf="page.url == 'friends'">
+        <app-friend></app-friend>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 </div>
