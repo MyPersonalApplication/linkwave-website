@@ -8,13 +8,13 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --force
+RUN yarn
 
 # Copy the Angular app files to the working directory
 COPY . .
 
 # Build the Angular app
-RUN npm run build
+RUN yarn build
 
 # Use Nginx as a lightweight base image
 FROM nginx:stable
