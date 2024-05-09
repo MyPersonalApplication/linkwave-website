@@ -19,6 +19,7 @@ import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { SocketService } from 'src/app/services/ws/socket.service';
 import { WebSocketService } from 'src/app/services/ws/web-socket.service';
 
 @Component({
@@ -42,41 +43,27 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
     private conversationService: ConversationService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private websocketService: WebSocketService
+    // private websocketService: WebSocketService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
     this.chatForm = this.formBuilder.group({
       message: [''],
     });
-    this.initializeSocketConnection();
+    this.socketService.receiveMessage((message: string) => {
+      console.log('Received message from server:', message);
+    });
   }
 
   ngOnDestroy() {
-    this.disconnectSocket();
+    this.socketService.disconnect();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && !changes['conversationId'].firstChange) {
       this.loadConversations();
     }
-  }
-
-  // Initializes socket connection
-  initializeSocketConnection() {
-    this.websocketService.connectSocket('Hello from client');
-  }
-
-  // Receives response from socket connection
-  receiveSocketResponse() {
-    this.websocketService.receiveStatus().subscribe((receivedMessage: any) => {
-      console.log(receivedMessage);
-    });
-  }
-
-  // Disconnects socket connection
-  disconnectSocket() {
-    this.websocketService.disconnectSocket();
   }
 
   loadConversations(): void {
@@ -136,6 +123,9 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
     if (this.chatForm.value.message === '') {
       return;
     }
+
+    // console.log(this.chatForm.value.message);
+    // this.socketService.sendMessage(this.chatForm.value.message);
 
     this.messageService
       .sendMessage(this.conversationId, this.chatForm.value.message, null)

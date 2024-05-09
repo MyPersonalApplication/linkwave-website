@@ -12,7 +12,7 @@ export class WebSocketService {
     const token = this.authService.getAccessToken();
 
     this.webSocket = new Socket({
-      url: '/ws',
+      url: 'http://localhost:8080/ws',
       options: {
         transportOptions: {
           polling: {
@@ -26,13 +26,17 @@ export class WebSocketService {
   }
 
   // this method is used to start connection/handhshake of socket with server
-  connectSocket(message: string) {
-    this.webSocket.emit('connect', message);
+  initSocket(message: string) {
+    this.webSocket.emit('init', message);
+  }
+
+  sendMessage(message: string) {
+    this.webSocket.emit('chat', message);
   }
 
   // this method is used to get response from server
   receiveStatus() {
-    return this.webSocket.fromEvent('/topic/chat');
+    return this.webSocket.fromEvent('messages');
   }
 
   // this method is used to end web socket connection
