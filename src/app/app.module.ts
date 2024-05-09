@@ -51,21 +51,14 @@ import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
 import { UserCardComponent } from './component/loading/user-card/user-card.component';
 import { ChatComponent } from './message/chat/chat.component';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
-import { StompService } from './services/ws/stomp.service';
 import { PostLikeComponent } from './component/dialog/post-like/post-like.component';
 import { PostCommentComponent } from './component/dialog/post-comment/post-comment.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
-// const config: SocketIoConfig = {
-//   url: 'http://localhost:8080/ws-chat/',
-//   options: {},
-// };
 
 @NgModule({
   declarations: [
@@ -127,7 +120,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxSkeletonLoaderModule,
     ImageCropperModule,
-    // SocketIoModule.forRoot(config),
   ],
   providers: [
     {
@@ -136,7 +128,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
     },
     AuthService,
-    StompService,
   ],
   bootstrap: [AppComponent],
 })

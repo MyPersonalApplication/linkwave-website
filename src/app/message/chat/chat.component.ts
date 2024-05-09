@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -14,19 +15,18 @@ import {
   Participant,
 } from 'src/app/models/conversation';
 import { UserInfo } from 'src/app/models/profile';
-import { ChatService } from 'src/app/services/api/chat.service';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { StompService } from 'src/app/services/ws/stomp.service';
+import { WebSocketService } from 'src/app/services/ws/web-socket.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit, OnChanges {
+export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() markAsRead: EventEmitter<void> = new EventEmitter<void>();
   @Output() sendMessage: EventEmitter<void> = new EventEmitter<void>();
@@ -42,23 +42,41 @@ export class ChatComponent implements OnInit, OnChanges {
     private conversationService: ConversationService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private stompService: StompService
+    private websocketService: WebSocketService
   ) {}
 
   ngOnInit(): void {
     this.chatForm = this.formBuilder.group({
       message: [''],
     });
-    this.stompService.subscribe('/topic/chat', (message) => {
-      console.log(message);
-      this.loadConversations();
-    });
+    this.initializeSocketConnection();
+  }
+
+  ngOnDestroy() {
+    this.disconnectSocket();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && !changes['conversationId'].firstChange) {
       this.loadConversations();
     }
+  }
+
+  // Initializes socket connection
+  initializeSocketConnection() {
+    this.websocketService.connectSocket('Hello from client');
+  }
+
+  // Receives response from socket connection
+  receiveSocketResponse() {
+    this.websocketService.receiveStatus().subscribe((receivedMessage: any) => {
+      console.log(receivedMessage);
+    });
+  }
+
+  // Disconnects socket connection
+  disconnectSocket() {
+    this.websocketService.disconnectSocket();
   }
 
   loadConversations(): void {
