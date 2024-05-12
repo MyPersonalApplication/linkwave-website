@@ -57,6 +57,8 @@ import { CheckEmailComponent } from './forgot-password/check-email/check-email.c
 import { StompService } from './services/ws/stomp.service';
 import { PostLikeComponent } from './component/dialog/post-like/post-like.component';
 import { PostCommentComponent } from './component/dialog/post-comment/post-comment.component';
+import { ScrollToBottomDirective } from './directive/scroll-to-bottom.directive';
+import { PostCardComponent } from './component/loading/post-card/post-card.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -102,6 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CheckEmailComponent,
     PostLikeComponent,
     PostCommentComponent,
+    ScrollToBottomDirective,
+    PostCardComponent,
   ],
   imports: [
     BrowserModule,

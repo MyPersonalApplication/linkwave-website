@@ -5,7 +5,7 @@ import {
   faShareFromSquare as faRegularShareFromSquare,
 } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
-import { PostList } from 'src/app/models/post';
+import { Post } from 'src/app/models/post';
 import * as AOS from 'aos';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserInfo } from 'src/app/models/profile';
@@ -26,7 +26,7 @@ export class CardPostComponent implements OnInit {
   faRegularComments = faRegularComments;
   faRegularShareFromSquare = faRegularShareFromSquare;
 
-  @Input() postList!: PostList[];
+  @Input() postList!: Post[];
 
   constructor(
     private showToast: ToastService,
@@ -58,7 +58,7 @@ export class CardPostComponent implements OnInit {
   likePost(postId: string) {
     const post = this.postList.find((post) => {
       return post.id === postId;
-    }) as PostList;
+    }) as Post;
     const currentUser = this.authService.getUserData() as UserInfo;
 
     if (this.isLikedPost(post.id)) {

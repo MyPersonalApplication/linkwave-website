@@ -11,7 +11,7 @@ export interface Message {
   id: string;
   content: string;
   isRead: boolean;
-  conversation?: Conversation;
+  conversationId?: string;
   sender: UserInfo;
   createdAt: string;
 }

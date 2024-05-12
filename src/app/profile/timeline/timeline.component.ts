@@ -7,7 +7,7 @@ import {
   faHeartPulse as faSolidHeartPulse,
 } from '@fortawesome/free-solid-svg-icons';
 import { PostComponent } from 'src/app/component/dialog/post/post.component';
-import { PostList, PostMedia } from 'src/app/models/post';
+import { Post, PostMedia } from 'src/app/models/post';
 import { UserInfo } from 'src/app/models/profile';
 import { PostService } from 'src/app/services/api/post.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -25,7 +25,7 @@ export class TimelineComponent implements OnInit {
   faSolidHouse = faSolidHouse;
   faSolidLocationDot = faSolidLocationDot;
   faSolidHeartPulse = faSolidHeartPulse;
-  postList: PostList[] = [];
+  postList: Post[] = [];
 
   sweetsMemories = [
     {
@@ -102,7 +102,7 @@ export class TimelineComponent implements OnInit {
       if (result) {
         console.log(result);
         this.postService.createPost(result).subscribe({
-          next: (postResponse: PostList) => {
+          next: (postResponse: Post) => {
             const postId = postResponse.id;
             if (result.files.length > 0) {
               this.postService.createPostMedia(postId, result.files).subscribe({

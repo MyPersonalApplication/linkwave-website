@@ -3,7 +3,7 @@
   <button mat-dialog-close type="button" class="btn-close me-3" aria-label="Close"></button>
 </div>
 <mat-dialog-content>
-  <div class="row">
+  <div class="row" *ngIf="post">
     <div class="col-12 col-lg-6 col-xl-8">
       <div id="carouselExampleIndicators" class="carousel slide bg-dark">
         <div class="carousel-indicators">
@@ -50,7 +50,8 @@
                 {{ post.user.firstName }} {{ post.user.lastName }}
               </h6>
               <span class="post-time">
-                {{ post.createdAt | date : "short" }}
+                <!-- {{ post.createdAt | date : "short" }} -->
+                {{ formatDistanceToNow(post.createdAt) }}
               </span>
             </div>
           </div>
@@ -117,17 +118,20 @@
                 <p class="card-text">{{ item.content }}</p>
               </div>
             </div>
-            <span class="post-time">
-              {{ item.createdAt | date : "short" }}
-            </span>
+            <div class="d-flex gap-3">
+              <span class="post-time">
+                <!-- {{ item.createdAt | date : "short" }} -->
+                {{ formatDistanceToNow(item.createdAt) }}
+              </span>
+              <span class="reply-comment">
+                Reply
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <form class="msb-reply p-2">
-        <button mat-icon-button>
-          <mat-icon>add_reaction</mat-icon>
-        </button>
-        <input placeholder="Comment here" />
+      <form class="msb-reply p-2" [formGroup]="commentForm" (ngSubmit)="submit()">
+        <input placeholder="Comment here" formControlName="content" />
         <button mat-icon-button type="submit">
           <mat-icon>send</mat-icon>
         </button>

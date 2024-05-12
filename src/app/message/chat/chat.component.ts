@@ -6,8 +6,10 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ScrollToBottomDirective } from 'src/app/directive/scroll-to-bottom.directive';
 import {
   Conversation,
   Message,
@@ -35,6 +37,9 @@ export class ChatComponent implements OnInit, OnChanges {
   currentUser: UserInfo | undefined;
   chatForm!: FormGroup;
 
+  @ViewChild(ScrollToBottomDirective)
+  scroll!: ScrollToBottomDirective;
+
   constructor(
     private showToast: ToastService,
     private authService: AuthService,
@@ -51,7 +56,7 @@ export class ChatComponent implements OnInit, OnChanges {
     this.stompService.connect().then(() => {
       this.stompService.initializeTopicSubscription(
         '/topic/chat',
-        (message) => {
+        (message: Message) => {
           if (message.conversationId === this.conversationId) {
             this.listMessages.push(message);
           }
@@ -63,57 +68,55 @@ export class ChatComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && !changes['conversationId'].firstChange) {
-      this.loadConversations();
+      this.loadConversationById(this.conversationId);
     }
   }
 
-  loadConversations(): void {
-    this.conversationService
-      .getConversationById(this.conversationId)
-      .subscribe({
-        next: (response: Conversation) => {
-          // Get current user info
-          const currentUser: UserInfo =
-            this.authService.getUserData() as UserInfo;
-          this.currentUser = currentUser;
+  loadConversationById(id: string): void {
+    this.conversationService.getConversationById(id).subscribe({
+      next: (response: Conversation) => {
+        // Get current user info
+        const currentUser: UserInfo =
+          this.authService.getUserData() as UserInfo;
+        this.currentUser = currentUser;
 
-          // Get friend info and list of messages
-          const friend = response.participants.find(
-            (participant: Participant) => participant.user.id !== currentUser.id
-          );
-          this.friendInfo = friend?.user;
-          this.listMessages = response.messages;
+        // Get friend info and list of messages
+        const friend = response.participants.find(
+          (participant: Participant) => participant.user.id !== currentUser.id
+        );
+        this.friendInfo = friend?.user;
+        this.listMessages = response.messages;
 
-          // Mark all messages as read
-          const unRead = response.messages.filter(
-            (message: Message) =>
-              message.sender.id !== currentUser.id && !message.isRead
-          );
-          if (unRead.length > 0) {
-            const listMessageIds = unRead.map((message) => message.id);
+        // Mark all messages as read
+        const unRead = response.messages.filter(
+          (message: Message) =>
+            message.sender.id !== currentUser.id && !message.isRead
+        );
+        if (unRead.length > 0) {
+          const listMessageIds = unRead.map((message) => message.id);
 
-            this.messageService.markAsRead(listMessageIds).subscribe({
-              next: () => {
-                this.markAsRead.emit();
-              },
-              error: (response) => {
-                this.showToast.showErrorMessage(
-                  'Error',
-                  response.error?.message ||
-                    'Something went wrong. Please try again later'
-                );
-              },
-            });
-          }
-        },
-        error: (response) => {
-          this.showToast.showErrorMessage(
-            'Error',
-            response.error?.message ||
-              'Something went wrong. Please try again later'
-          );
-        },
-      });
+          this.messageService.markAsRead(listMessageIds).subscribe({
+            next: () => {
+              this.markAsRead.emit();
+            },
+            error: (response) => {
+              this.showToast.showErrorMessage(
+                'Error',
+                response.error?.message ||
+                  'Something went wrong. Please try again later'
+              );
+            },
+          });
+        }
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 
   toggleMenu() {

@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostComponent } from '../component/dialog/post/post.component';
 import { faHandPointUp as faRegularHandPointUp } from '@fortawesome/free-regular-svg-icons';
-import { PostList, PostMedia } from '../models/post';
+import { Post, PostMedia } from '../models/post';
 import { Profile, UserInfo } from '../models/profile';
 import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/api/post.service';
@@ -16,8 +16,9 @@ import { ToastService } from '../services/toast.service';
 export class HomeComponent implements OnInit {
   faRegularHandPointUp = faRegularHandPointUp;
   showScrollTop = false;
-  postList: PostList[] = [];
+  postList: Post[] = [];
   currentUser!: UserInfo;
+  isLoading: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
   loadPosts() {
     this.postService.getPosts().subscribe({
       next: (response) => {
+        this.isLoading = false;
         this.postList = response;
       },
       error: (response) => {
@@ -55,7 +57,7 @@ export class HomeComponent implements OnInit {
       if (result) {
         console.log(result);
         this.postService.createPost(result).subscribe({
-          next: (postResponse: PostList) => {
+          next: (postResponse: Post) => {
             const postId = postResponse.id;
             if (result.files.length > 0) {
               this.postService.createPostMedia(postId, result.files).subscribe({

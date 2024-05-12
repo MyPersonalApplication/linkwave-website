@@ -98,3 +98,11 @@ span {
     }
   }
 }
+
+.reply-comment {
+  cursor: pointer;
+
+  &:hover {
+    color: #f44336;
+  }
+}

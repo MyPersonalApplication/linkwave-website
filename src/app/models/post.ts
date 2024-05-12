@@ -1,6 +1,6 @@
 import { UserInfo } from './profile';
 
-export interface PostList {
+export interface Post {
   id: string;
   content: string;
   user: UserInfo;
