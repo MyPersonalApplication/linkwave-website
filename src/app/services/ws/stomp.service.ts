@@ -7,37 +7,54 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class StompService {
-  socket = new SocketJs('/ws');
-  stompClient = Stomp.over(this.socket);
+  private stompClient: any = null;
+  private socket: any = null;
 
-  constructor(private authService: AuthService) {}
-
-  subscribe(topic: string, callback: (message: any) => void): void {
-    const connected: boolean = this.stompClient.connected;
-
-    if (connected) {
-      this.subscribeToTopic(topic, callback);
-      return;
-    }
-
-    this.stompClient.connect(
-      {
-        Headers: {
-          Authorization: `Bearer ${this.authService.getAccessToken()}`,
-        },
-      },
-      () => {
-        this.subscribeToTopic(topic, callback);
-      }
-    );
+  constructor(private authService: AuthService) {
+    this.socket = new SocketJs('/websocket');
+    this.stompClient = Stomp.over(this.socket);
   }
 
-  private subscribeToTopic(
+  connect(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.stompClient.connect(
+        {
+          'X-Authorization': `Bearer ${this.authService.getAccessToken()}`,
+        },
+        () => {
+          resolve();
+        },
+        (error: any) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  initializeTopicSubscription(
     topic: string,
     callback: (message: any) => void
   ): void {
+    if (!this.stompClient.connected) {
+      throw new Error('STOMP client is not connected');
+    }
+
     this.stompClient.subscribe(topic, (message: any) => {
       callback(JSON.parse(message.body));
     });
+  }
+
+  sendMessage(destination: string, payload: any): void {
+    if (!this.stompClient.connected) {
+      throw new Error('STOMP client is not connected');
+    }
+
+    this.stompClient.send(destination, {}, JSON.stringify(payload));
+  }
+
+  disconnect(): void {
+    if (this.stompClient.connected) {
+      this.stompClient.disconnect();
+    }
   }
 }

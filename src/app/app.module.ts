@@ -62,11 +62,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-// const config: SocketIoConfig = {
-//   url: 'http://localhost:8080/ws-chat/',
-//   options: {},
-// };
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +122,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxSkeletonLoaderModule,
     ImageCropperModule,
-    // SocketIoModule.forRoot(config),
   ],
   providers: [
     {

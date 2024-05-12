@@ -21,7 +21,9 @@
               "lodash",
               "sweetalert2",
               "plyr",
-              "aos"
+              "aos",
+              "sockjs-client",
+              "stompjs"
             ],
             "outputPath": "dist/itlinkwave-website",
             "index": "src/index.html",

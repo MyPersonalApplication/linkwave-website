@@ -14,7 +14,6 @@ import {
   Participant,
 } from 'src/app/models/conversation';
 import { UserInfo } from 'src/app/models/profile';
-import { ChatService } from 'src/app/services/api/chat.service';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -49,9 +48,16 @@ export class ChatComponent implements OnInit, OnChanges {
     this.chatForm = this.formBuilder.group({
       message: [''],
     });
-    this.stompService.subscribe('/topic/chat', (message) => {
-      console.log(message);
-      this.loadConversations();
+    this.stompService.connect().then(() => {
+      this.stompService.initializeTopicSubscription(
+        '/topic/chat',
+        (message) => {
+          if (message.conversationId === this.conversationId) {
+            this.listMessages.push(message);
+          }
+          this.sendMessage.emit();
+        }
+      );
     });
   }
 
@@ -122,10 +128,8 @@ export class ChatComponent implements OnInit, OnChanges {
     this.messageService
       .sendMessage(this.conversationId, this.chatForm.value.message, null)
       .subscribe({
-        next: (response: Message) => {
-          this.listMessages.push(response);
+        next: () => {
           this.chatForm.reset();
-          this.sendMessage.emit();
         },
         error: (response) => {
           this.showToast.showErrorMessage(
