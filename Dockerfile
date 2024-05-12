@@ -4,8 +4,8 @@ FROM node:20.11.0-alpine as builder
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Copy package.json and yarn.lock to the working directory
+COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn
