@@ -106,3 +106,30 @@ span {
     color: #f44336;
   }
 }
+
+.msb-reply-comment {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid #eee;
+  background: #f8f8f8;
+
+  input {
+    width: 100%;
+    font-size: 13px;
+    border: 0;
+    padding: 10px 15px;
+    resize: none;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  button {
+    color: $color_main;
+    &:hover {
+      background: #f2f2f2;
+    }
+  }
+}

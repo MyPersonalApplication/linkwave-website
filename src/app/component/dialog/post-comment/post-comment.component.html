@@ -127,6 +127,39 @@
                 Reply
               </span>
             </div>
+            <div class="d-flex gap-2 mt-3" *ngFor="let reply of item?.lstReplyComments">
+              <div class="avatar">
+                <img [src]="
+                                    reply.user.avatar?.imageUrl
+                                      ? reply.user.avatar?.imageUrl
+                                      : 'assets/avatar/default-avartar.jpg'
+                                  " class="rounded-circle" alt="User Image">
+              </div>
+              <div class="w-100">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title mb-0">{{ reply.user.firstName }} {{ reply.user.lastName }}</h6>
+                    <p class="card-text">{{ reply.content }}</p>
+                  </div>
+                </div>
+                <div class="d-flex gap-3">
+                  <span class="post-time">
+                    <!-- {{ reply.createdAt | date : "short" }} -->
+                    {{ formatDistanceToNow(reply.createdAt) }}
+                  </span>
+                  <!-- <span class="reply-comment">
+                    Reply
+                  </span> -->
+                </div>
+              </div>
+            </div>
+            <form *ngIf="item?.lstReplyComments!.length > 0" class="msb-reply-comment p-2"
+              [formGroup]="replyCommentForm" (ngSubmit)="submitReply(item.id)">
+              <input placeholder="Comment here" formControlName="content" />
+              <button mat-icon-button type="submit">
+                <mat-icon>send</mat-icon>
+              </button>
+            </form>
           </div>
         </div>
       </div>

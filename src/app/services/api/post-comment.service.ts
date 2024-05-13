@@ -14,4 +14,8 @@ export class PostCommentService {
       userId,
     });
   }
+
+  getPostComments(postCommentId: string) {
+    return this.http.get<any>(`/api/posts/comment/${postCommentId}`);
+  }
 }

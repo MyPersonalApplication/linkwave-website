@@ -25,6 +25,16 @@ export interface PostLike {
 export interface PostComment {
   id: string;
   content: string;
+  postId: string;
+  user: UserInfo;
+  lstReplyComments: Array<ReplyComment>;
+  createdAt: Date;
+}
+
+export interface ReplyComment {
+  id: string;
+  content: string;
+  postCommentId: string;
   user: UserInfo;
   createdAt: Date;
 }
