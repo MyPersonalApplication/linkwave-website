@@ -123,7 +123,16 @@
                 <!-- {{ item.createdAt | date : "short" }} -->
                 {{ formatDistanceToNow(item.createdAt) }}
               </span>
-              <span class="reply-comment">
+              <div class="post-meta-like">
+                <fa-icon *ngIf="!isLikedComment(item)" [icon]="faRegularHeart" size="sm" style="color: #ff3232"
+                  (click)="likeComment(item)"></fa-icon>
+                <fa-icon *ngIf="isLikedComment(item)" [icon]="faSolidHeart" size="sm" style="color: #ff3232"
+                  (click)="likeComment(item)"></fa-icon>
+                <span class="ps-1">
+                  {{ item.lstLikeComments.length }}
+                </span>
+              </div>
+              <span class="reply-comment" (click)="addReply(item)">
                 Reply
               </span>
             </div>
@@ -153,8 +162,8 @@
                 </div>
               </div>
             </div>
-            <form *ngIf="item?.lstReplyComments!.length > 0" class="msb-reply-comment p-2"
-              [formGroup]="replyCommentForm" (ngSubmit)="submitReply(item.id)">
+            <form *ngIf="replyCommentForm && item.id == replyCommentForm.value.commentId"
+              class="msb-reply-comment p-2 mt-2" [formGroup]="replyCommentForm" (ngSubmit)="submitReply(item.id)">
               <input placeholder="Comment here" formControlName="content" />
               <button mat-icon-button type="submit">
                 <mat-icon>send</mat-icon>

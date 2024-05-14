@@ -47,9 +47,9 @@ export class PostCommentComponent implements OnInit, OnDestroy {
     this.commentForm = this.formBuilder.group({
       content: [''],
     });
-    this.replyCommentForm = this.formBuilder.group({
-      content: [''],
-    });
+    // this.replyCommentForm = this.formBuilder.group({
+    //   content: [],
+    // });
     this.stompService.connect().then(() => {
       this.stompService.initializeTopicSubscription(
         '/topic/post-comment',
@@ -63,6 +63,13 @@ export class PostCommentComponent implements OnInit, OnDestroy {
           this.loadReplyCommentById(replyCommentId);
         }
       );
+    });
+  }
+
+  addReply(comment: PostComment) {
+    this.replyCommentForm = this.formBuilder.group({
+      commentId: [comment.id],
+      content: [''],
     });
   }
 
@@ -151,6 +158,16 @@ export class PostCommentComponent implements OnInit, OnDestroy {
     return isLiked ? true : false;
   }
 
+  isLikedComment(postComment: PostComment) {
+    const currentUser = this.authService.getUserData() as UserInfo;
+
+    const isLiked = postComment.lstLikeComments.find((like) => {
+      return like.user.id === currentUser.id;
+    });
+
+    return isLiked ? true : false;
+  }
+
   likePost() {
     const currentUser = this.authService.getUserData() as UserInfo;
 
@@ -179,6 +196,48 @@ export class PostCommentComponent implements OnInit, OnDestroy {
       this.postService.likePost(this.post.id).subscribe({
         next: (response) => {
           this.post.lstLikes.unshift(response);
+        },
+        error: (response) => {
+          this.showToast.showErrorMessage(
+            'Error',
+            response.error?.message ||
+              'Something went wrong. Please try again later'
+          );
+        },
+      });
+    }
+  }
+
+  likeComment(postComment: PostComment) {
+    const currentUser = this.authService.getUserData() as UserInfo;
+
+    if (this.isLikedComment(postComment)) {
+      // Unlike comment
+      const likeComment = postComment.lstLikeComments.find((like) => {
+        return like.user.id === currentUser.id;
+      }) as any;
+
+      this.postService.unlikeComment(likeComment.id).subscribe({
+        next: (response) => {
+          postComment.lstLikeComments = postComment.lstLikeComments.filter(
+            (like) => {
+              return like.id !== response;
+            }
+          );
+        },
+        error: (response) => {
+          this.showToast.showErrorMessage(
+            'Error',
+            response.error?.message ||
+              'Something went wrong. Please try again later'
+          );
+        },
+      });
+    } else {
+      // Like comment
+      this.postService.likeComment(postComment.id).subscribe({
+        next: (response) => {
+          postComment.lstLikeComments.unshift(response);
         },
         error: (response) => {
           this.showToast.showErrorMessage(

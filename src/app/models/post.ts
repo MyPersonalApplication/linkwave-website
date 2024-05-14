@@ -28,6 +28,7 @@ export interface PostComment {
   postId: string;
   user: UserInfo;
   lstReplyComments: Array<ReplyComment>;
+  lstLikeComments: Array<LikeComment>;
   createdAt: Date;
 }
 
@@ -37,4 +38,9 @@ export interface ReplyComment {
   postCommentId: string;
   user: UserInfo;
   createdAt: Date;
+}
+
+export interface LikeComment {
+  id: string;
+  user: UserInfo;
 }

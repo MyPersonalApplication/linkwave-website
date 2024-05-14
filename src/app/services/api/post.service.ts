@@ -27,8 +27,8 @@ export class PostService {
     return this.http.post<any>(`/api/posts/${postId}/like`, {});
   }
 
-  unlikePost(postId: string) {
-    return this.http.delete<any>(`/api/posts/${postId}/unlike`);
+  unlikePost(postLikeId: string) {
+    return this.http.delete<any>(`/api/posts/${postLikeId}/unlike`);
   }
 
   getPostLikes(postId: string) {
@@ -42,5 +42,13 @@ export class PostService {
       formData.append('multipartFile', file);
     });
     return this.http.post<any>(`/api/posts/${postId}/media`, formData);
+  }
+
+  likeComment(postCommentId: string) {
+    return this.http.post<any>(`/api/posts/comment/${postCommentId}/like`, {});
+  }
+
+  unlikeComment(likeCommentId: string) {
+    return this.http.delete<any>(`/api/posts/comment/${likeCommentId}/unlike`);
   }
 }
