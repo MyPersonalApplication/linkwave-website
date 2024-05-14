@@ -1,0 +1,11 @@
+<aside id="sidebar" class="sidebar" *ngIf="pages">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item" *ngFor="let page of pages" [ngClass]="{ 'nav-link': true, collapsed: !page.isActive }"
+      (click)="redicrectLink(page.path)">
+      <span style="cursor: pointer;">
+        <i [ngClass]="page.icon"></i>
+        <span>{{ page.name }}</span>
+      </span>
+    </li>
+  </ul>
+</aside>

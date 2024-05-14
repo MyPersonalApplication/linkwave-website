@@ -59,7 +59,10 @@ export class LoginComponent {
         next: (response) => {
           this.isLoading = false;
           this.authService.saveUser(response);
-          this.router.navigate(['/']);
+          if (response.roles.includes('ROLE_ADMIN')) {
+            return this.router.navigate(['/admin/post']);
+          }
+          return this.router.navigate(['/']);
         },
         error: (response) => {
           this.isLoading = false;

@@ -59,6 +59,10 @@ import { PostLikeComponent } from './component/dialog/post-like/post-like.compon
 import { PostCommentComponent } from './component/dialog/post-comment/post-comment.component';
 import { ScrollToBottomDirective } from './directive/scroll-to-bottom.directive';
 import { PostCardComponent } from './component/loading/post-card/post-card.component';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { ManagePostComponent } from './manage-post/manage-post.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -106,6 +110,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     PostCommentComponent,
     ScrollToBottomDirective,
     PostCardComponent,
+    SidebarComponent,
+    AdminComponent,
+    ManagePostComponent,
+    ManageUserComponent,
   ],
   imports: [
     BrowserModule,

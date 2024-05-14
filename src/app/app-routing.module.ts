@@ -23,6 +23,9 @@ import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { ManagePostComponent } from './manage-post/manage-post.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 const routes: Routes = [
   {
@@ -148,6 +151,24 @@ const routes: Routes = [
         path: 'notification',
         component: NotificationComponent,
         title: 'Notification',
+        canActivate: [AuthenticationGuard],
+      },
+    ],
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {
+        path: 'post',
+        component: ManagePostComponent,
+        title: 'Manage Post',
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'user',
+        component: ManageUserComponent,
+        title: 'Manage User',
         canActivate: [AuthenticationGuard],
       },
     ],

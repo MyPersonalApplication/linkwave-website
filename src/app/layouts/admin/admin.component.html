@@ -1,0 +1,42 @@
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a routerLink="/admin/post" class="logo d-flex align-items-center">
+      <img src="assets/images/logo/logo-dark.png" alt="Logo" class="rounded-circle" />
+      <span class="d-none d-lg-block">LinkWave</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn" (click)="toggleSidebar()"></i>
+  </div>
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown pe-3" style="cursor: pointer;">
+        <div [matMenuTriggerFor]="menu" class="d-flex align-items-center">
+          <img [src]="
+                    userData.avatar?.imageUrl
+                      ? userData.avatar?.imageUrl
+                      : 'assets/avatar/default-avartar.jpg'
+                  " alt="Profile" width="30" height="30" class="rounded-circle" />
+          <span class="d-none d-md-block dropdown-toggle ps-2">{{ userData.firstName }}</span>
+        </div>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-person-lock"></i>
+              <span>Change Password</span>
+            </div>
+          </button>
+          <button mat-menu-item (click)="handleLogout()">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Sign Out</span>
+            </div>
+          </button>
+        </mat-menu>
+      </li>
+    </ul>
+  </nav>
+</header>
+<app-sidebar *ngIf="isSidebarOpen"></app-sidebar>
+<main id="main" [ngClass]="{ 'main-sidebar-closed': !isSidebarOpen }">
+  <router-outlet></router-outlet>
+</main>
