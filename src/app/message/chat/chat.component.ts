@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -27,7 +28,7 @@ import { StompService } from 'src/app/services/ws/stomp.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit, OnChanges {
+export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   @Output() toggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() markAsRead: EventEmitter<void> = new EventEmitter<void>();
   @Output() sendMessage: EventEmitter<void> = new EventEmitter<void>();
@@ -70,6 +71,10 @@ export class ChatComponent implements OnInit, OnChanges {
     if (changes['conversationId'] && !changes['conversationId'].firstChange) {
       this.loadConversationById(this.conversationId);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.stompService.disconnect();
   }
 
   loadConversationById(id: string): void {

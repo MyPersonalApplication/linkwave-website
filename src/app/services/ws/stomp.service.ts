@@ -10,13 +10,13 @@ export class StompService {
   private stompClient: any = null;
   private socket: any = null;
 
-  constructor(private authService: AuthService) {
-    this.socket = new SocketJs('/websocket');
-    this.stompClient = Stomp.over(this.socket);
-  }
+  constructor(private authService: AuthService) {}
 
   connect(): Promise<void> {
     return new Promise((resolve, reject) => {
+      this.socket = new SocketJs('/websocket');
+      this.stompClient = Stomp.over(this.socket);
+
       this.stompClient.connect(
         {
           'X-Authorization': `Bearer ${this.authService.getAccessToken()}`,
@@ -35,7 +35,7 @@ export class StompService {
     topic: string,
     callback: (message: any) => void
   ): void {
-    if (!this.stompClient.connected) {
+    if (!this.stompClient || !this.stompClient.connected) {
       throw new Error('STOMP client is not connected');
     }
 
@@ -45,7 +45,7 @@ export class StompService {
   }
 
   sendMessage(destination: string, payload: any): void {
-    if (!this.stompClient.connected) {
+    if (!this.stompClient || !this.stompClient.connected) {
       throw new Error('STOMP client is not connected');
     }
 
@@ -53,8 +53,12 @@ export class StompService {
   }
 
   disconnect(): void {
-    if (this.stompClient.connected) {
-      this.stompClient.disconnect();
+    if (this.stompClient && this.stompClient.connected) {
+      this.stompClient.disconnect(() => {
+        console.log('Disconnected');
+      });
+      this.stompClient = null;
+      this.socket = null;
     }
   }
 }

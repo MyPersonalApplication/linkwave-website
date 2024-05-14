@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
   faComments as faRegularComments,
   faHeart as faRegularHeart,
@@ -22,7 +22,7 @@ import { ReplyCommentService } from 'src/app/services/api/reply-comment.service'
   templateUrl: './post-comment.component.html',
   styleUrls: ['./post-comment.component.scss'],
 })
-export class PostCommentComponent implements OnInit {
+export class PostCommentComponent implements OnInit, OnDestroy {
   faRegularHeart = faRegularHeart;
   faSolidHeart = faSolidHeart;
   faRegularComments = faRegularComments;
@@ -64,6 +64,10 @@ export class PostCommentComponent implements OnInit {
         }
       );
     });
+  }
+
+  ngOnDestroy(): void {
+    this.stompService.disconnect();
   }
 
   loadPostCommentById(postCommentId: string) {
