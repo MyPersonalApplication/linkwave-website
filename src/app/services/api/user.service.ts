@@ -1,18 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-  ChangeAvatar,
-  Experience,
-  Skill,
-  UserInfo,
-} from 'src/app/models/profile';
+import { Experience, Skill, UserInfo } from 'src/app/models/profile';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private http: HttpClient) {}
+
+  getAllUsers(page: number, size: number) {
+    const params = new HttpParams({
+      fromObject: {
+        page: page.toString(),
+        pageSize: size.toString(),
+      },
+    });
+    return this.http.get<any>('/api/users', { params });
+  }
 
   getCurrentProfile() {
     return this.http.get<UserInfo>('/api/users/profile/me');
@@ -41,14 +45,6 @@ export class UserService {
     formData.append('multipartFile', data);
     return this.http.put<any>(`/api/users/cover/${userId}`, formData);
   }
-
-  // getWorkExperiences(userId: string) {
-  //   return this.http.get<Experience>(`/api/users/experience/${userId}`);
-  // }
-
-  // getEducationExperiences(userId: string) {
-  //   return this.http.get<Experience>(`/api/users/experience/${userId}`);
-  // }
 
   addExperience(data: Experience) {
     return this.http.post<Experience>(`/api/users/experience`, data);

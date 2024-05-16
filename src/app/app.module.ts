@@ -51,7 +51,6 @@ import { RequestComponent } from './friend/request/request.component';
 import { UserFriendComponent } from './friend/friend.component';
 import { UserCardComponent } from './component/loading/user-card/user-card.component';
 import { ChatComponent } from './message/chat/chat.component';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CheckEmailComponent } from './forgot-password/check-email/check-email.component';
 import { StompService } from './services/ws/stomp.service';

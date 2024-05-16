@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,8 +7,14 @@ import { Injectable } from '@angular/core';
 export class PostService {
   constructor(private http: HttpClient) {}
 
-  getPosts() {
-    return this.http.get<any>('/api/posts');
+  getPosts(page: number, size: number) {
+    const params = new HttpParams({
+      fromObject: {
+        page: page.toString(),
+        pageSize: size.toString(),
+      },
+    });
+    return this.http.get<any>('/api/posts', { params });
   }
 
   getPostByUser(userId: string) {
