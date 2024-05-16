@@ -62,6 +62,7 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { ManagePostComponent } from './manage-post/manage-post.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
+import { NewMessageComponent } from './component/dialog/new-message/new-message.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -113,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminComponent,
     ManagePostComponent,
     ManageUserComponent,
+    NewMessageComponent,
   ],
   imports: [
     BrowserModule,

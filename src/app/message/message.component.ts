@@ -4,7 +4,9 @@ import { ConversationService } from '../services/api/conversation.service';
 import { AuthService } from '../services/auth.service';
 import { UserInfo } from '../models/profile';
 import { Conversation, Message, Participant } from '../models/conversation';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { NewMessageComponent } from '../component/dialog/new-message/new-message.component';
 
 @Component({
   selector: 'app-message',
@@ -17,10 +19,12 @@ export class MessageComponent implements OnInit {
   conversationId: string = '';
 
   constructor(
+    private dialog: MatDialog,
     private showToast: ToastService,
     private conversationService: ConversationService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -88,5 +92,35 @@ export class MessageComponent implements OnInit {
   handleChat(conversationId: string): void {
     this.conversationId = conversationId;
     this.isMenuToggled = false;
+  }
+
+  newMessage() {
+    const dialogRef = this.dialog.open(NewMessageComponent, {});
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.handleMessage(result);
+      }
+    });
+  }
+
+  handleMessage(friendId: string | undefined) {
+    if (!friendId) {
+      return;
+    }
+    this.conversationService.createConversation(friendId).subscribe({
+      next: (response) => {
+        this.router.navigate(['/message'], {
+          queryParams: { id: response.id },
+        });
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 }

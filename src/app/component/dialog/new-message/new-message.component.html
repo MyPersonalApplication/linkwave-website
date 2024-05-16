@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h2 mat-dialog-title class="fw-bold">New message</h2>
+  <div mat-dialog-close>
+    <button mat-icon-button matTooltip="Close" class="btn-close me-3" aria-label="Close"></button>
+  </div>
+</div>
+<mat-dialog-content>
+  <div class="w-lg-800 w-md-600 pt-2">
+    <mat-form-field class="example-full-width" color="warn">
+      <span matPrefix>
+        <button mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </span>
+      <input matInput placeholder="Search people" [formControl]="searchControl">
+    </mat-form-field>
+    <div id="search-list">
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of users" class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div mat-dialog-close class="d-flex gap-3 align-items-center" [routerLink]="['/profile', item.user.id]">
+              <img [src]="item.user.avatar?.imageUrl ? item.user.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+                alt="Avatar profile" class="rounded-circle header-avatar" />
+              <h6>{{ item.user.firstName }} {{ item.user.lastName }}</h6>
+            </div>
+            <button mat-raised-button color="warn" (click)="handleMessage(item?.user?.id)">Message</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</mat-dialog-content>

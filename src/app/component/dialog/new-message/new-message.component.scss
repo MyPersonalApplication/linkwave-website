@@ -1,0 +1,48 @@
+@media screen and (min-width: 1024px) {
+  .w-lg-800 {
+    width: 800px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+  .w-md-600 {
+    width: 600px;
+  }
+}
+
+h2 {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+#search-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 30vh;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.list-group-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}

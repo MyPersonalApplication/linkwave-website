@@ -77,5 +77,10 @@
   </form>
 </div>
 <div class="ms-body d-flex justify-content-center align-items-center" style="height: 90vh" *ngIf="!conversationId">
-  <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" />
+  <!-- <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" /> -->
+  <div class="text-center">
+    <h3 class="fw-bold">Select a message</h3>
+    <p>Select an existing conversation, start a new one, or keep exploring.</p>
+    <button routerLink="/login" mat-raised-button color="warn" class="mt-2">New message</button>
+  </div>
 </div>

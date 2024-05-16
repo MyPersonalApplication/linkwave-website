@@ -1,15 +1,13 @@
 <main class="container mt-2">
   <div class="tile tile-alt" id="messages-main">
     <div class="ms-menu" [class.toggled]="isMenuToggled">
-      <div
-        class="ms-user p-3 d-flex justify-content-between align-items-center"
-      >
+      <div class="ms-user p-3 d-flex justify-content-between align-items-center">
         <h3 class="m-0 fw-bold">Message</h3>
         <button mat-icon-button [matMenuTriggerFor]="messageOption">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #messageOption="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="newMessage()">
             <mat-icon>add_circle</mat-icon>
             <span>New message</span>
           </button>
@@ -20,47 +18,33 @@
         </mat-menu>
       </div>
       <mat-list id="friend-list">
-        <div>
-          <mat-list-item
-            *ngFor="let item of listConversations"
-            (click)="handleChat(item.id)"
-            [class.active]="item.id === conversationId"
-          >
-            <img
-              matListItemAvatar
-              [src]="
+        <div *ngIf="listConversations.length > 0">
+          <mat-list-item *ngFor="let item of listConversations" (click)="handleChat(item.id)"
+            [class.active]="item.id === conversationId">
+            <img matListItemAvatar [src]="
                 item.avatarUrl
                   ? item.avatarUrl
                   : 'assets/avatar/default-avartar.jpg'
-              "
-              alt="Avatar Profile"
-            />
+              " alt="Avatar Profile" />
             <span matListItemTitle class="fw-bold">
               {{ item.name }}
-              <span
-                class="ms-2 unread-indicator"
-                *ngIf="item.unreadCount.length > 0"
-              ></span>
+              <span class="ms-2 unread-indicator" *ngIf="item.unreadCount.length > 0"></span>
             </span>
-            <span
-              matListItemLine
-              class="ms-1"
-              *ngIf="item.lastMessage !== ''"
-              >{{ item.lastMessage }}</span
-            >
+            <span matListItemLine class="ms-1" *ngIf="item.lastMessage !== ''">{{ item.lastMessage }}</span>
             <span matListItemLine>
               {{ item.lastMessageTime | date : "short" }}
             </span>
           </mat-list-item>
         </div>
+        <div *ngIf="listConversations.length == 0" class="p-5">
+          <h3 class="fw-bold">Welcome to your inbox!</h3>
+          <p>Connect, share posts, and engage in private conversations with others on LinkWave.</p>
+          <button mat-raised-button color="warn" class="mt-2" (click)="newMessage()">Write a message</button>
+        </div>
       </mat-list>
     </div>
 
-    <app-chat
-      (toggle)="toggleMenu()"
-      (markAsRead)="loadConversations(undefined)"
-      (sendMessage)="loadConversations(undefined)"
-      [conversationId]="conversationId"
-    ></app-chat>
+    <app-chat (toggle)="toggleMenu()" (markAsRead)="loadConversations(undefined)"
+      (sendMessage)="loadConversations(undefined)" [conversationId]="conversationId"></app-chat>
   </div>
 </main>
