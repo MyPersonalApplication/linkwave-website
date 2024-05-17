@@ -1,4 +1,4 @@
-import { Avatar, UserInfo } from './profile';
+import { Avatar, Profile, UserInfo } from './profile';
 
 export interface FriendRequest {
   id: string;
@@ -20,4 +20,5 @@ export interface UserRecommend {
   firstName: string;
   lastName: string;
   avatar?: Avatar;
+  profile?: Profile;
 }

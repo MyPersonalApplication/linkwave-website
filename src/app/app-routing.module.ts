@@ -26,6 +26,7 @@ import { CheckEmailComponent } from './forgot-password/check-email/check-email.c
 import { AdminComponent } from './layouts/admin/admin.component';
 import { ManagePostComponent } from './manage-post/manage-post.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
+import { SearchPeopleComponent } from './search-people/search-people.component';
 
 const routes: Routes = [
   {
@@ -151,6 +152,12 @@ const routes: Routes = [
         path: 'notification',
         component: NotificationComponent,
         title: 'Notification',
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'search',
+        component: SearchPeopleComponent,
+        title: 'Search People',
         canActivate: [AuthenticationGuard],
       },
     ],

@@ -18,6 +18,17 @@ export class UserService {
     return this.http.get<any>('/api/users', { params });
   }
 
+  searchUsers(query: string, page: number, size: number) {
+    const params = new HttpParams({
+      fromObject: {
+        page: page.toString(),
+        pageSize: size.toString(),
+        query,
+      },
+    });
+    return this.http.get<any>('/api/users/search', { params });
+  }
+
   getCurrentProfile() {
     return this.http.get<UserInfo>('/api/users/profile/me');
   }

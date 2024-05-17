@@ -1,0 +1,14 @@
+#friend-list {
+  &.active {
+    background: #f8f8f8;
+  }
+
+  span {
+    font-family: "Poppins", sans-serif;
+
+    &:last-child {
+      margin-left: -4px;
+      margin-top: -2px;
+    }
+  }
+}

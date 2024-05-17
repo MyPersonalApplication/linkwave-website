@@ -15,6 +15,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class NewMessageComponent {
   searchControl = new FormControl();
   users: FriendShip[] = [];
+  searchUser: FriendShip[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<NewMessageComponent>,
@@ -36,6 +37,7 @@ export class NewMessageComponent {
     this.friendShipService.getFriendList().subscribe({
       next: (response) => {
         this.users = response;
+        this.searchUser = response;
       },
       error: (response) => {
         this.showToast.showErrorMessage(
@@ -48,8 +50,16 @@ export class NewMessageComponent {
   }
 
   onInputChange(value: string): void {
-    console.log('Input value:', value);
-    // Add your function logic here
+    if (!value) {
+      this.searchUser = this.users;
+      return;
+    }
+    this.searchUser = this.users.filter((user) => {
+      return (
+        user.user.firstName.toLowerCase().includes(value.toLowerCase()) ||
+        user.user.lastName.toLowerCase().includes(value.toLowerCase())
+      );
+    });
   }
 
   handleMessage(friendId: string | undefined) {

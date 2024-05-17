@@ -1,3 +1,11 @@
+<mat-form-field color="warn">
+  <span matPrefix>
+    <button mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </span>
+  <input matInput placeholder="Search by content" [formControl]="searchControl">
+</mat-form-field>
 <div class="mat-elevation-z8">
   <table mat-table matSort [dataSource]="dataSource">
 

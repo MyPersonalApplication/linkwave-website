@@ -10,6 +10,7 @@ import { SwalService } from 'src/app/services/swal.service';
   styleUrls: ['./full.component.scss'],
 })
 export class FullComponent implements OnInit {
+  searchQuery: string = '';
   userData!: UserInfo;
 
   constructor(
@@ -32,5 +33,13 @@ export class FullComponent implements OnInit {
       'warning',
       this.authService.logout.bind(this.authService)
     );
+  }
+
+  onSearch(): void {
+    if (this.searchQuery) {
+      this.router.navigate(['/search'], {
+        queryParams: { q: this.searchQuery },
+      });
+    }
   }
 }

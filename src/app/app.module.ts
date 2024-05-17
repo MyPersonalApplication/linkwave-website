@@ -63,6 +63,7 @@ import { AdminComponent } from './layouts/admin/admin.component';
 import { ManagePostComponent } from './manage-post/manage-post.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
 import { NewMessageComponent } from './component/dialog/new-message/new-message.component';
+import { SearchPeopleComponent } from './search-people/search-people.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -115,6 +116,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ManagePostComponent,
     ManageUserComponent,
     NewMessageComponent,
+    SearchPeopleComponent,
   ],
   imports: [
     BrowserModule,

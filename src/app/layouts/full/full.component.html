@@ -4,16 +4,8 @@
       <div class="row align-items-center">
         <div class="col-4">
           <div class="text-start">
-            <a
-              routerLink="/home"
-              class="text-reset text-decoration-none d-flex align-items-center"
-            >
-              <img
-                src="assets/images/logo/logo-light.png"
-                alt="Logo"
-                class="rounded-circle"
-                width="50"
-              />
+            <a routerLink="/home" class="text-reset text-decoration-none d-flex align-items-center">
+              <img src="assets/images/logo/logo-light.png" alt="Logo" class="rounded-circle" width="50" />
               <span class="fs-5 ms-2 d-none d-lg-block text-uppercase fw-bold">
                 Link Wave
               </span>
@@ -45,32 +37,21 @@
         <div class="col-4">
           <div class="d-flex justify-content-end gap-3">
             <div class="header-top-search d-none d-lg-block">
-              <form class="top-search-box">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  class="top-search-field"
-                />
-                <button mat-icon-button class="top-search-btn">
+              <form class="top-search-box" (ngSubmit)="onSearch()">
+                <input type="text" placeholder="Search" class="top-search-field" [(ngModel)]="searchQuery"
+                  name="searchQuery" />
+                <button mat-icon-button class="top-search-btn" type="submit">
                   <mat-icon>search</mat-icon>
                 </button>
               </form>
             </div>
             <div>
-              <button
-                mat-mini-fab
-                color="primary"
-                [matMenuTriggerFor]="profile"
-              >
-                <img
-                  [src]="
+              <button mat-mini-fab color="primary" [matMenuTriggerFor]="profile">
+                <img [src]="
                     userData.avatar?.imageUrl
                       ? userData.avatar?.imageUrl
                       : 'assets/avatar/default-avartar.jpg'
-                  "
-                  alt="Avatar profile"
-                  class="rounded-circle header-avatar"
-                />
+                  " alt="Avatar profile" class="rounded-circle header-avatar" />
               </button>
               <mat-menu #profile="matMenu">
                 <button mat-menu-item class="justify-content-center">

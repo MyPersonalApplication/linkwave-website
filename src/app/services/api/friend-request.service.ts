@@ -25,6 +25,17 @@ export class FriendRequestService {
     return this.http.get<any>('/api/friends/recommends', { params });
   }
 
+  searchUser(query: string, page: number, size: number) {
+    const params = new HttpParams({
+      fromObject: {
+        page: page.toString(),
+        pageSize: size.toString(),
+        query,
+      },
+    });
+    return this.http.get<any>('/api/friends/search', { params });
+  }
+
   sendFriendRequest(userId: string) {
     return this.http.post<any>('/api/friends/send', { receiverId: userId });
   }

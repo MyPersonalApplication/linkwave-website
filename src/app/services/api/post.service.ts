@@ -17,6 +17,17 @@ export class PostService {
     return this.http.get<any>('/api/posts', { params });
   }
 
+  searchPosts(query: string, page: number, size: number) {
+    const params = new HttpParams({
+      fromObject: {
+        page: page.toString(),
+        pageSize: size.toString(),
+        query,
+      },
+    });
+    return this.http.get<any>('/api/posts/search', { params });
+  }
+
   getPostByUser(userId: string) {
     return this.http.get<any>(`/api/posts/user/${userId}`);
   }

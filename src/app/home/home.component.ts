@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = true;
   isLoadMore: boolean = false;
   pagination: Pagination = {
-    pageSize: 2,
+    pageSize: 10,
     page: 0,
     totalRecords: 0,
   };

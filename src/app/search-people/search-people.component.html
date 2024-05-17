@@ -1,0 +1,42 @@
+<main class="container mt-2">
+  <div class="row justify-content-center">
+    <mat-list id="friend-list" class="col-6">
+      <div>
+        <mat-card *ngFor="let item of searchResult" class="mt-2">
+          <mat-card-content>
+            <mat-list-item>
+              <img matListItemAvatar
+                [src]="item.user.avatar?.imageUrl ? item.user.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+                alt="Avatar Profile" />
+              <span matListItemTitle class="fw-bold">
+                {{ item.user.firstName }} {{ item.user.lastName }}
+              </span>
+              <span matListItemLine class="ms-1">Live in: {{ item.user.profile?.country }}</span>
+              <span matListItemMeta class="mt-2">
+                <button *ngIf="item?.friend" mat-raised-button color="warn"
+                  (click)="handleMessage(item?.user?.id)">Message</button>
+                <button *ngIf="item?.requestId && item?.request?.sender?.id == getCurrentUserId()" mat-stroked-button
+                  color="warn" class="w-100 confirm" (click)="recallRequest(item.requestId)">
+                  Recall
+                </button>
+                <div *ngIf="item?.requestId && item?.request?.receiver?.id == getCurrentUserId()" class="d-flex gap-2">
+                  <button mat-raised-button color="warn" class="w-100 confirm"
+                    (click)="confirmFriendRequest(item.requestId)">
+                    Accept
+                  </button>
+                  <button mat-raised-button class="w-100 remove" (click)="removeFriendRequest(item.requestId)">
+                    Remove
+                  </button>
+                </div>
+                <button *ngIf="!item?.requestId && !item?.friend" mat-raised-button color="warn" class="w-100 confirm"
+                  (click)="addFriend(item.user.id)">
+                  Add Friend
+                </button>
+              </span>
+            </mat-list-item>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-list>
+  </div>
+</main>
