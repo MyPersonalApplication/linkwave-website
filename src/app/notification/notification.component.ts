@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { Notification } from '../models/notification';
+import { Notification, NotificationType } from '../models/notification';
 import { Profile, UserInfo } from '../models/profile';
 import { ToastService } from '../services/toast.service';
+import { NotificationService } from '../services/api/notification.service';
+import { StompService } from '../services/ws/stomp.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-notification',
@@ -9,84 +12,46 @@ import { ToastService } from '../services/toast.service';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent {
-  userProfile: Profile = {
-    gender: true,
-    dateOfBirth: new Date(),
-    country: 'Vietnam',
-    address: 'Can Tho',
-    aboutMe: 'I am a developer',
-    phoneNumber: '0123456789',
-    hobbies: ['Reading', 'Coding', 'Gaming'],
-  };
+  notifications: Notification[] = [];
 
-  userInfo: UserInfo = {
-    id: '1',
-    email: 'quang@gmail.com',
-    firstName: 'Quang',
-    lastName: 'Nguyen',
-    profile: this.userProfile,
-  };
+  constructor(
+    private showToast: ToastService,
+    private notificationService: NotificationService,
+    private authService: AuthService,
+    private stompService: StompService
+  ) {
+    const currentUser = this.authService.getUserData() as UserInfo;
+    this.stompService.connect().then(() => {
+      this.stompService.initializeTopicSubscription(
+        '/topic/notification',
+        (notification: Notification) => {
+          if (notification.receiverId === currentUser.id) {
+            this.showToast.showInfoMessage(
+              'Notification',
+              'You have a new notification'
+            );
+            this.notifications.unshift(notification);
+          }
+        }
+      );
+    });
+    this.loadNotifications();
+  }
 
-  notifications: Notification[] = [
-    {
-      id: '1',
-      type: 'friend-request',
-      message: 'You have a new friend request',
-      isRead: true,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '2',
-      type: 'message',
-      message: 'You have a new message',
-      isRead: false,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '3',
-      type: 'friend-request',
-      message: 'You have a new friend request',
-      isRead: true,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '4',
-      type: 'message',
-      message: 'You have a new message',
-      isRead: false,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '5',
-      type: 'friend-request',
-      message: 'You have a new friend request',
-      isRead: true,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '6',
-      type: 'message',
-      message: 'You have a new message',
-      isRead: false,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-    {
-      id: '7',
-      type: 'friend-request',
-      message: 'You have a new friend request',
-      isRead: true,
-      createdAt: new Date(),
-      sender: this.userInfo,
-    },
-  ];
-
-  constructor(private showToast: ToastService) {}
+  loadNotifications(): void {
+    this.notificationService.getNotifications().subscribe({
+      next: (response) => {
+        this.notifications = response;
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
 
   markAllAsRead(): void {
     this.notifications.forEach((n) => (n.isRead = true));

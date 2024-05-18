@@ -48,4 +48,12 @@ export class ToastService {
       timeOut: 2000,
     });
   }
+
+  showInfoMessage(title: string, message: string) {
+    const displayMessage = this.translate.instant(message);
+    this.toastr.findDuplicate(title, displayMessage, true, false);
+    this.toastr.info(displayMessage, title, {
+      timeOut: 2000,
+    });
+  }
 }

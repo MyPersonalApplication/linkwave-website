@@ -1,136 +1,114 @@
 <div class="container mt-4 notification-container">
-  <!-- <h2 class="text-center">My Notifications</h2> -->
-  <div class="d-flex justify-content-between">
-    <h3>Notifications</h3>
-    <p class="dismiss text-end" *ngIf="notifications.length !== 0">
-      <button mat-raised-button color="warn" (click)="markAllAsRead()">
-        Mark all as read
-      </button>
-    </p>
-  </div>
-  <div
-    class="d-flex justify-content-center align-items-center vh-90"
-    *ngIf="notifications.length === 0"
-  >
-    <div>
-      <img
-        src="assets/images/no-notification.png"
-        class="img-fluid"
-        width="300"
-        alt="No notification"
-      />
-      <h2>No notifications Yet</h2>
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+      <div class="d-flex flex-wrap justify-content-between">
+        <h3>Notifications</h3>
+        <p class="dismiss text-end" *ngIf="notifications.length !== 0">
+          <button mat-raised-button color="warn" (click)="markAllAsRead()">
+            Mark all as read
+          </button>
+        </p>
+      </div>
+      <div class="d-flex justify-content-center align-items-center vh-90" *ngIf="notifications.length === 0">
+        <div>
+          <img src="assets/images/no-notification.png" class="img-fluid" width="300" alt="No notification" />
+          <h2>No notifications Yet</h2>
+        </div>
+      </div>
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" color="warn" *ngIf="notifications.length !== 0">
+        <mat-tab label="All">
+          <div *ngFor="let item of notifications; let index = index">
+            <mat-card class="mb-1 notification-card">
+              <mat-card-content>
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-10 d-flex align-items-center">
+                      <img
+                        [src]="item.sender.avatar?.imageUrl ? item.sender.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+                        class="rounded-circle" alt="Avatar" width="50" height="50" />
+                      <div class="ms-2">
+                        <div class="card-text">
+                          <span class="fw-bold text-decoration-underline" [routerLink]="['/profile', item.sender.id]">
+                            {{ item.sender.firstName }}
+                          </span> {{ item.message }}
+                        </div>
+                        <div class="card-text">
+                          <small class="text-body-secondary">
+                            {{ item.createdAt | date : "medium" }}
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 text-end align-center">
+                      <button mat-icon-button [matMenuTriggerFor]="menuNotificationMoreItem" class="options-button">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <span class="unread-indicator" *ngIf="!item.isRead"></span>
+                      <mat-menu #menuNotificationMoreItem="matMenu">
+                        <button mat-menu-item (click)="changeReadStatus(item.id)">
+                          <mat-icon>check</mat-icon>
+                          <span *ngIf="!item.isRead">Mark as read</span>
+                          <span *ngIf="item.isRead">Mark as unread</span>
+                        </button>
+                        <button mat-menu-item (click)="removeNotification(item.id)">
+                          <mat-icon>remove</mat-icon>
+                          <span>Remove this notification</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Unread">
+          <div *ngFor="let item of notifications; let index = index">
+            <mat-card *ngIf="!item.isRead" class="mb-1 notification-card">
+              <mat-card-content>
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-10 d-flex align-items-center">
+                      <img
+                        [src]="item.sender.avatar?.imageUrl ? item.sender.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+                        class="rounded-circle" alt="Avatar" width="50" height="50" />
+                      <div class="ms-2">
+                        <div class="card-text">
+                          <span class="fw-bold text-decoration-underline" [routerLink]="['/profile', item.sender.id]">
+                            {{ item.sender.firstName }}
+                          </span> {{ item.message }}
+                        </div>
+                        <div class="card-text">
+                          <small class="text-body-secondary">
+                            {{ item.createdAt | date : "medium" }}
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2 text-end">
+                      <button mat-icon-button [matMenuTriggerFor]="menuNotificationMoreItem" class="options-button">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <span class="unread-indicator"></span>
+                      <mat-menu #menuNotificationMoreItem="matMenu">
+                        <button mat-menu-item>
+                          <mat-icon>check</mat-icon>
+                          <span>Mark as read</span>
+                        </button>
+                        <button mat-menu-item (click)="removeNotification(item.id)">
+                          <mat-icon>remove</mat-icon>
+                          <span>Remove this notification</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <div></div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
-  <mat-tab-group
-    mat-stretch-tabs="false"
-    mat-align-tabs="start"
-    color="warn"
-    *ngIf="notifications.length !== 0"
-  >
-    <mat-tab label="All">
-      <div *ngFor="let item of notifications; let index = index">
-        <mat-card class="mb-1 notification-card">
-          <mat-card-content>
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-10 d-flex align-items-center">
-                  <img
-                    src="assets/avatar/default-avartar.jpg"
-                    class="rounded-circle"
-                    alt="Avatar"
-                    width="50"
-                    height="50"
-                  />
-                  <div class="ms-2">
-                    <div class="card-text">
-                      {{ item.message }}
-                    </div>
-                    <div class="card-text">
-                      <small class="text-body-secondary">
-                        {{ item.createdAt | date : "medium" }}
-                      </small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-2 text-end align-center">
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menuNotificationMoreItem"
-                    class="options-button"
-                  >
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <span class="unread-indicator" *ngIf="!item.isRead"></span>
-                  <mat-menu #menuNotificationMoreItem="matMenu">
-                    <button mat-menu-item (click)="changeReadStatus(item.id)">
-                      <mat-icon>check</mat-icon>
-                      <span *ngIf="!item.isRead">Mark as read</span>
-                      <span *ngIf="item.isRead">Mark as unread</span>
-                    </button>
-                    <button mat-menu-item (click)="removeNotification(item.id)">
-                      <mat-icon>remove</mat-icon>
-                      <span>Remove this notification</span>
-                    </button>
-                  </mat-menu>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-tab>
-    <mat-tab label="Unread">
-      <div *ngFor="let item of notifications; let index = index">
-        <mat-card *ngIf="!item.isRead" class="mb-1 notification-card">
-          <mat-card-content>
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-10 d-flex align-items-center">
-                  <img
-                    src="assets/avatar/default-avartar.jpg"
-                    class="rounded-circle"
-                    alt="Avatar"
-                    width="50"
-                    height="50"
-                  />
-                  <div class="ms-2">
-                    <div class="card-text">
-                      {{ item.message }}
-                    </div>
-                    <div class="card-text">
-                      <small class="text-body-secondary">
-                        {{ item.createdAt | date : "medium" }}
-                      </small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-2 text-end">
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menuNotificationMoreItem"
-                    class="options-button"
-                  >
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <span class="unread-indicator"></span>
-                  <mat-menu #menuNotificationMoreItem="matMenu">
-                    <button mat-menu-item>
-                      <mat-icon>check</mat-icon>
-                      <span>Mark as read</span>
-                    </button>
-                    <button mat-menu-item (click)="removeNotification(item.id)">
-                      <mat-icon>remove</mat-icon>
-                      <span>Remove this notification</span>
-                    </button>
-                  </mat-menu>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-        <div></div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
 </div>

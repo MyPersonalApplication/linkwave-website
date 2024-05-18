@@ -4,14 +4,14 @@
       <div>
         <mat-card *ngFor="let item of searchResult" class="mt-2">
           <mat-card-content>
-            <mat-list-item>
+            <mat-list-item style="cursor: pointer;">
               <img matListItemAvatar
                 [src]="item.user.avatar?.imageUrl ? item.user.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
-                alt="Avatar Profile" />
-              <span matListItemTitle class="fw-bold">
+                alt="Avatar Profile" [routerLink]="['/profile', item.user.id]" />
+              <span matListItemTitle class="fw-bold" [routerLink]="['/profile', item.user.id]">
                 {{ item.user.firstName }} {{ item.user.lastName }}
               </span>
-              <span matListItemLine class="ms-1">Live in: {{ item.user.profile?.country }}</span>
+              <span matListItemLine class="ms-1">Live in: {{ item.user.profile?.country ?? 'N/A' }}</span>
               <span matListItemMeta class="mt-2">
                 <button *ngIf="item?.friend" mat-raised-button color="warn"
                   (click)="handleMessage(item?.user?.id)">Message</button>
