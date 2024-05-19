@@ -18,14 +18,12 @@
         </mat-menu>
       </div>
       <mat-list id="friend-list">
+        <!-- <app-friend-card *ngIf="isLoading" [count]="8" class="p-4"></app-friend-card> -->
         <div *ngIf="listConversations.length > 0">
           <mat-list-item *ngFor="let item of listConversations" (click)="handleChat(item.id)"
             [class.active]="item.id === conversationId">
-            <img matListItemAvatar [src]="
-                item.avatarUrl
-                  ? item.avatarUrl
-                  : 'assets/avatar/default-avartar.jpg'
-              " alt="Avatar Profile" />
+            <img matListItemAvatar [src]="item.avatarUrl ? item.avatarUrl : 'assets/avatar/default-avartar.jpg'"
+              alt="Avatar Profile" />
             <span matListItemTitle class="fw-bold">
               {{ item.name }}
               <span class="ms-2 unread-indicator" *ngIf="item.unreadCount.length > 0"></span>
@@ -36,7 +34,7 @@
             </span>
           </mat-list-item>
         </div>
-        <div *ngIf="listConversations.length == 0" class="p-5">
+        <div *ngIf="listConversations.length == 0 && !isLoading" class="p-5">
           <h3 class="fw-bold">Welcome to your inbox!</h3>
           <p>Connect, share posts, and engage in private conversations with others on LinkWave.</p>
           <button mat-raised-button color="warn" class="mt-2" (click)="newMessage()">Write a message</button>

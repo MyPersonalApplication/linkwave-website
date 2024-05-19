@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
 @import url("../src/assets/scss/main.scss");
+@import "@ctrl/ngx-emoji-mart/picker";
 
 * {
   font-family: "Poppins", sans-serif;
@@ -172,11 +173,6 @@ body {
 /* Close Button */
 .btn-close {
   background-size: 25%;
-}
-
-.btn-close:focus {
-  outline: 0;
-  box-shadow: none;
 }
 
 /*--------------------------------------------------------------

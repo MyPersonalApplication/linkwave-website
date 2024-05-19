@@ -17,6 +17,7 @@ export class MessageComponent implements OnInit {
   isMenuToggled: boolean = false;
   listConversations: any = [];
   conversationId: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -34,7 +35,12 @@ export class MessageComponent implements OnInit {
     });
   }
 
+  changeLoadingState() {
+    this.isLoading = !this.isLoading;
+  }
+
   loadConversations(conversationId: string | undefined): void {
+    this.changeLoadingState();
     this.conversationService.getConversationList().subscribe({
       next: (response: Conversation[]) => {
         const currentUser: UserInfo =
@@ -81,6 +87,9 @@ export class MessageComponent implements OnInit {
           response.error?.message ||
             'Something went wrong. Please try again later'
         );
+      },
+      complete: () => {
+        this.changeLoadingState();
       },
     });
   }

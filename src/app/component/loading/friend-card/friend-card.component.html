@@ -1,0 +1,13 @@
+<div *ngFor="let _ of range(count)" class="d-flex mb-2">
+  <div>
+    <ngx-skeleton-loader count="1" appearance="circle" [theme]="{
+                width: '45px',
+                height: '45px',
+              }">
+    </ngx-skeleton-loader>
+  </div>
+  <div class="w-100">
+    <ngx-skeleton-loader count="1" [theme]="{ marginBottom: '0' }"></ngx-skeleton-loader>
+    <ngx-skeleton-loader count="1" [theme]="{ width: '35px' }"></ngx-skeleton-loader>
+  </div>
+</div>

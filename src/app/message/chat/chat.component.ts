@@ -10,6 +10,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { NewMessageComponent } from 'src/app/component/dialog/new-message/new-message.component';
 import { ScrollToBottomDirective } from 'src/app/directive/scroll-to-bottom.directive';
 import {
   Conversation,
@@ -37,17 +40,21 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   listMessages: Message[] = [];
   currentUser: UserInfo | undefined;
   chatForm!: FormGroup;
+  isLoading: boolean = true;
+  isOpenEmojiPicker: boolean = false;
 
   @ViewChild(ScrollToBottomDirective)
   scroll!: ScrollToBottomDirective;
 
   constructor(
+    private dialog: MatDialog,
     private showToast: ToastService,
     private authService: AuthService,
     private conversationService: ConversationService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private stompService: StompService
+    private stompService: StompService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +74,23 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  addEmoji(event: any) {
+    const currentMessage = this.chatForm.get('message')?.value || '';
+    this.chatForm.get('message')?.setValue(currentMessage + event.emoji.native);
+  }
+
+  changeLoadingState() {
+    this.isLoading = !this.isLoading;
+  }
+
+  changeEmojiPickerState() {
+    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
+  }
+
+  triggerFileInput(fileInput: HTMLInputElement): void {
+    fileInput.click();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && !changes['conversationId'].firstChange) {
       this.loadConversationById(this.conversationId);
@@ -80,6 +104,10 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   loadConversationById(id: string): void {
     this.conversationService.getConversationById(id).subscribe({
       next: (response: Conversation) => {
+        console.log(
+          '🚀 ~ ChatComponent ~ this.conversationService.getConversationById ~ response:',
+          response
+        );
         // Get current user info
         const currentUser: UserInfo =
           this.authService.getUserData() as UserInfo;
@@ -121,6 +149,9 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
             'Something went wrong. Please try again later'
         );
       },
+      complete: () => {
+        this.changeLoadingState();
+      },
     });
   }
 
@@ -147,5 +178,44 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
           );
         },
       });
+  }
+
+  newMessage() {
+    const dialogRef = this.dialog.open(NewMessageComponent, {});
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.handleMessage(result);
+      }
+    });
+  }
+
+  handleMessage(friendId: string | undefined) {
+    if (!friendId) {
+      return;
+    }
+    this.conversationService.createConversation(friendId).subscribe({
+      next: (response) => {
+        this.router.navigate(['/message'], {
+          queryParams: { id: response.id },
+        });
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files;
+      console.log('Selected file:', file);
+      // Handle the selected file here (e.g., upload it to the server or read its content)
+    }
   }
 }

@@ -64,6 +64,8 @@ import { ManagePostComponent } from './manage-post/manage-post.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
 import { NewMessageComponent } from './component/dialog/new-message/new-message.component';
 import { SearchPeopleComponent } from './search-people/search-people.component';
+import { FriendCardComponent } from './component/loading/friend-card/friend-card.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -117,6 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ManageUserComponent,
     NewMessageComponent,
     SearchPeopleComponent,
+    FriendCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -137,6 +140,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxSkeletonLoaderModule,
     ImageCropperModule,
+    PickerComponent,
   ],
   providers: [
     {

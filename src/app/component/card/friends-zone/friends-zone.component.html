@@ -2,44 +2,27 @@
   <mat-card-content>
     <h5 class="widget-title fw-bold">Friends Zone</h5>
     <div class="widget-body">
-      <div class="like-page-list-wrapper d-flex justify-content-between mb-4">
-        <div class="profile-thumb d-flex gap-2">
-          <img
-            src="assets/images/profile/profile-35x35-15.jpg"
-            alt="profile picture"
-            class="rounded-circle avatar-thumbnail"
-          />
-          <div class="unorder-list-info">
-            <p class="list-title">Ammeya Jakson</p>
-            <p class="list-subtitle">10 mutual</p>
+      <app-friend-card *ngIf="isLoading" [count]="6"></app-friend-card>
+      <div *ngIf="friends.length > 0">
+        <div class="like-page-list-wrapper d-flex justify-content-between mb-4" *ngFor="let item of friends">
+          <div class="profile-thumb d-flex gap-2">
+            <img [src]="item.user.avatar?.imageUrl ? item.user.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+              alt="profile picture" class="rounded-circle avatar-thumbnail" />
+            <div class="unorder-list-info">
+              <p class="list-title">{{ item.user.firstName }} {{ item.user.lastName }}</p>
+              <p class="list-subtitle" [routerLink]="['/profile', item.user.id]">
+                <span>View Profile</span>
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="page-like">
-          <fa-icon
-            [icon]="faRegularHeart"
-            size="lg"
-            style="color: #ff3232"
-          ></fa-icon>
+          <div class="page-like" (click)="handleMessage(item?.user?.id)">
+            <fa-icon [icon]="faRegularMessage" size="lg" style="color: #ff3232"></fa-icon>
+          </div>
         </div>
       </div>
-      <div class="like-page-list-wrapper d-flex justify-content-between">
-        <div class="profile-thumb d-flex gap-2">
-          <img
-            src="assets/images/profile/profile-35x35-18.jpg"
-            alt="profile picture"
-            class="rounded-circle avatar-thumbnail"
-          />
-          <div class="unorder-list-info">
-            <p class="list-title">Jashon Muri</p>
-            <p class="list-subtitle">2 mutual</p>
-          </div>
-        </div>
-        <div class="page-like">
-          <fa-icon
-            [icon]="faRegularHeart"
-            size="lg"
-            style="color: #ff3232"
-          ></fa-icon>
+      <div *ngIf="friends.length == 0 && !isLoading">
+        <div class="d-flex justify-content-center align-items-center">
+          <p class="text-center">No friends found</p>
         </div>
       </div>
     </div>

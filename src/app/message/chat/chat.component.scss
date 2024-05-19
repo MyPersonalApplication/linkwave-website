@@ -62,7 +62,7 @@ $background-color_1: #edecec;
 
 .msb-reply {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   box-shadow: 0 -20px 20px -5px #fff;
   position: relative;
   border-top: 1px solid #eee;
@@ -82,9 +82,6 @@ $background-color_1: #edecec;
 
   button {
     color: $color_main;
-    &:hover {
-      background: #f2f2f2;
-    }
   }
 }
 
@@ -117,6 +114,67 @@ $background-color_1: #edecec;
 
     .ms-body {
       overflow: hidden;
+    }
+  }
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.send-file {
+  display: flex;
+  gap: 10px;
+
+  :is(img) {
+    width: 80px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  .file-icon {
+    display: inline-block;
+    width: 80px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.word {
+      background-image: url("/assets/svg/file-word.svg");
+    }
+
+    &.pdf {
+      background-image: url("/assets/svg/file-pdf.svg");
+    }
+  }
+
+  .send-media {
+    position: relative;
+    width: 80px;
+
+    .send-media-change {
+      display: none;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    &:hover {
+      .send-media-change {
+        display: block;
+        transition: all 0.5s ease-in-out;
+      }
+    }
+
+    .figure-caption {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
     }
   }
 }

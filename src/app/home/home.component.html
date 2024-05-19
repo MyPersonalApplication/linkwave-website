@@ -17,11 +17,9 @@
                 <div class="profile-thumb">
                   <a href="#">
                     <figure class="profile-thumb-middle">
-                      <img [src]="
-                            currentUser.avatar?.imageUrl
-                              ? currentUser.avatar?.imageUrl
-                              : 'assets/avatar/default-avartar.jpg'
-                          " alt="profile picture" />
+                      <img
+                        [src]="currentUser.avatar?.imageUrl ? currentUser.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+                        alt="profile picture" />
                     </figure>
                   </a>
                 </div>

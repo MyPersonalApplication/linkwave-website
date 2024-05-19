@@ -46,11 +46,9 @@
       <div *ngIf="item.content !== ''">
         <div [class.float-start]="item?.sender?.id !== currentUser?.id"
           [class.float-end]="item?.sender?.id === currentUser?.id">
-          <img [src]="
-              item?.sender?.avatar?.imageUrl
-                ? item?.sender?.avatar?.imageUrl
-                : 'assets/avatar/default-avartar.jpg'
-            " alt="" class="rounded-circle" [class.me-1]="item?.sender?.id !== currentUser?.id"
+          <img
+            [src]="item?.sender?.avatar?.imageUrl ? item?.sender?.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+            alt="" class="rounded-circle" [class.me-1]="item?.sender?.id !== currentUser?.id"
             [class.ms-1]="item?.sender?.id === currentUser?.id" height="45" width="45" />
         </div>
         <div class="media-body">
@@ -67,20 +65,62 @@
   </div>
 
   <form class="msb-reply p-2" [formGroup]="chatForm" (ngSubmit)="submit()">
-    <button mat-icon-button>
+    <button mat-icon-button (click)="changeEmojiPickerState()">
       <mat-icon>add_reaction</mat-icon>
     </button>
+    <emoji-mart *ngIf="isOpenEmojiPicker" title="Pick your emoji…" set="google"
+      [style]="{ position: 'absolute', bottom: '75px', left: '10px' }" (emojiClick)="addEmoji($event)"
+      emoji="thumbsup"></emoji-mart>
+    <!-- Hidden file input -->
+    <input type="file" id="file-upload" multiple (change)="onFileSelected($event)" #fileInput>
+    <button mat-icon-button (click)="triggerFileInput(fileInput)">
+      <mat-icon>attachment</mat-icon>
+    </button>
+    <div [style]="{ position: 'absolute', bottom: '75px', left: '105px' }" class="send-file">
+      <figure class="figure send-media ms-2">
+        <img src="assets/images/books/book-1.jpg" class="figure-img img-fluid" alt="item-file-name" />
+        <div class="send-media-change">
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+      </figure>
+      <figure class="figure send-media ms-2">
+        <img src="assets/images/banner/advertise.jpg" class="figure-img img-fluid" alt="item-file-name" />
+        <div class="send-media-change">
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+      </figure>
+      <figure class="figure send-media">
+        <a class="file-icon word" href="assets/files/word.docx"></a>
+        <div class="send-media-change">
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+      </figure>
+      <figure class="figure send-media">
+        <a class="file-icon pdf" href="assets/files/pdf.pdf"></a>
+        <div class="send-media-change">
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+      </figure>
+    </div>
     <input placeholder="What's on your mind..." formControlName="message" />
     <button mat-icon-button type="submit">
       <mat-icon>send</mat-icon>
     </button>
   </form>
 </div>
+
 <div class="ms-body d-flex justify-content-center align-items-center" style="height: 90vh" *ngIf="!conversationId">
-  <!-- <img src="assets/gif/empty-states-nbg.gif" alt="Empty State" class="img-fluid" width="500" /> -->
-  <div class="text-center">
+  <div class="text-center" *ngIf="!isLoading">
     <h3 class="fw-bold">Select a message</h3>
     <p>Select an existing conversation, start a new one, or keep exploring.</p>
-    <button routerLink="/login" mat-raised-button color="warn" class="mt-2">New message</button>
+    <button mat-raised-button color="warn" class="mt-2" (click)="newMessage()">New message</button>
+  </div>
+  <div class="text-center" *ngIf="isLoading">
+    <mat-progress-spinner class="example-margin" color="warn" mode="indeterminate">
+    </mat-progress-spinner>
   </div>
 </div>

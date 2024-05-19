@@ -13,14 +13,12 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./friend.component.scss'],
 })
 export class FriendComponent implements OnInit {
-  // Add 12 friends to the friends array
   friends: FriendShip[] = [];
 
   constructor(
     private showToast: ToastService,
     private friendShipService: FriendShipService,
     private conversationService: ConversationService,
-    private messageService: MessageService,
     private swalService: SwalService,
     public router: Router
   ) {}

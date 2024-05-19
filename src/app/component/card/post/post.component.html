@@ -4,11 +4,8 @@
       <div class="d-flex gap-2 align-items-center">
         <div class="profile-thumb">
           <div class="author" [routerLink]="['/profile', post.user.id]">
-            <img [src]="
-                post.user.avatar?.imageUrl
-                  ? post.user.avatar?.imageUrl
-                  : 'assets/avatar/default-avartar.jpg'
-              " alt="profile picture" class="rounded-circle avatar-post" />
+            <img [src]="post.user.avatar?.imageUrl ? post.user.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+              alt="profile picture" class="rounded-circle avatar-post" />
           </div>
         </div>
 

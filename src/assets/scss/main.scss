@@ -2175,11 +2175,12 @@ textarea:focus {
   text-transform: capitalize;
 }
 
-.list-subtitle a {
+.list-subtitle span {
+  cursor: pointer;
   color: #666666;
 }
 
-.list-subtitle a:hover {
+.list-subtitle span:hover {
   color: #dc4734;
 }
 
