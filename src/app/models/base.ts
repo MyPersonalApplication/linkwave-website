@@ -18,3 +18,8 @@ export interface TableAction<T> {
   tooltip: string;
   action: (row: T) => void;
 }
+
+export interface Item {
+  imageSrc: string;
+  imageAlt: string;
+}

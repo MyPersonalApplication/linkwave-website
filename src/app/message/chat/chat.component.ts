@@ -9,20 +9,24 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NewMessageComponent } from 'src/app/component/dialog/new-message/new-message.component';
 import { ScrollToBottomDirective } from 'src/app/directive/scroll-to-bottom.directive';
+import { Item } from 'src/app/models/base';
 import {
   Conversation,
   Message,
+  MessageAttachment,
+  MessageAttachmentFileType,
   Participant,
 } from 'src/app/models/conversation';
 import { UserInfo } from 'src/app/models/profile';
 import { ConversationService } from 'src/app/services/api/conversation.service';
 import { MessageService } from 'src/app/services/api/message.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { SwalService } from 'src/app/services/swal.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { StompService } from 'src/app/services/ws/stomp.service';
 
@@ -39,8 +43,12 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   friendInfo: UserInfo | undefined;
   listMessages: Message[] = [];
   currentUser: UserInfo | undefined;
-  chatForm!: FormGroup;
-  isLoading: boolean = true;
+  files: File[] = [];
+  messageAttachReviews: any[] = [];
+  messageAttachmentFileType = MessageAttachmentFileType;
+  chatControl = new FormControl();
+  isLoading: boolean = false;
+  isLoadingSendMessage: boolean = false;
   isOpenEmojiPicker: boolean = false;
 
   @ViewChild(ScrollToBottomDirective)
@@ -48,19 +56,16 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
+    private swalService: SwalService,
     private showToast: ToastService,
     private authService: AuthService,
     private conversationService: ConversationService,
     private messageService: MessageService,
-    private formBuilder: FormBuilder,
     private stompService: StompService,
     public router: Router
   ) {}
 
   ngOnInit(): void {
-    this.chatForm = this.formBuilder.group({
-      message: [''],
-    });
     this.stompService.connect().then(() => {
       this.stompService.initializeTopicSubscription(
         '/topic/chat',
@@ -75,12 +80,16 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addEmoji(event: any) {
-    const currentMessage = this.chatForm.get('message')?.value || '';
-    this.chatForm.get('message')?.setValue(currentMessage + event.emoji.native);
+    const currentMessage = this.chatControl.value ?? '';
+    this.chatControl.setValue(currentMessage + event.emoji.native);
   }
 
   changeLoadingState() {
     this.isLoading = !this.isLoading;
+  }
+
+  changeLoadingSendMessageState() {
+    this.isLoadingSendMessage = !this.isLoadingSendMessage;
   }
 
   changeEmojiPickerState() {
@@ -102,6 +111,7 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadConversationById(id: string): void {
+    this.changeLoadingState();
     this.conversationService.getConversationById(id).subscribe({
       next: (response: Conversation) => {
         console.log(
@@ -155,20 +165,39 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  getListMessageAttachmentFileType(
+    listMessageAttachment: MessageAttachment[]
+  ): Item[] {
+    return listMessageAttachment.map((item) => {
+      return {
+        imageSrc: item.fileUrl,
+        imageAlt: item.fileName,
+      };
+    });
+  }
+
   toggleMenu() {
     this.toggle.emit();
   }
 
   submit(): void {
-    if (this.chatForm.value.message === '') {
+    if (
+      (this.chatControl.value === '' || this.chatControl.value === null) &&
+      this.files.length === 0
+    ) {
       return;
     }
 
+    this.changeLoadingSendMessageState();
+    const content = this.chatControl.value ?? '';
+    this.isOpenEmojiPicker = false;
     this.messageService
-      .sendMessage(this.conversationId, this.chatForm.value.message, null)
+      .sendMessage(this.conversationId, content, this.files)
       .subscribe({
         next: () => {
-          this.chatForm.reset();
+          this.chatControl.setValue('');
+          this.messageAttachReviews = [];
+          this.files = [];
         },
         error: (response) => {
           this.showToast.showErrorMessage(
@@ -176,6 +205,9 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
             response.error?.message ||
               'Something went wrong. Please try again later'
           );
+        },
+        complete: () => {
+          this.changeLoadingSendMessageState();
         },
       });
   }
@@ -213,9 +245,76 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file = input.files;
-      console.log('Selected file:', file);
-      // Handle the selected file here (e.g., upload it to the server or read its content)
+      this.files = [...this.files, ...Array.from<File>(input.files)];
+      this.messageAttachReviews = this.files.map((file) => {
+        return {
+          file,
+          type: file.type,
+          objectUrl: URL.createObjectURL(file),
+        };
+      });
     }
+  }
+
+  getFileExtension(mimeType: string): string {
+    const mimeTypes: { [key: string]: string } = {
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        'DOCX',
+      'application/msword': 'DOC',
+      'application/pdf': 'PDF',
+      'image/png': 'PNG',
+      'image/jpeg': 'JPG',
+      'application/vnd.ms-excel': 'XLS',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        'XLSX',
+    };
+
+    return mimeTypes[mimeType] || 'unknown';
+  }
+
+  isImage(type: string): boolean {
+    return type.includes('image');
+  }
+
+  isWordFile(type: string): boolean {
+    return type.includes('word');
+  }
+
+  isPdfFile(type: string): boolean {
+    return type.includes('pdf');
+  }
+
+  isExcelFile(type: string): boolean {
+    return type.includes('excel');
+  }
+
+  removeFile(index: number): void {
+    this.messageAttachReviews.splice(index, 1);
+    this.files.splice(index, 1);
+  }
+
+  removeConversation(): void {
+    this.swalService.confirmToHandle(
+      'Are you sure you want to remove?',
+      'warning',
+      this.processRemove.bind(this, this.conversationId)
+    );
+  }
+
+  processRemove(id: string) {
+    this.conversationService.removeConversation(id).subscribe({
+      next: () => {
+        this.sendMessage.emit();
+        this.conversationId = '';
+        this.router.navigate(['/message']);
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 }

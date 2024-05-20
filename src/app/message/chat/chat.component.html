@@ -18,21 +18,21 @@
     </div>
 
     <div class="d-flex justify-content-end gap-1">
-      <button mat-icon-button>
+      <!-- <button mat-icon-button>
         <mat-icon>call</mat-icon>
       </button>
       <button mat-icon-button>
         <mat-icon>video_call</mat-icon>
-      </button>
+      </button> -->
       <button mat-icon-button [matMenuTriggerFor]="messageInfor">
         <mat-icon>infor</mat-icon>
       </button>
       <mat-menu #messageInfor="matMenu">
-        <button mat-menu-item>
+        <!-- <button mat-menu-item>
           <mat-icon>archive</mat-icon>
           <span>Archive</span>
-        </button>
-        <button mat-menu-item>
+        </button> -->
+        <button mat-menu-item (click)="removeConversation()">
           <mat-icon>delete</mat-icon>
           <span>Remove</span>
         </button>
@@ -43,28 +43,31 @@
   <div id="message-list" #scrollMe [scrollTop]="scrollMe.scrollHeight">
     <div *ngFor="let item of listMessages" class="message-feed" [class.media]="item?.sender?.id !== currentUser?.id"
       [class.right]="item?.sender?.id === currentUser?.id">
-      <div *ngIf="item.content !== ''">
-        <div [class.float-start]="item?.sender?.id !== currentUser?.id"
-          [class.float-end]="item?.sender?.id === currentUser?.id">
-          <img
-            [src]="item?.sender?.avatar?.imageUrl ? item?.sender?.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
-            alt="" class="rounded-circle" [class.me-1]="item?.sender?.id !== currentUser?.id"
-            [class.ms-1]="item?.sender?.id === currentUser?.id" height="45" width="45" />
+      <div [class.float-start]="item?.sender?.id !== currentUser?.id"
+        [class.float-end]="item?.sender?.id === currentUser?.id">
+        <img
+          [src]="item?.sender?.avatar?.imageUrl ? item?.sender?.avatar?.imageUrl : 'assets/avatar/default-avartar.jpg'"
+          alt="" class="rounded-circle" [class.me-1]="item?.sender?.id !== currentUser?.id"
+          [class.ms-1]="item?.sender?.id === currentUser?.id" height="45" width="45" />
+      </div>
+      <div class="media-body" *ngIf="item.content != ''">
+        <div class="mf-content" [title]="
+                    (item.createdAt | date : 'MM/dd/yyyy') +
+                    ' at ' +
+                    (item.createdAt | date : 'HH:mm')
+                  ">
+          {{ item.content }}
         </div>
-        <div class="media-body">
-          <div class="mf-content" [title]="
-              (item.createdAt | date : 'MM/dd/yyyy') +
-              ' at ' +
-              (item.createdAt | date : 'HH:mm')
-            ">
-            {{ item.content }}
-          </div>
-        </div>
+      </div>
+      <div *ngIf="item.lstAttachments.length > 0" class="mf-content-media" [class.px-5]="item.content != ''"
+        [class.py-2]="item.content != ''">
+        <app-gallery-lightbox [galleryData]="getListMessageAttachmentFileType(item.lstAttachments)"
+          [showCount]="true"></app-gallery-lightbox>
       </div>
     </div>
   </div>
 
-  <form class="msb-reply p-2" [formGroup]="chatForm" (ngSubmit)="submit()">
+  <div class="msb-reply p-2">
     <button mat-icon-button (click)="changeEmojiPickerState()">
       <mat-icon>add_reaction</mat-icon>
     </button>
@@ -72,45 +75,34 @@
       [style]="{ position: 'absolute', bottom: '75px', left: '10px' }" (emojiClick)="addEmoji($event)"
       emoji="thumbsup"></emoji-mart>
     <!-- Hidden file input -->
-    <input type="file" id="file-upload" multiple (change)="onFileSelected($event)" #fileInput>
+    <input type="file" id="file-upload" accept="image/jpeg, image/png" multiple (change)="onFileSelected($event)"
+      #fileInput>
     <button mat-icon-button (click)="triggerFileInput(fileInput)">
       <mat-icon>attachment</mat-icon>
     </button>
-    <div [style]="{ position: 'absolute', bottom: '75px', left: '105px' }" class="send-file">
-      <figure class="figure send-media ms-2">
-        <img src="assets/images/books/book-1.jpg" class="figure-img img-fluid" alt="item-file-name" />
-        <div class="send-media-change">
+    <div [style]="{ position: 'absolute', bottom: '75px', left: '105px', background: '#f8f8f8', padding: '10px' }"
+      class="send-file" [class.d-none]="messageAttachReviews.length == 0">
+      <figure class="figure send-media ms-2" *ngFor="let item of messageAttachReviews; let i = index">
+        <img *ngIf="isImage(item.type)" [src]="item.objectUrl" class="figure-img img-fluid" alt="item-file-name" />
+        <a *ngIf="isWordFile(item.type)" class="file-icon word" [href]="item.objectUrl"></a>
+        <a *ngIf="isPdfFile(item.type)" class="file-icon pdf" [href]="item.objectUrl"></a>
+        <a *ngIf="isExcelFile(item.type)" class="file-icon pdf" [href]="item.objectUrl"></a>
+        <div class="send-media-change" (click)="removeFile(i)">
           <button type="button" class="btn-close" aria-label="Close"></button>
         </div>
-        <figcaption class="figure-caption">A caption for the above image.</figcaption>
-      </figure>
-      <figure class="figure send-media ms-2">
-        <img src="assets/images/banner/advertise.jpg" class="figure-img img-fluid" alt="item-file-name" />
-        <div class="send-media-change">
-          <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-        <figcaption class="figure-caption">A caption for the above image.</figcaption>
-      </figure>
-      <figure class="figure send-media">
-        <a class="file-icon word" href="assets/files/word.docx"></a>
-        <div class="send-media-change">
-          <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-        <figcaption class="figure-caption">A caption for the above image.</figcaption>
-      </figure>
-      <figure class="figure send-media">
-        <a class="file-icon pdf" href="assets/files/pdf.pdf"></a>
-        <div class="send-media-change">
-          <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-        <figcaption class="figure-caption">A caption for the above image.</figcaption>
+        <figcaption class="figure-caption">{{ item.file.name }}</figcaption>
       </figure>
     </div>
-    <input placeholder="What's on your mind..." formControlName="message" />
-    <button mat-icon-button type="submit">
+    <input placeholder="What's on your mind..." [formControl]="chatControl" (keydown.enter)="submit()" />
+    <button mat-icon-button (click)="submit()" *ngIf="!isLoadingSendMessage">
       <mat-icon>send</mat-icon>
     </button>
-  </form>
+    <button mat-button *ngIf="isLoadingSendMessage">
+      <mat-icon>
+        <mat-spinner color="warn" diameter="18"></mat-spinner>
+      </mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="ms-body d-flex justify-content-center align-items-center" style="height: 90vh" *ngIf="!conversationId">

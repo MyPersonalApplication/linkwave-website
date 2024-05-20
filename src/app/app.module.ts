@@ -66,6 +66,7 @@ import { NewMessageComponent } from './component/dialog/new-message/new-message.
 import { SearchPeopleComponent } from './search-people/search-people.component';
 import { FriendCardComponent } from './component/loading/friend-card/friend-card.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { GalleryLightboxComponent } from './component/card/gallery-lightbox/gallery-lightbox.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -120,6 +121,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewMessageComponent,
     SearchPeopleComponent,
     FriendCardComponent,
+    GalleryLightboxComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,16 +9,18 @@ import { Observable } from 'rxjs';
 export class MessageService {
   constructor(private http: HttpClient) {}
 
-  sendMessage(
-    conversationId: string,
-    content: string,
-    senderId: string | null
-  ) {
-    return this.http.post<any>('/api/messages', {
-      conversationId,
-      content,
-      senderId,
-    });
+  sendMessage(conversationId: string, content: string, files: File[]) {
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('conversationId', conversationId);
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append('multipartFiles', file);
+      });
+    } else {
+      formData.append('multipartFiles', new Blob([]));
+    }
+    return this.http.post<any>('/api/messages', formData);
   }
 
   markAsRead(listMessageIds: string[]) {

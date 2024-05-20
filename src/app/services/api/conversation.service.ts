@@ -18,4 +18,8 @@ export class ConversationService {
   getConversationById(conversationId: string) {
     return this.http.get<any>(`/api/conversations/${conversationId}`);
   }
+
+  removeConversation(conversationId: string) {
+    return this.http.delete<any>(`/api/conversations/${conversationId}`);
+  }
 }
