@@ -40,6 +40,10 @@ export class PostService {
     return this.http.post<any>('/api/posts', post);
   }
 
+  deletePost(postId: string) {
+    return this.http.delete<any>(`/api/posts/${postId}`);
+  }
+
   likePost(postId: string) {
     return this.http.post<any>(`/api/posts/${postId}/like`, {});
   }

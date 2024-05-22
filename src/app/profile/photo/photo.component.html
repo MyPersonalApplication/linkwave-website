@@ -6,12 +6,12 @@
           <div class="page-title-inner">
             <h4 class="page-title">photos (120)</h4>
           </div>
-          <nav class="d-flex gap-5 nav-about">
+          <!-- <nav class="d-flex gap-5 nav-about">
             <div class="nav-item">All</div>
             <div class="nav-item">Timeline</div>
             <div class="nav-item">Upload</div>
             <div class="nav-item">Folder</div>
-          </nav>
+          </nav> -->
         </div>
       </mat-card-content>
     </mat-card>
@@ -35,11 +35,7 @@
       <div *ngFor="let photo of photos" class="col-md-6 col-lg-4 my-3">
         <div class="photo-group">
           <div class="d-none product-thumb-large-view">
-            <img
-              *ngFor="let gallery of photo.galleries"
-              [src]="gallery"
-              alt="Photo Gallery"
-            />
+            <img *ngFor="let gallery of photo.galleries" [src]="gallery" alt="Photo Gallery" />
           </div>
           <div class="gallery-overlay">
             <img [src]="photo.galleries[0]" alt="Photo Gallery" />

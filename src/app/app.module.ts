@@ -67,6 +67,13 @@ import { SearchPeopleComponent } from './search-people/search-people.component';
 import { FriendCardComponent } from './component/loading/friend-card/friend-card.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { GalleryLightboxComponent } from './component/card/gallery-lightbox/gallery-lightbox.component';
+import { BasicComponent } from './component/chart/column/basic/basic.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { AdminDasboardComponent } from './admin-dasboard/admin-dasboard.component';
+import { LineComponent } from './component/chart/mix/line/line.component';
+import { SimpleComponent } from './component/chart/pie/simple/simple.component';
+import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { AdminChangePasswordComponent } from './admin-change-password/admin-change-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -122,6 +129,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     SearchPeopleComponent,
     FriendCardComponent,
     GalleryLightboxComponent,
+    BasicComponent,
+    AdminDasboardComponent,
+    LineComponent,
+    SimpleComponent,
+    ChangePasswordComponent,
+    AdminChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -143,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxSkeletonLoaderModule,
     ImageCropperModule,
     PickerComponent,
+    NgApexchartsModule,
   ],
   providers: [
     {

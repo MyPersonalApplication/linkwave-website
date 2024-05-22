@@ -27,6 +27,8 @@ import { AdminComponent } from './layouts/admin/admin.component';
 import { ManagePostComponent } from './manage-post/manage-post.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
 import { SearchPeopleComponent } from './search-people/search-people.component';
+import { AdminDasboardComponent } from './admin-dasboard/admin-dasboard.component';
+import { AdminChangePasswordComponent } from './admin-change-password/admin-change-password.component';
 
 const routes: Routes = [
   {
@@ -167,6 +169,12 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       {
+        path: 'dashboard',
+        component: AdminDasboardComponent,
+        title: 'Dashboard',
+        canActivate: [AuthenticationGuard],
+      },
+      {
         path: 'post',
         component: ManagePostComponent,
         title: 'Manage Post',
@@ -176,6 +184,12 @@ const routes: Routes = [
         path: 'user',
         component: ManageUserComponent,
         title: 'Manage User',
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'change-password',
+        component: AdminChangePasswordComponent,
+        title: 'Change Password',
         canActivate: [AuthenticationGuard],
       },
     ],

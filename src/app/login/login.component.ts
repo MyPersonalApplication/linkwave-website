@@ -60,7 +60,7 @@ export class LoginComponent {
           this.isLoading = false;
           this.authService.saveUser(response);
           if (response.roles.includes('ROLE_ADMIN')) {
-            return this.router.navigate(['/admin/post']);
+            return this.router.navigate(['/admin/dashboard']);
           }
           return this.router.navigate(['/']);
         },

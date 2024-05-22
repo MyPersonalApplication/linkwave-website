@@ -39,11 +39,6 @@ export class AboutComponent implements OnInit {
   contentLoading = false;
   workExperiences: Experience[] = [];
   educationExperiences: Experience[] = [];
-  changePasswordForm!: FormGroup;
-  hideOldPassword: boolean = true;
-  hidePassword: boolean = true;
-  hideConfirm: boolean = true;
-  isLoading: boolean = false;
 
   constructor(
     private showToast: ToastService,
@@ -53,14 +48,6 @@ export class AboutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.changePasswordForm = this.formBuilder.group(
-      {
-        oldPassword: ['', [Validators.required]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', [Validators.required]],
-      },
-      { validators: passwordMatchingValidatior }
-    );
     this.workExperiences =
       this.profileData?.experiences?.filter(
         (exp) => exp.experienceType === ExperienceType.WORK
@@ -69,18 +56,6 @@ export class AboutComponent implements OnInit {
       this.profileData?.experiences?.filter(
         (exp) => exp.experienceType === ExperienceType.EDUCATION
       ) || [];
-  }
-
-  get oldPassword() {
-    return this.changePasswordForm.get('oldPassword') as FormGroup;
-  }
-
-  get password() {
-    return this.changePasswordForm.get('password') as FormGroup;
-  }
-
-  get confirmPassword() {
-    return this.changePasswordForm.get('confirmPassword') as FormGroup;
   }
 
   openDialogEditProfile() {
@@ -298,49 +273,6 @@ export class AboutComponent implements OnInit {
           },
         });
       }
-    });
-  }
-
-  toggleOldPasswordVisibility(): void {
-    this.hideOldPassword = !this.hideOldPassword;
-  }
-
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;
-  }
-
-  toggleConfirmVisibility(): void {
-    this.hideConfirm = !this.hideConfirm;
-  }
-
-  submit(): void {
-    if (this.changePasswordForm.invalid) {
-      this.showToast.showWarningMessage('Warning', 'Please fill in all fields');
-      return;
-    }
-
-    const requestData = {
-      oldPassword: this.changePasswordForm.value.oldPassword,
-      newPassword: this.changePasswordForm.value.password,
-    };
-
-    this.isLoading = true;
-    this.userService.changePassword(requestData).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.showToast.showSuccessMessage(
-          'Success',
-          'Change password successfully'
-        );
-        this.changePasswordForm.reset();
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.showToast.showErrorMessage(
-          'Error',
-          error.error?.message || 'Change password failed. Please try again'
-        );
-      },
     });
   }
 }

@@ -9,7 +9,10 @@
       </div>
       <div class="d-flex flex-column">
         <figure class="figure post-media" *ngFor="let item of mediaReviews; let i = index">
-          <img [src]="item.objectUrl" class="figure-img img-fluid rounded mt-2 w-100" [alt]="item.file.name" />
+          <img [src]="item.objectUrl" *ngIf="!isVideo(item.file.type)" class="figure-img img-fluid rounded mt-2 w-100"
+            [alt]="item.file.name" />
+          <video *ngIf="isVideo(item.file.type)" controls [src]="item.objectUrl"
+            class="figure-img img-fluid rounded mt-2 w-100"></video>
           <div class="post-media-change">
             <button mat-icon-button (click)="removeReview(i)">
               <mat-icon>close</mat-icon>

@@ -23,3 +23,16 @@ export interface Item {
   imageSrc: string;
   imageAlt: string;
 }
+
+export interface MonthlyStats {
+  month: string;
+  postCount: number;
+  postLikeCount: number;
+  postCommentCount: number;
+}
+
+export interface MonthlyMessageStats {
+  month: string;
+  conversationCount: number;
+  chatMessageCount: number;
+}

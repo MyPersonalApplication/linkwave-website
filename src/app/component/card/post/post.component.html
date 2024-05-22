@@ -19,11 +19,15 @@
         </div>
       </div>
 
-      <button mat-icon-button [matMenuTriggerFor]="menuPostSettings">
+      <button mat-icon-button [matMenuTriggerFor]="menuPostSettings" *ngIf="isCurrentUserPost(post)">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menuPostSettings="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="removePost(post.id)">
+          <mat-icon>delete</mat-icon>
+          <span>Remove post</span>
+        </button>
+        <!-- <button mat-menu-item>
           <mat-icon>bookmark</mat-icon>
           <span>Save post</span>
         </button>
@@ -38,7 +42,7 @@
         <button mat-menu-item>
           <mat-icon>report</mat-icon>
           <span>Report post</span>
-        </button>
+        </button> -->
       </mat-menu>
     </div>
 

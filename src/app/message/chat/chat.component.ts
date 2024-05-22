@@ -114,10 +114,6 @@ export class ChatComponent implements OnInit, OnChanges, OnDestroy {
     this.changeLoadingState();
     this.conversationService.getConversationById(id).subscribe({
       next: (response: Conversation) => {
-        console.log(
-          '🚀 ~ ChatComponent ~ this.conversationService.getConversationById ~ response:',
-          response
-        );
         // Get current user info
         const currentUser: UserInfo =
           this.authService.getUserData() as UserInfo;

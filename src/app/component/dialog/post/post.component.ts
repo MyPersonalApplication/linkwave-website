@@ -55,4 +55,8 @@ export class PostComponent {
 
     this.dialogRef.close(response);
   }
+
+  isVideo(fileType: string): boolean {
+    return fileType.startsWith('video/');
+  }
 }

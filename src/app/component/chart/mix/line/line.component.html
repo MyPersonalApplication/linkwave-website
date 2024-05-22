@@ -1,0 +1,10 @@
+<div id="chart">
+  <apx-chart *ngIf="!isLoading" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+    [yaxis]="chartOptions.yaxis!" [xaxis]="chartOptions.xaxis!" [labels]="chartOptions.labels!"
+    [stroke]="chartOptions.stroke!" [title]="chartOptions.title!" [dataLabels]="chartOptions.dataLabels!"
+    [fill]="chartOptions.fill!" [tooltip]="chartOptions.tooltip!"></apx-chart>
+  <div *ngIf="isLoading" class="loading d-flex justify-content-center align-items-center">
+    <mat-progress-spinner class="example-margin" color="warn" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+</div>

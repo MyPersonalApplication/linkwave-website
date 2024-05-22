@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PostLikeComponent } from '../../dialog/post-like/post-like.component';
 import { PostCommentComponent } from '../../dialog/post-comment/post-comment.component';
+import { SwalService } from 'src/app/services/swal.service';
 
 @Component({
   selector: 'app-card-post',
@@ -32,7 +33,8 @@ export class CardPostComponent implements OnInit {
     private showToast: ToastService,
     public dialog: MatDialog,
     private authService: AuthService,
-    private postService: PostService
+    private postService: PostService,
+    private swalService: SwalService
   ) {}
 
   ngOnInit() {
@@ -40,6 +42,11 @@ export class CardPostComponent implements OnInit {
       duration: 800,
       easing: 'ease-in-out',
     });
+  }
+
+  isCurrentUserPost(post: Post) {
+    const currentUser = this.authService.getUserData() as UserInfo;
+    return post.user.id === currentUser.id;
   }
 
   isLikedPost(postId: string) {
@@ -96,6 +103,35 @@ export class CardPostComponent implements OnInit {
         },
       });
     }
+  }
+
+  removePost(postId: string) {
+    this.swalService.confirmToHandle(
+      'Are you sure you want to remove?',
+      'warning',
+      this.processRemove.bind(this, postId)
+    );
+  }
+
+  processRemove(postId: string) {
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.showToast.showSuccessMessage(
+          'Success',
+          'Delete post successfully'
+        );
+        this.postList = this.postList.filter((post) => {
+          return post.id !== postId;
+        });
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 
   openDialogPostLike(postId: string) {

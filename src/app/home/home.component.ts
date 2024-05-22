@@ -86,7 +86,6 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result);
         this.postService.createPost(result).subscribe({
           next: (postResponse: Post) => {
             const postId = postResponse.id;

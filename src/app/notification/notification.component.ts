@@ -5,6 +5,7 @@ import { ToastService } from '../services/toast.service';
 import { NotificationService } from '../services/api/notification.service';
 import { StompService } from '../services/ws/stomp.service';
 import { AuthService } from '../services/auth.service';
+import { SwalService } from '../services/swal.service';
 
 @Component({
   selector: 'app-notification',
@@ -16,6 +17,7 @@ export class NotificationComponent {
 
   constructor(
     private showToast: ToastService,
+    private swalService: SwalService,
     private notificationService: NotificationService,
     private authService: AuthService,
     private stompService: StompService
@@ -54,21 +56,70 @@ export class NotificationComponent {
   }
 
   markAllAsRead(): void {
-    this.notifications.forEach((n) => (n.isRead = true));
+    this.notificationService.markAllAsRead().subscribe({
+      next: () => {
+        this.showToast.showSuccessMessage(
+          'Success',
+          'Mark all notifications as read successfully'
+        );
+        this.notifications.forEach((n) => (n.isRead = true));
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 
   removeNotification(id: string): void {
-    this.notifications = this.notifications.filter((n) => n.id !== id);
-    this.showToast.showSuccessMessage(
-      'Success',
-      'Remove notification successfully'
+    this.swalService.confirmToHandle(
+      'Are you sure you want to remove?',
+      'warning',
+      this.processRemove.bind(this, id)
     );
   }
 
+  processRemove(id: string) {
+    this.notificationService.deleteNotification(id).subscribe({
+      next: () => {
+        this.notifications = this.notifications.filter((n) => n.id !== id);
+        this.showToast.showSuccessMessage(
+          'Success',
+          'Remove notification successfully'
+        );
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
+  }
+
   changeReadStatus(id: string): void {
-    const notification = this.notifications.find((n) => n.id === id);
-    if (notification) {
-      notification.isRead = !notification.isRead;
-    }
+    this.notificationService.markAsRead(id).subscribe({
+      next: () => {
+        this.showToast.showSuccessMessage(
+          'Success',
+          'Mark notification as read successfully'
+        );
+        const notification = this.notifications.find((n) => n.id === id);
+        if (notification) {
+          notification.isRead = !notification.isRead;
+        }
+      },
+      error: (response) => {
+        this.showToast.showErrorMessage(
+          'Error',
+          response.error?.message ||
+            'Something went wrong. Please try again later'
+        );
+      },
+    });
   }
 }

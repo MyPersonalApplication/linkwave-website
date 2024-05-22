@@ -10,6 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SidebarComponent {
   pages: any[] = [
     {
+      name: 'Dashboard',
+      path: '/admin/dashboard',
+      icon: 'bi bi-grid',
+      isActive: false,
+    },
+    {
       name: 'Post',
       path: '/admin/post',
       icon: 'bi bi-postcard',

@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
     { text: 'Timeline', url: 'timeline', isActive: true },
     { text: 'About', url: 'about', isActive: false },
     { text: 'Friends', url: 'friends', isActive: false },
+    // { text: 'Photos', url: 'photos', isActive: false },
   ];
 
   constructor(
